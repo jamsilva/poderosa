@@ -26,6 +26,11 @@ using Poderosa.Util;
 using Poderosa.Sessions;
 using Poderosa.Util.Collections;
 using Poderosa.UI;
+#if LIBRARY
+using Poderosa.Properties;
+#else
+using Poderosa.TerminalEmulator.Properties;
+#endif
 
 namespace Poderosa.Terminal {
     internal class TerminalToolBar : IToolBarComponent, IPositionDesignation, IActiveDocumentChangeListener {
@@ -167,7 +172,7 @@ namespace Poderosa.Terminal {
         private class LocalEchoHandler : ToolBarToggleButtonImpl {
             public override Image Icon {
                 get {
-                    return Poderosa.TerminalEmulator.Properties.Resources.LocalEcho16x16;
+                    return Properties.Resources.LocalEcho16x16;
                 }
             }
             public override string ToolTipText {
@@ -195,7 +200,7 @@ namespace Poderosa.Terminal {
         private class IntelliSenseHandler : ToolBarToggleButtonImpl {
             public override Image Icon {
                 get {
-                    return Poderosa.TerminalEmulator.Properties.Resources.Intellisense16x16;
+                    return Properties.Resources.Intellisense16x16;
                 }
             }
             public override string ToolTipText {

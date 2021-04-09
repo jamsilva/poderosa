@@ -25,6 +25,11 @@ using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+#if LIBRARY
+using Poderosa.Properties;
+#else
+using Poderosa.TerminalSession.Properties;
+#endif
 
 namespace Poderosa.Sessions {
 
@@ -73,8 +78,8 @@ namespace Poderosa.Sessions {
             _icons.ColorDepth = ColorDepth.Depth32Bit;
             _icons.ImageSize = new Size(12, 12);
             var color = SystemColors.ControlText;
-            _icons.Images.Add(IconUtil.CreateColoredIcon(Poderosa.TerminalSession.Properties.Resources.TerminalSmall, color));
-            _icons.Images.Add(IconUtil.CreateColoredIcon(Poderosa.TerminalSession.Properties.Resources.MacroSmall, color));
+            _icons.Images.Add(IconUtil.CreateColoredIcon(Properties.Resources.TerminalSmall, color));
+            _icons.Images.Add(IconUtil.CreateColoredIcon(Properties.Resources.MacroSmall, color));
 
             _optionsTab.ImageList = _icons;
 
@@ -353,7 +358,7 @@ namespace Poderosa.Sessions {
             termParam.SetTerminalName(terminalType.ToTermValue());
 
             string terminalCaption = tcp.Destination;
-            Image terminalIcon = Poderosa.TerminalSession.Properties.Resources.NewConnection16x16;
+            Image terminalIcon = Properties.Resources.NewConnection16x16;
             ITerminalSettings termSettings = TerminalSessionsPlugin.Instance.TerminalEmulatorService.CreateDefaultTerminalSettings(terminalCaption, terminalIcon);
             termSettings.BeginUpdate();
             termSettings.Encoding = ((EnumListItem<EncodingType>)_encodingBox.SelectedItem).Value;

@@ -50,7 +50,11 @@ namespace Poderosa.Forms {
             _commandKeyHandler.AddLastHandler(new FixedShortcutKeyHandler(this));
 
             this.ImeMode = ImeMode.NoControl;
+#if LIBRARY
+            this.AllowDrop = false;
+#else
             this.AllowDrop = true;
+#endif
 
             arg.ApplyToUnloadedWindow(this);
 
@@ -66,12 +70,18 @@ namespace Poderosa.Forms {
             IViewManagerFactory f = ((IViewManagerFactory[])creator_ext.GetExtensions())[0];
 
             _toolStripContainer = new PoderosaToolStripContainer(this, _argument.ToolBarInfo);
+#if LIBRARY
+            _toolStripContainer.TopToolStripPanelVisible = false;
+#endif
             this.Controls.Add(_toolStripContainer);
 
             //ステータスバーその他の初期化
             //コントロールを追加する順番は重要！
             _viewManager = f.Create(this);
             Control main = _viewManager.RootControl;
+#if LIBRARY
+            _viewManager.RootControl.Visible = false;
+#endif
             if (main != null) { //テストケースではウィンドウの中身がないこともある
                 main.Dock = DockStyle.Fill;
                 _toolStripContainer.ContentPanel.Controls.Add(main);
@@ -84,7 +94,11 @@ namespace Poderosa.Forms {
 
             _statusBar = new PoderosaStatusBar();
 
+#if LIBRARY
+            _statusBar.Visible = false;
+#else
             _toolStripContainer.ContentPanel.Controls.Add(_tabBarTable);
+#endif
             this.Controls.Add(_statusBar); //こうでなく、_toolStripContainer.BottomToolStripPanelに_statusBarを追加してもよさそうだが、そうするとツールバー項目がステータスバーの上下に挿入可能になってしまう
 
             _tabBarTable.Create(rowcount);
@@ -98,7 +112,7 @@ namespace Poderosa.Forms {
             }
         }
 
-        #region IPoderosaMainWindow & IPoderosaForm
+#region IPoderosaMainWindow & IPoderosaForm
         public IViewManager ViewManager {
             get {
                 return _viewManager;
@@ -129,7 +143,7 @@ namespace Poderosa.Forms {
             }
         }
 
-        #endregion
+#endregion
 
 
         protected override void OnLoad(EventArgs e) {
@@ -170,6 +184,9 @@ namespace Poderosa.Forms {
             _mainMenu = new MenuStrip();
             menu.FullBuild(_mainMenu, this);
             this.MainMenuStrip = _mainMenu;
+#if LIBRARY
+            this.MainMenuStrip.Visible = false;
+#endif
             this.Controls.Add(_mainMenu);
 
             if (with_toolbar && _toolStripContainer != null)
@@ -185,6 +202,7 @@ namespace Poderosa.Forms {
         }
 
         protected override void OnDragEnter(DragEventArgs args) {
+#if !LIBRARY
             base.OnDragEnter(args);
             try {
                 WindowManagerPlugin.Instance.BypassDragEnter(this, args);
@@ -192,8 +210,10 @@ namespace Poderosa.Forms {
             catch (Exception ex) {
                 RuntimeUtil.ReportException(ex);
             }
+#endif
         }
         protected override void OnDragDrop(DragEventArgs args) {
+#if !LIBRARY
             base.OnDragDrop(args);
             try {
                 WindowManagerPlugin.Instance.BypassDragDrop(this, args);
@@ -201,6 +221,7 @@ namespace Poderosa.Forms {
             catch (Exception ex) {
                 RuntimeUtil.ReportException(ex);
             }
+#endif
         }
     }
 
@@ -217,7 +238,7 @@ namespace Poderosa.Forms {
             return KeysToDocuments(_tabBarTable.GetAllDocuments());
         }
 
-        #region IDocumentTabFeature
+#region IDocumentTabFeature
         public IPoderosaDocument ActiveDocument {
             get {
                 return KeyToDocument(_tabBarTable.ActiveTabKey);
@@ -294,9 +315,9 @@ namespace Poderosa.Forms {
             return WindowManagerPlugin.Instance.PoderosaWorld.AdapterManager.GetAdapter(this, adapter);
         }
 
-        #endregion
+#endregion
 
-        #region TabBarTable.IUIHandler
+#region TabBarTable.IUIHandler
         public void ActivateTab(TabKey key) {
             SessionManagerPlugin.Instance.ActivateDocument(KeyToDocument(key), ActivateReason.TabClick);
         }
@@ -354,7 +375,7 @@ namespace Poderosa.Forms {
                 RuntimeUtil.ReportException(ex);
             }
         }
-        #endregion
+#endregion
 
 
         private static IPoderosaDocument KeyToDocument(TabKey key) {

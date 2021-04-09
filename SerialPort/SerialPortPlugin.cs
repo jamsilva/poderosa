@@ -32,6 +32,11 @@ using Poderosa.Preferences;
 using Poderosa.Sessions;
 using Poderosa.Serializing;
 using Poderosa.MacroEngine;
+#if LIBRARY
+using Poderosa.Properties;
+#else
+using Poderosa.SerialPort.Properties;
+#endif
 
 [assembly: PluginDeclaration(typeof(Poderosa.SerialPort.SerialPortPlugin))]
 
@@ -134,7 +139,7 @@ namespace Poderosa.SerialPort {
         }
 
         public Image LoadIcon() {
-            return Poderosa.SerialPort.Properties.Resources.Icon16x16;
+            return Properties.Resources.Serial16x16;
         }
 
         //コマンド、メニュー、ツールバー

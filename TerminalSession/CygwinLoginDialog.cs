@@ -27,6 +27,11 @@ using Poderosa.ConnectionParam;
 using Poderosa.Protocols;
 using Poderosa.Forms;
 using Poderosa.View;
+#if LIBRARY
+using Poderosa.Properties;
+#else
+using Poderosa.TerminalSession.Properties;
+#endif
 
 namespace Poderosa.Sessions {
 
@@ -469,7 +474,7 @@ namespace Poderosa.Sessions {
             if (logsettings != null)
                 settings.LogSettings.Reset(logsettings);
             settings.Caption = _param.ShellBody;
-            settings.Icon = Poderosa.TerminalSession.Properties.Resources.Cygwin16x16;
+            settings.Icon = Properties.Resources.Cygwin16x16;
             settings.Encoding = ((EnumListItem<EncodingType>)_encodingBox.SelectedItem).Value;
             settings.TerminalType = ((EnumListItem<TerminalType>)_terminalTypeBox.SelectedItem).Value;
             settings.EndUpdate();

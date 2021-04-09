@@ -91,7 +91,9 @@ namespace Poderosa.Usability {
         private bool AskUserReliability(ISSHHostKeyInformationProvider info, string keystr, string message_text_id) {
             //比較結果に基づく処理
             IPoderosaForm form = UsabilityPlugin.Instance.WindowManager.ActiveWindow;
+#if !LIBRARY
             Debug.Assert(form.AsForm().InvokeRequired); //別スレッドで実行しているはず
+#endif
 
             //fingerprint
             StringBuilder bld = new StringBuilder();
@@ -104,15 +106,17 @@ namespace Poderosa.Usability {
 
             string message = String.Format("ssh hostkey fingerprint {0}\n\n{1}", bld.ToString(), UsabilityPlugin.Strings.GetString(message_text_id));
 
-            if (form.AskUserYesNo(message) == DialogResult.Yes) {
-                Update(info, keystr, true);
-                return true;
-            }
-            else
+#if !LIBRARY
+            if (form.AskUserYesNo(message) != DialogResult.Yes) {
                 return false;
+            }
+#endif
+
+            Update(info, keystr, true);
+            return true;
         }
 
-        #endregion
+#endregion
 
         private void Load() {
             Clear();
@@ -188,7 +192,7 @@ namespace Poderosa.Usability {
         }
 
 
-        #region IPreferenceSupplier
+#region IPreferenceSupplier
         public string PreferenceID {
             get {
                 return "org.poderosa.usability.ssh-knownhosts";
@@ -205,7 +209,7 @@ namespace Poderosa.Usability {
 
         public void ValidateFolder(IPreferenceFolder folder, IPreferenceValidationResult output) {
         }
-        #endregion
+#endregion
 
         private string GetKnownHostsFileName() {
             IPoderosaApplication app = (IPoderosaApplication)UsabilityPlugin.Instance.PoderosaWorld.GetAdapter(typeof(IPoderosaApplication));

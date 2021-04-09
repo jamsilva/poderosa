@@ -170,41 +170,40 @@ namespace Granados.SSH2 {
             if (magic != MAGIC_VAL)
                 throw new SSHException("key file is broken");
             int privateKeyLen = re.ReadInt32();
-            string type = Encoding.ASCII.GetString(re.ReadString());
+            string type = re.ReadString();
 
-            string ciphername = Encoding.ASCII.GetString(re.ReadString());
+            string ciphername = re.ReadString();
             int bufLen = re.ReadInt32();
             if (ciphername != "none") {
                 CipherAlgorithm algo = CipherFactory.SSH2NameToAlgorithm(ciphername);
                 byte[] key = PassphraseToKey(passphrase, CipherFactory.GetKeySize(algo));
                 Cipher c = CipherFactory.CreateCipher(SSHProtocol.SSH2, algo, key);
-                byte[] tmp = new Byte[re.Image.Length - re.Offset];
-                c.Decrypt(re.Image, re.Offset, re.Image.Length - re.Offset, tmp, 0);
+                byte[] tmp = re.Read(re.RemainingDataLength);
                 re = new SSH2DataReader(tmp);
             }
 
             int parmLen = re.ReadInt32();
-            if (parmLen < 0 || parmLen > re.Rest)
+            if (parmLen < 0 || parmLen > re.RemainingDataLength)
                 throw new SSHException(Strings.GetString("WrongPassphrase"));
 
             if (type.IndexOf("if-modn") != -1) {
                 //mindterm mistaken this order of BigIntegers
-                BigInteger e = re.ReadBigIntWithBits();
-                BigInteger d = re.ReadBigIntWithBits();
-                BigInteger n = re.ReadBigIntWithBits();
-                BigInteger u = re.ReadBigIntWithBits();
-                BigInteger p = re.ReadBigIntWithBits();
-                BigInteger q = re.ReadBigIntWithBits();
+                BigInteger e = re.ReadMPInt();
+                BigInteger d = re.ReadMPInt();
+                BigInteger n = re.ReadMPInt();
+                BigInteger u = re.ReadMPInt();
+                BigInteger p = re.ReadMPInt();
+                BigInteger q = re.ReadMPInt();
                 return new SSH2UserAuthKey(new RSAKeyPair(e, d, n, u, p, q), comment);
             }
             else if (type.IndexOf("dl-modp") != -1) {
                 if (re.ReadInt32() != 0)
                     throw new SSHException("DSS Private Key File is broken");
-                BigInteger p = re.ReadBigIntWithBits();
-                BigInteger g = re.ReadBigIntWithBits();
-                BigInteger q = re.ReadBigIntWithBits();
-                BigInteger y = re.ReadBigIntWithBits();
-                BigInteger x = re.ReadBigIntWithBits();
+                BigInteger p = re.ReadMPInt();
+                BigInteger g = re.ReadMPInt();
+                BigInteger q = re.ReadMPInt();
+                BigInteger y = re.ReadMPInt();
+                BigInteger x = re.ReadMPInt();
                 return new SSH2UserAuthKey(new DSAKeyPair(p, g, q, y, x), comment);
             }
             else

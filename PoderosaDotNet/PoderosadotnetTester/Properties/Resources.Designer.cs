@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Poderosa.Pipe.Properties {
+namespace WindowsFormsApplication1.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Poderosa.Pipe.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Poderosa.Pipe.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WindowsFormsApplication1.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,16 +57,6 @@ namespace Poderosa.Pipe.Properties {
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Pipe16x16 {
-            get {
-                object obj = ResourceManager.GetObject("Pipe16x16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

@@ -175,7 +175,7 @@ namespace Granados.Mono.Math {
 			this.length = DEFAULT_LEN;
 		}
 
-#if !INSIDE_CORLIB
+#if !LIBRARY && !INSIDE_CORLIB
 		[CLSCompliant (false)]
 #endif          
 		public BigInteger (Sign sign, uint len) 
@@ -190,7 +190,7 @@ namespace Granados.Mono.Math {
 			this.length = bi.length;
 		}
 
-#if !INSIDE_CORLIB
+#if !LIBRARY && !INSIDE_CORLIB
 		[CLSCompliant (false)]
 #endif       
 		public BigInteger (BigInteger bi, uint len)
@@ -238,7 +238,7 @@ namespace Granados.Mono.Math {
 			this.Normalize ();
 		}
 
-#if !INSIDE_CORLIB
+#if !LIBRARY && !INSIDE_CORLIB
 		[CLSCompliant (false)]
 #endif 
 		public BigInteger (uint [] inData)
@@ -255,7 +255,7 @@ namespace Granados.Mono.Math {
 			this.Normalize ();
 		}
 
-#if !INSIDE_CORLIB
+#if !LIBRARY && !INSIDE_CORLIB
 		[CLSCompliant (false)]
 #endif 
 		public BigInteger (uint ui)
@@ -263,7 +263,7 @@ namespace Granados.Mono.Math {
 			data = new uint [] {ui};
 		}
 
-#if !INSIDE_CORLIB
+#if !LIBRARY && !INSIDE_CORLIB
 		[CLSCompliant (false)]
 #endif 
 		public BigInteger (ulong ul)
@@ -274,7 +274,7 @@ namespace Granados.Mono.Math {
 			this.Normalize ();
 		}
 
-#if !INSIDE_CORLIB
+#if !LIBRARY && !INSIDE_CORLIB
 		[CLSCompliant (false)]
 #endif 
 		public static implicit operator BigInteger (uint value)
@@ -288,7 +288,7 @@ namespace Granados.Mono.Math {
 			return (new BigInteger ((uint)value));
 		}
 
-#if !INSIDE_CORLIB
+#if !LIBRARY && !INSIDE_CORLIB
 		[CLSCompliant (false)]
 #endif 
 		public static implicit operator BigInteger (ulong value)
@@ -386,7 +386,7 @@ namespace Granados.Mono.Math {
 				return -(int)Kernel.DwordMod (bi, (uint)-i);
 		}
 
-#if !INSIDE_CORLIB
+#if !LIBRARY && !INSIDE_CORLIB
 		[CLSCompliant (false)]
 #endif 
 		public static uint operator % (BigInteger bi, uint ui)
@@ -470,7 +470,7 @@ namespace Granados.Mono.Math {
 			return (bi % i);
 		}
 
-#if !INSIDE_CORLIB
+#if !LIBRARY && !INSIDE_CORLIB
 		[CLSCompliant (false)]
 #endif 
 		public static uint Modulus (BigInteger bi, uint ui) 
@@ -628,7 +628,7 @@ namespace Granados.Mono.Math {
 		/// </summary>
 		/// <param name="bitNum">The bit to test. The least significant bit is 0.</param>
 		/// <returns>True if bitNum is set to 1, else false.</returns>
-#if !INSIDE_CORLIB
+#if !LIBRARY && !INSIDE_CORLIB
 		[CLSCompliant (false)]
 #endif 
 		public bool TestBit (uint bitNum)
@@ -651,7 +651,7 @@ namespace Granados.Mono.Math {
 			return ((this.data [bytePos] | mask) == this.data [bytePos]);
 		}
 
-#if !INSIDE_CORLIB
+#if !LIBRARY && !INSIDE_CORLIB
 		[CLSCompliant (false)]
 #endif 
 		public void SetBit (uint bitNum)
@@ -659,7 +659,7 @@ namespace Granados.Mono.Math {
 			SetBit (bitNum, true);
 		}
 
-#if !INSIDE_CORLIB
+#if !LIBRARY && !INSIDE_CORLIB
 		[CLSCompliant (false)]
 #endif 
 		public void ClearBit (uint bitNum)
@@ -667,7 +667,7 @@ namespace Granados.Mono.Math {
 			SetBit (bitNum, false);
 		}
 
-#if !INSIDE_CORLIB
+#if !LIBRARY && !INSIDE_CORLIB
 		[CLSCompliant (false)]
 #endif 
 		public void SetBit (uint bitNum, bool value)
@@ -721,8 +721,8 @@ namespace Granados.Mono.Math {
 		#endregion
 
 		#region Compare
-
-#if !INSIDE_CORLIB
+ 
+#if !LIBRARY && !INSIDE_CORLIB
 		[CLSCompliant (false)]
 #endif 
 		public static bool operator == (BigInteger bi1, uint ui)
@@ -731,7 +731,7 @@ namespace Granados.Mono.Math {
 			return bi1.length == 1 && bi1.data [0] == ui;
 		}
 
-#if !INSIDE_CORLIB
+#if !LIBRARY && !INSIDE_CORLIB
 		[CLSCompliant (false)]
 #endif 
 		public static bool operator != (BigInteger bi1, uint ui)
@@ -789,7 +789,7 @@ namespace Granados.Mono.Math {
 
 		#region Formatting
 
-#if !INSIDE_CORLIB
+#if !LIBRARY && !INSIDE_CORLIB
 		[CLSCompliant (false)]
 #endif 
 		public string ToString (uint radix)
@@ -797,7 +797,7 @@ namespace Granados.Mono.Math {
 			return ToString (radix, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 		}
 
-#if !INSIDE_CORLIB
+#if !LIBRARY && !INSIDE_CORLIB
 		[CLSCompliant (false)]
 #endif 
 		public string ToString (uint radix, string characterSet)
@@ -1191,7 +1191,7 @@ namespace Granados.Mono.Math {
 
 			// TODO: Make tests for this, not really needed b/c prime stuff
 			// checks it, but still would be nice
-#if !INSIDE_CORLIB && !GRANADOS
+#if !LIBRARY && !INSIDE_CORLIB && !GRANADOS
 			[CLSCompliant (false)]
 #endif
 #if true

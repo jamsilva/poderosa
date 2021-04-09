@@ -47,7 +47,9 @@ namespace Poderosa.Forms {
         private List<MainWindow> _windows;
         private List<PopupViewContainer> _popupWindows;
         private MainWindow _activeWindow;
+#if !LIBRARY
         private PoderosaAppContext _appContext;
+#endif
         private MainWindowMenu _menu;
         private WindowPreference _preferences;
         private ViewFactoryManager _viewFactoryManager;
@@ -98,7 +100,9 @@ namespace Poderosa.Forms {
             _popupWindows = new List<PopupViewContainer>();
 
             _menu = new MainWindowMenu();
+#if !LIBRARY
             _appContext = new PoderosaAppContext();
+#endif
             _selectionService = new SelectionService(this);
             _viewFactoryManager = new ViewFactoryManager();
 
@@ -111,6 +115,9 @@ namespace Poderosa.Forms {
         public void RunExtension() {
             try {
                 _poderosaWorld.Culture.SetCulture(CoreServicePreferenceAdapter.LangToCulture(_preferences.OriginalPreference.Language));
+#if LIBRARY
+                IPoderosaApplication app = (IPoderosaApplication)_poderosaWorld.GetAdapter(typeof(IPoderosaApplication));
+#else
                 MainWindowArgument[] args = MainWindowArgument.Parse(_preferences);
                 foreach (MainWindowArgument arg in args)
                     _windows.Add(CreateMainWindow(arg));
@@ -120,11 +127,27 @@ namespace Poderosa.Forms {
                     IPoderosaApplication app = (IPoderosaApplication)_poderosaWorld.GetAdapter(typeof(IPoderosaApplication));
                     app.Shutdown();
                 }
+#endif
             }
             catch (Exception ex) {
                 RuntimeUtil.ReportException(ex);
             }
         }
+
+#if LIBRARY
+        public MainWindow CreateLibraryMainWindow()
+        {
+            MainWindowArgument arg = MainWindowArgument.Parse(_preferences)[0];
+            MainWindow w = new MainWindow(arg, _menu);
+            w.Text = "Poderosa";
+            w.FormClosed += new FormClosedEventHandler(WindowClosedHandler);
+            w.Activated += delegate(object sender, EventArgs args) {
+                _activeWindow = (MainWindow)sender; //最後にアクティブになったものを指定する
+            };
+            _windows.Add(w);
+            return w;
+        }
+#endif
 
         private MainWindow CreateMainWindow(MainWindowArgument arg) {
             MainWindow w = new MainWindow(arg, _menu);
@@ -172,7 +195,9 @@ namespace Poderosa.Forms {
             NotifyMainWindowUnloaded(w);
             if (_windows.Count == 0 && GetStartMode() == StartMode.StandAlone) {
                 CloseAllPopupWindows();
+#if !LIBRARY
                 _appContext.ExitThread();
+#endif
             }
         }
 
@@ -193,7 +218,7 @@ namespace Poderosa.Forms {
         }
 
 
-        #region IWindowManager
+#region IWindowManager
         public IPoderosaMainWindow[] MainWindows {
             get {
                 return _windows.ToArray();
@@ -244,24 +269,24 @@ namespace Poderosa.Forms {
         }
 
 
-        #endregion
+#endregion
 
 
-        #region IKeyBindChangeListener
+#region IKeyBindChangeListener
         public void OnKeyBindChanged(IKeyBinds newvalues) {
             foreach (MainWindow w in _windows)
                 w.ReloadMenu(_menu, false);
         }
-        #endregion
+#endregion
 
 
-        #region ICultureChangeListener
+#region ICultureChangeListener
         public void OnCultureChanged(CultureInfo newculture) {
             //メニューのリロード含め全部やる
             CoreUtil.Strings.OnCultureChanged(newculture); //先にリソース更新
             ReloadMenu();
         }
-        #endregion
+#endregion
 
         public ITimerSite CreateTimer(int interval, TimerDelegate callback) {
             return new TimerSite(interval, callback);
@@ -281,7 +306,7 @@ namespace Poderosa.Forms {
                 return _viewFactoryManager;
             }
         }
-        #region IWinFormsService
+#region IWinFormsService
         public object GetDraggingObject(IDataObject data, Type required_type) {
             //TODO IDataObject使わなくていいの？
             if (_draggingObject == null)
@@ -325,7 +350,7 @@ namespace Poderosa.Forms {
                 }
             }
         }
-        #endregion
+#endregion
 
         public void SetDraggingTabBar(TabKey value) {
             _draggingObject = value;

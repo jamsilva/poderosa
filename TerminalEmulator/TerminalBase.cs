@@ -28,6 +28,11 @@ using Poderosa.ConnectionParam;
 using Poderosa.Protocols;
 using Poderosa.Forms;
 using Poderosa.View;
+#if LIBRARY
+using Poderosa.Properties;
+#else
+using Poderosa.TerminalEmulator.Properties;
+#endif
 
 namespace Poderosa.Terminal {
 
@@ -548,7 +553,7 @@ namespace Poderosa.Terminal {
             if (window != null) {
                 Debug.Assert(window.AsForm().InvokeRequired);
                 Monitor.Exit(GetDocument());
-                window.StatusBar.SetStatusIcon(Poderosa.TerminalEmulator.Properties.Resources.Bell16x16);
+                window.StatusBar.SetStatusIcon(Properties.Resources.Bell16x16);
                 Monitor.Enter(GetDocument());
             }
             if (GEnv.Options.BeepOnBellChar)

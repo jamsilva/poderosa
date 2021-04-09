@@ -25,6 +25,11 @@ using Poderosa.ConnectionParam;
 using Poderosa.Protocols;
 using Poderosa.Forms;
 using Poderosa.MacroEngine;
+#if LIBRARY
+using Poderosa.Properties;
+#else
+using Poderosa.TerminalSession.Properties;
+#endif
 
 [assembly: PluginDeclaration(typeof(Poderosa.Sessions.TelnetSSHPlugin))]
 
@@ -165,7 +170,7 @@ namespace Poderosa.Sessions {
             }
             public IToolBarElement[] ToolBarElements {
                 get {
-                    return new IToolBarElement[] { new ToolBarCommandButtonImpl(_instance._loginDialogCommand, Poderosa.TerminalSession.Properties.Resources.NewConnection16x16) };
+                    return new IToolBarElement[] { new ToolBarCommandButtonImpl(_instance._loginDialogCommand, Properties.Resources.NewConnection16x16) };
                 }
             }
 

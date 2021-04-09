@@ -23,6 +23,11 @@ using Poderosa.Forms;
 using Poderosa.Protocols;
 using Poderosa.Commands;
 using Poderosa.Terminal;
+#if LIBRARY
+using Poderosa.Properties;
+#else
+using Poderosa.TerminalSession.Properties;
+#endif
 
 namespace Poderosa.Sessions {
 
@@ -229,10 +234,10 @@ namespace Poderosa.Sessions {
             if (terminal_settings.Icon == null) {
                 switch (icon) {
                     case StartCommandIcon.NewConnection:
-                        terminal_settings.Icon = Poderosa.TerminalSession.Properties.Resources.NewConnection16x16;
+                        terminal_settings.Icon = Properties.Resources.NewConnection16x16;
                         break;
                     case StartCommandIcon.Cygwin:
-                        terminal_settings.Icon = Poderosa.TerminalSession.Properties.Resources.Cygwin16x16;
+                        terminal_settings.Icon = Properties.Resources.Cygwin16x16;
                         break;
                 }
             }

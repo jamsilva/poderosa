@@ -25,6 +25,11 @@ using Poderosa.ConnectionParam;
 using Poderosa.Protocols;
 using Poderosa.Forms;
 using Poderosa.MacroEngine;
+#if LIBRARY
+using Poderosa.Properties;
+#else
+using Poderosa.TerminalSession.Properties;
+#endif
 
 [assembly: PluginDeclaration(typeof(Poderosa.Sessions.CygwinPlugin))]
 
@@ -160,7 +165,7 @@ namespace Poderosa.Sessions {
 
             public IToolBarElement[] ToolBarElements {
                 get {
-                    return new IToolBarElement[] { new ToolBarCommandButtonImpl(_instance._loginDialogCommand, Poderosa.TerminalSession.Properties.Resources.Cygwin16x16) };
+                    return new IToolBarElement[] { new ToolBarCommandButtonImpl(_instance._loginDialogCommand, Properties.Resources.Cygwin16x16) };
                 }
             }
 
@@ -246,7 +251,7 @@ namespace Poderosa.Sessions {
         }
 
         public ITerminalSettings CreateDefaultCygwinTerminalSettings() {
-            ITerminalSettings settings = TerminalSessionsPlugin.Instance.TerminalEmulatorService.CreateDefaultTerminalSettings("", Poderosa.TerminalSession.Properties.Resources.Cygwin16x16);
+            ITerminalSettings settings = TerminalSessionsPlugin.Instance.TerminalEmulatorService.CreateDefaultTerminalSettings("", Poderosa.Properties.Resources.Cygwin16x16);
             settings.BeginUpdate();
             settings.Encoding = EncodingType.UTF8;
             settings.EndUpdate();

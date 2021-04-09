@@ -26,6 +26,11 @@ using Poderosa.Protocols;
 using Poderosa.Commands;
 using Poderosa.Terminal;
 using Poderosa.View;
+#if LIBRARY
+using Poderosa.Properties;
+#else
+using Poderosa.TerminalSession.Properties;
+#endif
 
 [assembly: PluginDeclaration(typeof(Poderosa.Sessions.ShortcutFilePlugin))]
 
@@ -108,8 +113,8 @@ namespace Poderosa.Sessions {
             public IToolBarElement[] ToolBarElements {
                 get {
                     return new IToolBarElement[] {
-                        new ToolBarCommandButtonImpl(_openCommand, Poderosa.TerminalSession.Properties.Resources.Open16x16),
-                        new ToolBarCommandButtonImpl(_saveCommand, Poderosa.TerminalSession.Properties.Resources.Save16x16)
+                        new ToolBarCommandButtonImpl(_openCommand, Properties.Resources.Open16x16),
+                        new ToolBarCommandButtonImpl(_saveCommand, Properties.Resources.Save16x16)
                     };
                 }
             }
