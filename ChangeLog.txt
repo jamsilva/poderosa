@@ -1,4 +1,4 @@
-﻿4.4.5
+4.4.5
 -----
     * Fixed: opening a new SSH connection from MRU list works.
       The previously succeeded passphrase is used silently.
