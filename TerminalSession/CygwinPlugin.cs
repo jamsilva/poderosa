@@ -74,14 +74,17 @@ namespace Poderosa.Sessions {
             _loginDialogCommand = new CygwinLoginDialogCommand();
             _commandManager.Register(_loginDialogCommand);
 
+#if !LIBRARY
             IExtensionPoint ep = poderosa.PluginManager.FindExtensionPoint("org.poderosa.menu.file");
             _cygwinMenuGroup = new CygwinMenuGroup();
             ep.RegisterExtension(_cygwinMenuGroup);
+#endif
 
             _cygwinToolBarComponent = new CygwinToolBarComponent();
             poderosa.PluginManager.FindExtensionPoint("org.poderosa.core.window.toolbar").RegisterExtension(_cygwinToolBarComponent);
         }
 
+#if !LIBRARY
         private class CygwinMenuGroup : IPoderosaMenuGroup, IPositionDesignation {
             public IPoderosaMenu[] ChildMenus {
                 get {
@@ -142,6 +145,7 @@ namespace Poderosa.Sessions {
                 return _instance.PoderosaWorld.AdapterManager.GetAdapter(this, adapter);
             }
         }
+#endif
 
         private class CygwinToolBarComponent : IToolBarComponent, IPositionDesignation {
 
@@ -177,6 +181,7 @@ namespace Poderosa.Sessions {
 
         private class CygwinLoginDialogCommand : IGeneralCommand {
             public CommandResult InternalExecute(ICommandTarget target, params IAdaptable[] args) {
+#if !LIBRARY
                 IPoderosaMainWindow window = (IPoderosaMainWindow)target.GetAdapter(typeof(IPoderosaMainWindow));
                 if (window == null)
                     return CommandResult.Ignored;
@@ -202,7 +207,7 @@ namespace Poderosa.Sessions {
                         }
                     }
                 }
-
+#endif
                 return CommandResult.Cancelled;
             }
 

@@ -48,18 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Core\AboutBox.cs">
-      <SubType>Form</SubType>
-      <Link>Core\AboutBox.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\AboutBoxEx.cs">
-      <Link>Core\AboutBoxEx.cs</Link>
-    </Compile>
     <Compile Include="..\Core\BasicCommands.cs">
       <Link>Core\BasicCommands.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\BasicMenus.cs">
-      <Link>Core\BasicMenus.cs</Link>
     </Compile>
     <Compile Include="..\Core\Caret.cs">
       <Link>Core\Caret.cs</Link>
@@ -82,10 +72,6 @@
     </Compile>
     <Compile Include="..\Core\CoreServicesEx.cs">
       <Link>Core\CoreServicesEx.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\Credits.cs">
-      <SubType>Form</SubType>
-      <Link>Core\Credits.cs</Link>
     </Compile>
     <Compile Include="..\Core\DocActivationCommands.cs">
       <Link>Core\DocActivationCommands.cs</Link>
@@ -116,9 +102,6 @@
     <Compile Include="..\Core\MainWindow.cs">
       <SubType>Form</SubType>
       <Link>Core\MainWindow.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\MainWindowMenu.cs">
-      <Link>Core\MainWindowMenu.cs</Link>
     </Compile>
     <Compile Include="..\Core\MenuUtil.cs">
       <Link>Core\MenuUtil.cs</Link>
@@ -306,36 +289,6 @@
     <Compile Include="..\Granados\Poderosa\KeyFormat\SSHComPrivateKeyLoader.cs">
       <Link>Granados\Poderosa\KeyFormat\SSHComPrivateKeyLoader.cs</Link>
     </Compile>
-    <Compile Include="..\Granados\Poderosa\SCP\SCPChannelStream.cs">
-      <Link>Granados\Poderosa\SCP\SCPChannelStream.cs</Link>
-    </Compile>
-    <Compile Include="..\Granados\Poderosa\SCP\SCPClient.cs">
-      <Link>Granados\Poderosa\SCP\SCPClient.cs</Link>
-    </Compile>
-    <Compile Include="..\Granados\Poderosa\SCP\SCPClientException.cs">
-      <Link>Granados\Poderosa\SCP\SCPClientException.cs</Link>
-    </Compile>
-    <Compile Include="..\Granados\Poderosa\SFTP\SFTPClient.cs">
-      <Link>Granados\Poderosa\SFTP\SFTPClient.cs</Link>
-    </Compile>
-    <Compile Include="..\Granados\Poderosa\SFTP\SFTPClientException.cs">
-      <Link>Granados\Poderosa\SFTP\SFTPClientException.cs</Link>
-    </Compile>
-    <Compile Include="..\Granados\Poderosa\SFTP\SFTPFileAttributes.cs">
-      <Link>Granados\Poderosa\SFTP\SFTPFileAttributes.cs</Link>
-    </Compile>
-    <Compile Include="..\Granados\Poderosa\SFTP\SFTPFileInfo.cs">
-      <Link>Granados\Poderosa\SFTP\SFTPFileInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\Granados\Poderosa\SFTP\SFTPPacket.cs">
-      <Link>Granados\Poderosa\SFTP\SFTPPacket.cs</Link>
-    </Compile>
-    <Compile Include="..\Granados\Poderosa\SFTP\SFTPPacketType.cs">
-      <Link>Granados\Poderosa\SFTP\SFTPPacketType.cs</Link>
-    </Compile>
-    <Compile Include="..\Granados\Poderosa\SFTP\SFTPStatusCodes.cs">
-      <Link>Granados\Poderosa\SFTP\SFTPStatusCodes.cs</Link>
-    </Compile>
     <Compile Include="..\Granados\Poderosa\Util\FilePathValidator.cs">
       <Link>Granados\Poderosa\Util\FilePathValidator.cs</Link>
     </Compile>
@@ -422,63 +375,6 @@
     </Compile>
     <Compile Include="..\Granados\X11Utils.cs">
       <Link>Granados\X11Utils.cs</Link>
-    </Compile>
-    <Compile Include="..\Macro\MacroEnv.cs">
-      <Link>Macro\MacroEnv.cs</Link>
-    </Compile>
-    <Compile Include="..\Macro\MacroExec.cs">
-      <Link>Macro\MacroExec.cs</Link>
-    </Compile>
-    <Compile Include="..\Macro\MacroInterface.cs">
-      <Link>Macro\MacroInterface.cs</Link>
-    </Compile>
-    <Compile Include="..\Macro\MacroList.cs">
-      <SubType>Form</SubType>
-      <Link>Macro\MacroList.cs</Link>
-    </Compile>
-    <Compile Include="..\Macro\MacroModule.cs">
-      <Link>Macro\MacroModule.cs</Link>
-    </Compile>
-    <Compile Include="..\Macro\MacroPlugin.cs">
-      <Link>Macro\MacroPlugin.cs</Link>
-    </Compile>
-    <Compile Include="..\Macro\MacroTrace.cs">
-      <SubType>Form</SubType>
-      <Link>Macro\MacroTrace.cs</Link>
-    </Compile>
-    <Compile Include="..\Macro\ModuleProperty.cs">
-      <SubType>Form</SubType>
-      <Link>Macro\ModuleProperty.cs</Link>
-    </Compile>
-    <Compile Include="..\Macro\SessionBinder.cs">
-      <Link>Macro\SessionBinder.cs</Link>
-    </Compile>
-    <Compile Include="..\Macro\TerminalParam.cs">
-      <Link>Macro\TerminalParam.cs</Link>
-    </Compile>
-    <Compile Include="..\Pipe\EditVariableDialog.cs">
-      <SubType>Form</SubType>
-      <Link>Pipe\EditVariableDialog.cs</Link>
-    </Compile>
-    <Compile Include="..\Pipe\EditVariableDialog.Designer.cs">
-      <DependentUpon>EditVariableDialog.cs</DependentUpon>
-      <Link>Pipe\EditVariableDialog.Designer.cs</Link>
-    </Compile>
-    <Compile Include="..\Pipe\EnvironmentVariablesDialog.cs">
-      <SubType>Form</SubType>
-      <Link>Pipe\EnvironmentVariablesDialog.cs</Link>
-    </Compile>
-    <Compile Include="..\Pipe\EnvironmentVariablesDialog.Designer.cs">
-      <DependentUpon>EnvironmentVariablesDialog.cs</DependentUpon>
-      <Link>Pipe\EnvironmentVariablesDialog.Designer.cs</Link>
-    </Compile>
-    <Compile Include="..\Pipe\OpenPipeDialog.cs">
-      <SubType>Form</SubType>
-      <Link>Pipe\OpenPipeDialog.cs</Link>
-    </Compile>
-    <Compile Include="..\Pipe\OpenPipeDialog.Designer.cs">
-      <DependentUpon>OpenPipeDialog.cs</DependentUpon>
-      <Link>Pipe\OpenPipeDialog.Designer.cs</Link>
     </Compile>
     <Compile Include="..\Pipe\PipeConnection.cs">
       <Link>Pipe\PipeConnection.cs</Link>
@@ -573,9 +469,6 @@
     <Compile Include="..\Plugin\Win32.cs">
       <Link>Plugin\Win32.cs</Link>
     </Compile>
-    <Compile Include="..\PortForwardingCommand\PortForwardingCommandPlugin.cs">
-      <Link>PortForwardingCommand\PortForwardingCommandPlugin.cs</Link>
-    </Compile>
     <Compile Include="..\Protocols\CommunicationUtil.cs">
       <Link>Protocols\CommunicationUtil.cs</Link>
     </Compile>
@@ -642,10 +535,6 @@
     <Compile Include="..\SerialPort\SerialConnection.cs">
       <Link>SerialPort\SerialConnection.cs</Link>
     </Compile>
-    <Compile Include="..\SerialPort\SerialLoginDialog.cs">
-      <SubType>Form</SubType>
-      <Link>SerialPort\SerialLoginDialog.cs</Link>
-    </Compile>
     <Compile Include="..\SerialPort\SerialPluginEx.cs">
       <Link>SerialPort\SerialPluginEx.cs</Link>
     </Compile>
@@ -654,43 +543,6 @@
     </Compile>
     <Compile Include="..\SerialPort\SerialSettings.cs">
       <Link>SerialPort\SerialSettings.cs</Link>
-    </Compile>
-    <Compile Include="..\SFTP\MultiSelectTreeView.cs">
-      <SubType>Component</SubType>
-      <Link>SFTP\MultiSelectTreeView.cs</Link>
-    </Compile>
-    <Compile Include="..\SFTP\SCPForm.cs">
-      <SubType>Form</SubType>
-      <Link>SFTP\SCPForm.cs</Link>
-    </Compile>
-    <Compile Include="..\SFTP\SCPForm.Designer.cs">
-      <DependentUpon>SCPForm.cs</DependentUpon>
-      <Link>SFTP\SCPForm.Designer.cs</Link>
-    </Compile>
-    <Compile Include="..\SFTP\SFTPForm.cs">
-      <SubType>Form</SubType>
-      <Link>SFTP\SFTPForm.cs</Link>
-    </Compile>
-    <Compile Include="..\SFTP\SFTPForm.Designer.cs">
-      <DependentUpon>SFTPForm.cs</DependentUpon>
-      <Link>SFTP\SFTPForm.Designer.cs</Link>
-    </Compile>
-    <Compile Include="..\SFTP\SFTPPlugin.cs">
-      <Link>SFTP\SFTPPlugin.cs</Link>
-    </Compile>
-    <Compile Include="..\SFTP\SFTPToolbar.cs">
-      <Link>SFTP\SFTPToolbar.cs</Link>
-    </Compile>
-    <Compile Include="..\SFTP\UnixPermissions.cs">
-      <Link>SFTP\UnixPermissions.cs</Link>
-    </Compile>
-    <Compile Include="..\SFTP\YesNoAllDialog.cs">
-      <SubType>Form</SubType>
-      <Link>SFTP\YesNoAllDialog.cs</Link>
-    </Compile>
-    <Compile Include="..\SFTP\YesNoAllDialog.Designer.cs">
-      <DependentUpon>YesNoAllDialog.cs</DependentUpon>
-      <Link>SFTP\YesNoAllDialog.Designer.cs</Link>
     </Compile>
     <Compile Include="..\TerminalEmulator\CharDecoder.cs">
       <Link>TerminalEmulator\CharDecoder.cs</Link>
@@ -797,10 +649,6 @@
     <Compile Include="..\TerminalEmulator\VT100.cs">
       <Link>TerminalEmulator\VT100.cs</Link>
     </Compile>
-    <Compile Include="..\TerminalEmulator\WarningWithDisableOption.cs">
-      <SubType>Form</SubType>
-      <Link>TerminalEmulator\WarningWithDisableOption.cs</Link>
-    </Compile>
     <Compile Include="..\TerminalEmulator\XmlLogger.cs">
       <Link>TerminalEmulator\XmlLogger.cs</Link>
     </Compile>
@@ -813,43 +661,8 @@
     <Compile Include="..\TerminalSession\CopyPaste.cs">
       <Link>TerminalSession\CopyPaste.cs</Link>
     </Compile>
-    <Compile Include="..\TerminalSession\CygwinLoginDialog.cs">
-      <SubType>Form</SubType>
-      <Link>TerminalSession\CygwinLoginDialog.cs</Link>
-    </Compile>
     <Compile Include="..\TerminalSession\CygwinPlugin.cs">
       <Link>TerminalSession\CygwinPlugin.cs</Link>
-    </Compile>
-    <Compile Include="..\TerminalSession\IOpenSessionTabPage.cs">
-      <Link>TerminalSession\IOpenSessionTabPage.cs</Link>
-    </Compile>
-    <Compile Include="..\TerminalSession\LoginDialogBase.cs">
-      <SubType>Form</SubType>
-      <Link>TerminalSession\LoginDialogBase.cs</Link>
-    </Compile>
-    <Compile Include="..\TerminalSession\OpenSessionDialog.cs">
-      <SubType>Form</SubType>
-      <Link>TerminalSession\OpenSessionDialog.cs</Link>
-    </Compile>
-    <Compile Include="..\TerminalSession\OpenSessionDialog.Designer.cs">
-      <DependentUpon>OpenSessionDialog.cs</DependentUpon>
-      <Link>TerminalSession\OpenSessionDialog.Designer.cs</Link>
-    </Compile>
-    <Compile Include="..\TerminalSession\OpenSessionTabPageSSH.cs">
-      <SubType>UserControl</SubType>
-      <Link>TerminalSession\OpenSessionTabPageSSH.cs</Link>
-    </Compile>
-    <Compile Include="..\TerminalSession\OpenSessionTabPageSSH.Designer.cs">
-      <DependentUpon>OpenSessionTabPageSSH.cs</DependentUpon>
-      <Link>TerminalSession\OpenSessionTabPageSSH.Designer.cs</Link>
-    </Compile>
-    <Compile Include="..\TerminalSession\OpenSessionTabPageTelnet.cs">
-      <SubType>UserControl</SubType>
-      <Link>TerminalSession\OpenSessionTabPageTelnet.cs</Link>
-    </Compile>
-    <Compile Include="..\TerminalSession\OpenSessionTabPageTelnet.Designer.cs">
-      <DependentUpon>OpenSessionTabPageTelnet.cs</DependentUpon>
-      <Link>TerminalSession\OpenSessionTabPageTelnet.Designer.cs</Link>
     </Compile>
     <Compile Include="..\TerminalSession\PaneBridge.cs">
       <Link>TerminalSession\PaneBridge.cs</Link>
@@ -862,10 +675,6 @@
     </Compile>
     <Compile Include="..\TerminalSession\ShortcutFileCommands.cs">
       <Link>TerminalSession\ShortcutFileCommands.cs</Link>
-    </Compile>
-    <Compile Include="..\TerminalSession\SSHShortcutLoginDialog.cs">
-      <SubType>Form</SubType>
-      <Link>TerminalSession\SSHShortcutLoginDialog.cs</Link>
     </Compile>
     <Compile Include="..\TerminalSession\StartCommands.cs">
       <Link>TerminalSession\StartCommands.cs</Link>
@@ -941,92 +750,8 @@
     <Compile Include="..\UI\WinFormsUtil.cs">
       <Link>UI\WinFormsUtil.cs</Link>
     </Compile>
-    <Compile Include="..\Usability\AgentKeyListDialog.cs">
-      <SubType>Form</SubType>
-      <Link>Usability\AgentKeyListDialog.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\AgentKeyListDialog.Designer.cs">
-      <DependentUpon>AgentKeyListDialog.cs</DependentUpon>
-      <Link>Usability\AgentKeyListDialog.Designer.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\ChangeLog.cs">
-      <SubType>Form</SubType>
-      <Link>Usability\ChangeLog.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\ChangePassphrase.cs">
-      <SubType>Form</SubType>
-      <Link>Usability\ChangePassphrase.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\CommandOptionPanel.cs">
-      <SubType>UserControl</SubType>
-      <Link>Usability\CommandOptionPanel.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\CommentLog.cs">
-      <SubType>Form</SubType>
-      <Link>Usability\CommentLog.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\ConnectionOptionPanel.cs">
-      <SubType>UserControl</SubType>
-      <Link>Usability\ConnectionOptionPanel.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\DisplayOptionPanel.cs">
-      <SubType>UserControl</SubType>
-      <Link>Usability\DisplayOptionPanel.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\EditEscapeSequenceColor.cs">
-      <SubType>Form</SubType>
-      <Link>Usability\EditEscapeSequenceColor.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\EditRenderProfile.cs">
-      <SubType>Form</SubType>
-      <Link>Usability\EditRenderProfile.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\FontDialog.cs">
-      <SubType>Form</SubType>
-      <Link>Usability\FontDialog.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\GenericOptionPanel.cs">
-      <SubType>UserControl</SubType>
-      <Link>Usability\GenericOptionPanel.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\GuevaraAboutBox.cs">
-      <SubType>Form</SubType>
-      <Link>Usability\GuevaraAboutBox.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\InputPassphraseDialog.cs">
-      <SubType>Form</SubType>
-      <Link>Usability\InputPassphraseDialog.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\InputPassphraseDialog.Designer.cs">
-      <DependentUpon>InputPassphraseDialog.cs</DependentUpon>
-      <Link>Usability\InputPassphraseDialog.Designer.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\KeyAgent.cs">
-      <Link>Usability\KeyAgent.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\KeyGenWizard.cs">
-      <SubType>Form</SubType>
-      <Link>Usability\KeyGenWizard.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\MRUPlugin.cs">
-      <Link>Usability\MRUPlugin.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\MRUPluginEx.cs">
-      <Link>Usability\MRUPluginEx.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\OptionDialog.cs">
-      <SubType>Form</SubType>
-      <Link>Usability\OptionDialog.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\OptionDialogPlugin.cs">
-      <Link>Usability\OptionDialogPlugin.cs</Link>
-    </Compile>
     <Compile Include="..\Usability\OrderedCollection.cs">
       <Link>Usability\OrderedCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\PeripheralOptionPanel.cs">
-      <SubType>UserControl</SubType>
-      <Link>Usability\PeripheralOptionPanel.cs</Link>
     </Compile>
     <Compile Include="..\Usability\PoderosaLogViewerPlugin.cs">
       <Link>Usability\PoderosaLogViewerPlugin.cs</Link>
@@ -1035,67 +760,14 @@
       <SubType>Component</SubType>
       <Link>Usability\PoderosaLogViewerSession.cs</Link>
     </Compile>
-    <Compile Include="..\Usability\PreferenceEditor.cs">
-      <SubType>Form</SubType>
-      <Link>Usability\PreferenceEditor.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\PreferenceItemEditor.cs">
-      <SubType>Form</SubType>
-      <Link>Usability\PreferenceItemEditor.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\RenameTabBox.cs">
-      <SubType>Form</SubType>
-      <Link>Usability\RenameTabBox.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\ShellSchemeEditor.cs">
-      <SubType>Form</SubType>
-      <Link>Usability\ShellSchemeEditor.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\ShellSchemeEditor.Designer.cs">
-      <DependentUpon>ShellSchemeEditor.cs</DependentUpon>
-      <Link>Usability\ShellSchemeEditor.Designer.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\SSHKnownHosts.cs">
-      <Link>Usability\SSHKnownHosts.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\SSHOptionPanel.cs">
-      <SubType>UserControl</SubType>
-      <Link>Usability\SSHOptionPanel.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\SSHUtilPlugin.cs">
-      <Link>Usability\SSHUtilPlugin.cs</Link>
-    </Compile>
     <Compile Include="..\Usability\StartupActionPlugin.cs">
       <Link>Usability\StartupActionPlugin.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\TerminalOptionPanel.cs">
-      <SubType>UserControl</SubType>
-      <Link>Usability\TerminalOptionPanel.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\TerminalUICommands.cs">
-      <Link>Usability\TerminalUICommands.cs</Link>
     </Compile>
     <Compile Include="..\Usability\TerminalUIPlugin.cs">
       <Link>Usability\TerminalUIPlugin.cs</Link>
     </Compile>
     <Compile Include="..\Usability\UsabilityPlugin.cs">
       <Link>Usability\UsabilityPlugin.cs</Link>
-    </Compile>
-    <Compile Include="..\XZModem\Crc.cs">
-      <Link>XZModem\Crc.cs</Link>
-    </Compile>
-    <Compile Include="..\XZModem\xmodem.cs">
-      <Link>XZModem\xmodem.cs</Link>
-    </Compile>
-    <Compile Include="..\XZModem\XZModemDialog.cs">
-      <SubType>Form</SubType>
-      <Link>XZModem\XZModemDialog.cs</Link>
-    </Compile>
-    <Compile Include="..\XZModem\XZModemPlugin.cs">
-      <Link>XZModem\XZModemPlugin.cs</Link>
-    </Compile>
-    <Compile Include="..\XZModem\zmodem.cs">
-      <Link>XZModem\zmodem.cs</Link>
     </Compile>
     <Compile Include="Library\Internals.cs" />
     <Compile Include="Library\LibPoderosa.cs" />
@@ -1106,16 +778,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\Core\AboutBox.resx">
-      <DependentUpon>AboutBox.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>Core\AboutBox.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Core\Credits.resx">
-      <DependentUpon>Credits.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>Core\Credits.resx</Link>
-    </EmbeddedResource>
     <EmbeddedResource Include="..\Core\icons.resx">
       <SubType>Designer</SubType>
       <Link>Core\icons.resx</Link>
@@ -1141,44 +803,6 @@
       <SubType>Designer</SubType>
       <Link>Granados\strings_ja.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\Macro\MacroList.resx">
-      <DependentUpon>MacroList.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>Macro\MacroList.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Macro\MacroTrace.resx">
-      <DependentUpon>MacroTrace.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>Macro\MacroTrace.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Macro\ModuleProperty.resx">
-      <DependentUpon>ModuleProperty.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>Macro\ModuleProperty.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Macro\strings.resx">
-      <SubType>Designer</SubType>
-      <Link>Macro\strings.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Macro\strings_ja.resx">
-      <SubType>Designer</SubType>
-      <Link>Macro\strings_ja.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Pipe\EditVariableDialog.resx">
-      <DependentUpon>EditVariableDialog.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>Pipe\EditVariableDialog.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Pipe\EnvironmentVariablesDialog.resx">
-      <DependentUpon>EnvironmentVariablesDialog.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>Pipe\EnvironmentVariablesDialog.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Pipe\OpenPipeDialog.resx">
-      <DependentUpon>OpenPipeDialog.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>Pipe\OpenPipeDialog.resx</Link>
-    </EmbeddedResource>
     <EmbeddedResource Include="..\Pipe\strings.resx">
       <SubType>Designer</SubType>
       <Link>Pipe\strings.resx</Link>
@@ -1195,14 +819,6 @@
       <SubType>Designer</SubType>
       <Link>Plugin\strings_ja.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\PortForwardingCommand\strings.resx">
-      <SubType>Designer</SubType>
-      <Link>PortForwardingCommand\strings.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\PortForwardingCommand\strings_ja.resx">
-      <SubType>Designer</SubType>
-      <Link>PortForwardingCommand\strings_ja.resx</Link>
-    </EmbeddedResource>
     <EmbeddedResource Include="..\Protocols\strings.resx">
       <SubType>Designer</SubType>
       <Link>Protocols\strings.resx</Link>
@@ -1211,11 +827,6 @@
       <SubType>Designer</SubType>
       <Link>Protocols\strings_ja.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\SerialPort\SerialLoginDialog.resx">
-      <DependentUpon>SerialLoginDialog.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>SerialPort\SerialLoginDialog.resx</Link>
-    </EmbeddedResource>
     <EmbeddedResource Include="..\SerialPort\strings.resx">
       <SubType>Designer</SubType>
       <Link>SerialPort\strings.resx</Link>
@@ -1223,29 +834,6 @@
     <EmbeddedResource Include="..\SerialPort\strings_ja.resx">
       <SubType>Designer</SubType>
       <Link>SerialPort\strings_ja.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\SFTP\SCPForm.resx">
-      <DependentUpon>SCPForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>SFTP\SCPForm.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\SFTP\SFTPForm.resx">
-      <DependentUpon>SFTPForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>SFTP\SFTPForm.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\SFTP\strings.resx">
-      <SubType>Designer</SubType>
-      <Link>SFTP\strings.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\SFTP\strings_ja.resx">
-      <SubType>Designer</SubType>
-      <Link>SFTP\strings_ja.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\SFTP\YesNoAllDialog.resx">
-      <DependentUpon>YesNoAllDialog.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>SFTP\YesNoAllDialog.resx</Link>
     </EmbeddedResource>
     <EmbeddedResource Include="..\TerminalEmulator\rulechars.resx">
       <SubType>Designer</SubType>
@@ -1258,33 +846,6 @@
     <EmbeddedResource Include="..\TerminalEmulator\strings_ja.resx">
       <SubType>Designer</SubType>
       <Link>TerminalEmulator\strings_ja.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\TerminalEmulator\WarningWithDisableOption.resx">
-      <DependentUpon>WarningWithDisableOption.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>TerminalEmulator\WarningWithDisableOption.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\TerminalSession\CygwinLoginDialog.resx">
-      <DependentUpon>CygwinLoginDialog.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>TerminalSession\CygwinLoginDialog.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\TerminalSession\OpenSessionDialog.resx">
-      <DependentUpon>OpenSessionDialog.cs</DependentUpon>
-      <Link>TerminalSession\OpenSessionDialog.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\TerminalSession\OpenSessionTabPageSSH.resx">
-      <DependentUpon>OpenSessionTabPageSSH.cs</DependentUpon>
-      <Link>TerminalSession\OpenSessionTabPageSSH.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\TerminalSession\OpenSessionTabPageTelnet.resx">
-      <DependentUpon>OpenSessionTabPageTelnet.cs</DependentUpon>
-      <Link>TerminalSession\OpenSessionTabPageTelnet.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\TerminalSession\SSHShortcutLoginDialog.resx">
-      <DependentUpon>SSHShortcutLoginDialog.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>TerminalSession\SSHShortcutLoginDialog.resx</Link>
     </EmbeddedResource>
     <EmbeddedResource Include="..\TerminalSession\strings.resx">
       <SubType>Designer</SubType>
@@ -1299,54 +860,9 @@
       <SubType>Designer</SubType>
       <Link>UI\ThreeButtonMessageBox.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\Usability\AgentKeyListDialog.resx">
-      <DependentUpon>AgentKeyListDialog.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>Usability\AgentKeyListDialog.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Usability\DisplayOptionPanel.resx">
-      <DependentUpon>DisplayOptionPanel.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>Usability\DisplayOptionPanel.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Usability\GuevaraAboutBox.resx">
-      <DependentUpon>GuevaraAboutBox.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>Usability\GuevaraAboutBox.resx</Link>
-    </EmbeddedResource>
     <EmbeddedResource Include="..\Usability\icons.resx">
       <SubType>Designer</SubType>
       <Link>Usability\icons.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Usability\InputPassphraseDialog.resx">
-      <DependentUpon>InputPassphraseDialog.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>Usability\InputPassphraseDialog.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Usability\OptionDialog.resx">
-      <DependentUpon>OptionDialog.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>Usability\OptionDialog.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Usability\PreferenceEditor.resx">
-      <DependentUpon>PreferenceEditor.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>Usability\PreferenceEditor.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Usability\PreferenceItemEditor.resx">
-      <DependentUpon>PreferenceItemEditor.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>Usability\PreferenceItemEditor.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Usability\ShellSchemeEditor.resx">
-      <DependentUpon>ShellSchemeEditor.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>Usability\ShellSchemeEditor.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Usability\SSHOptionPanel.resx">
-      <DependentUpon>SSHOptionPanel.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>Usability\SSHOptionPanel.resx</Link>
     </EmbeddedResource>
     <EmbeddedResource Include="..\Usability\strings.resx">
       <SubType>Designer</SubType>
@@ -1355,24 +871,6 @@
     <EmbeddedResource Include="..\Usability\strings_ja.resx">
       <SubType>Designer</SubType>
       <Link>Usability\strings_ja.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Usability\TerminalOptionPanel.resx">
-      <DependentUpon>TerminalOptionPanel.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>Usability\TerminalOptionPanel.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\XZModem\strings.resx">
-      <SubType>Designer</SubType>
-      <Link>XZModem\strings.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\XZModem\strings_ja.resx">
-      <SubType>Designer</SubType>
-      <Link>XZModem\strings_ja.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\XZModem\XZModemDialog.resx">
-      <DependentUpon>XZModemDialog.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>XZModem\XZModemDialog.resx</Link>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -1388,51 +886,6 @@
   <ItemGroup>
     <None Include="..\SerialPort\Resources\Serial16x16.png">
       <Link>SerialPort\Resources\Serial16x16.png</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\SFTP\Resources\File16x16.png">
-      <Link>SFTP\Resources\File16x16.png</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\SFTP\Resources\FolderClose16x16.png">
-      <Link>SFTP\Resources\FolderClose16x16.png</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\SFTP\Resources\FolderOpen16x16.png">
-      <Link>SFTP\Resources\FolderOpen16x16.png</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\SFTP\Resources\FormIconSCP.ico">
-      <Link>SFTP\Resources\FormIconSCP.ico</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\SFTP\Resources\FormIconSFTP.ico">
-      <Link>SFTP\Resources\FormIconSFTP.ico</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\SFTP\Resources\Host16x16.png">
-      <Link>SFTP\Resources\Host16x16.png</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\SFTP\Resources\IconSCP16x16.png">
-      <Link>SFTP\Resources\IconSCP16x16.png</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\SFTP\Resources\IconSFTP16x16.png">
-      <Link>SFTP\Resources\IconSFTP16x16.png</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\SFTP\Resources\Link16x16.png">
-      <Link>SFTP\Resources\Link16x16.png</Link>
     </None>
   </ItemGroup>
   <ItemGroup>

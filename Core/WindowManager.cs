@@ -49,8 +49,8 @@ namespace Poderosa.Forms {
         private MainWindow _activeWindow;
 #if !LIBRARY
         private PoderosaAppContext _appContext;
-#endif
         private MainWindowMenu _menu;
+#endif
         private WindowPreference _preferences;
         private ViewFactoryManager _viewFactoryManager;
 
@@ -88,7 +88,9 @@ namespace Poderosa.Forms {
             pm.CreateExtensionPoint(WindowManagerConstants.TOOLBARCOMPONENT_ID, typeof(IToolBarComponent), this);
             pm.CreateExtensionPoint(WindowManagerConstants.MAINWINDOWEVENTHANDLER_ID, typeof(IMainWindowEventHandler), this);
             pm.CreateExtensionPoint(WindowManagerConstants.FILEDROPHANDLER_ID, typeof(IFileDropHandler), this);
+#if !LIBRARY
             AboutBoxUtil.DefineExtensionPoint(pm);
+#endif
 
             _preferences = new WindowPreference();
             pm.FindExtensionPoint(PreferencePlugin.EXTENSIONPOINT_NAME)
@@ -99,8 +101,8 @@ namespace Poderosa.Forms {
             _windows = new List<MainWindow>();
             _popupWindows = new List<PopupViewContainer>();
 
-            _menu = new MainWindowMenu();
 #if !LIBRARY
+            _menu = new MainWindowMenu();
             _appContext = new PoderosaAppContext();
 #endif
             _selectionService = new SelectionService(this);
@@ -138,7 +140,7 @@ namespace Poderosa.Forms {
         public MainWindow CreateLibraryMainWindow()
         {
             MainWindowArgument arg = MainWindowArgument.Parse(_preferences)[0];
-            MainWindow w = new MainWindow(arg, _menu);
+            MainWindow w = new MainWindow(arg);
             w.Text = "Poderosa";
             w.FormClosed += new FormClosedEventHandler(WindowClosedHandler);
             w.Activated += delegate(object sender, EventArgs args) {
@@ -151,8 +153,7 @@ namespace Poderosa.Forms {
             w.Visible = true;
             return w;
         }
-#endif
-
+#else
         private MainWindow CreateMainWindow(MainWindowArgument arg) {
             MainWindow w = new MainWindow(arg, _menu);
             w.Text = "Poderosa";
@@ -167,6 +168,7 @@ namespace Poderosa.Forms {
         public void CreateNewWindow(MainWindowArgument arg) {
             _windows.Add(CreateMainWindow(arg));
         }
+#endif
 
         //アプリ終了時
         public CommandResult CloseAllWindows() {
@@ -239,8 +241,10 @@ namespace Poderosa.Forms {
             }
         }
         public void ReloadMenu() {
+#if !LIBRARY
             foreach (MainWindow w in _windows)
                 w.ReloadMenu(_menu, true);
+#endif
         }
         /*
         public void ReloadMenu(string extension_point_name) {
@@ -250,8 +254,10 @@ namespace Poderosa.Forms {
         }
          */
         public void ReloadPreference(ICoreServicePreference pref) {
+#if !LIBRARY
             foreach (MainWindow w in _windows)
                 w.ReloadPreference(pref);
+#endif
         }
         public void ReloadPreference() {
             //デフォルトを使う
@@ -278,8 +284,10 @@ namespace Poderosa.Forms {
 
 #region IKeyBindChangeListener
         public void OnKeyBindChanged(IKeyBinds newvalues) {
+#if !LIBRARY
             foreach (MainWindow w in _windows)
                 w.ReloadMenu(_menu, false);
+#endif
         }
 #endregion
 
@@ -295,11 +303,14 @@ namespace Poderosa.Forms {
         public ITimerSite CreateTimer(int interval, TimerDelegate callback) {
             return new TimerSite(interval, callback);
         }
+
+#if !LIBRARY
         public MainWindowMenu MainMenu {
             get {
                 return _menu;
             }
         }
+#endif
         public WindowPreference WindowPreference {
             get {
                 return _preferences;
@@ -322,6 +333,7 @@ namespace Poderosa.Forms {
             }
         }
         public void BypassDragEnter(Control target, DragEventArgs args) {
+#if !LIBRARY
             ICommandTarget ct = CommandTargetUtil.AsCommandTarget(target as IAdaptable);
             if (ct == null)
                 return;
@@ -337,8 +349,10 @@ namespace Poderosa.Forms {
                     }
                 }
             }
+#endif
         }
         public void BypassDragDrop(Control target, DragEventArgs args) {
+#if !LIBRARY
             ICommandTarget ct = CommandTargetUtil.AsCommandTarget(target as IAdaptable);
             if (ct == null)
                 return;
@@ -353,6 +367,7 @@ namespace Poderosa.Forms {
                     }
                 }
             }
+#endif
         }
 #endregion
 

@@ -41,7 +41,9 @@ namespace Poderosa.Sessions {
 
         private ICommandManager _commandManager;
         private LoginDialogCommand _loginDialogCommand;
+#if !LIBRARY
         private LoginMenuGroup _loginMenuGroup;
+#endif
         private LoginToolBarComponent _loginToolBarComponent;
         private IMacroEngine _macroEngine;
 
@@ -60,20 +62,25 @@ namespace Poderosa.Sessions {
             _loginDialogCommand = new LoginDialogCommand();
             _commandManager.Register(_loginDialogCommand);
 
+#if !LIBRARY
             IExtensionPoint ep = pm.FindExtensionPoint("org.poderosa.menu.file");
             _loginMenuGroup = new LoginMenuGroup();
             ep.RegisterExtension(_loginMenuGroup);
+#endif
 
             IExtensionPoint toolbar = pm.FindExtensionPoint("org.poderosa.core.window.toolbar");
             _loginToolBarComponent = new LoginToolBarComponent();
             toolbar.RegisterExtension(_loginToolBarComponent);
         }
 
+#if !LIBRARY
         public IPoderosaMenuGroup TelnetSSHMenuGroup {
             get {
                 return _loginMenuGroup;
             }
         }
+#endif
+
         public IToolBarComponent TelnetSSHToolBar {
             get {
                 return _loginToolBarComponent;
@@ -89,6 +96,7 @@ namespace Poderosa.Sessions {
             }
         }
 
+#if !LIBRARY
         private class LoginMenuGroup : IPoderosaMenuGroup, IPositionDesignation {
             public IPoderosaMenu[] ChildMenus {
                 get {
@@ -148,6 +156,7 @@ namespace Poderosa.Sessions {
                 return _instance.PoderosaWorld.AdapterManager.GetAdapter(this, adapter);
             }
         }
+#endif
 
         private class LoginToolBarComponent : IToolBarComponent, IPositionDesignation {
 
@@ -183,6 +192,7 @@ namespace Poderosa.Sessions {
 
         private class LoginDialogCommand : IGeneralCommand {
             public CommandResult InternalExecute(ICommandTarget target, params IAdaptable[] args) {
+#if !LIBRARY
                 IPoderosaMainWindow window = (IPoderosaMainWindow)target.GetAdapter(typeof(IPoderosaMainWindow));
                 if (window == null)
                     return CommandResult.Ignored;
@@ -203,8 +213,9 @@ namespace Poderosa.Sessions {
                         }
                         return CommandResult.Succeeded;
                     }
-                    return CommandResult.Cancelled;
                 }
+#endif
+                return CommandResult.Cancelled;
             }
 
             public string CommandID {

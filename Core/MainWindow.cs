@@ -38,13 +38,19 @@ namespace Poderosa.Forms {
 
         private IViewManager _viewManager;
         private MainWindowArgument _argument;
+#if !LIBRARY
         private MenuStrip _mainMenu;
+#endif
         private TabBarTable _tabBarTable;
         private PoderosaToolStripContainer _toolStripContainer;
         private PoderosaStatusBar _statusBar;
         private TabBarManager _tabBarManager;
 
+#if LIBRARY
+        public MainWindow(MainWindowArgument arg) {
+#else
         public MainWindow(MainWindowArgument arg, MainWindowMenu menu) {
+#endif
             _argument = arg;
             Debug.Assert(_argument != null);
             _commandKeyHandler.AddLastHandler(new FixedShortcutKeyHandler(this));
@@ -60,7 +66,9 @@ namespace Poderosa.Forms {
 
             InitContent();
 
+#if !LIBRARY
             ReloadMenu(menu, true);
+#endif
         }
 
         private void InitContent() {
@@ -155,6 +163,7 @@ namespace Poderosa.Forms {
             WindowManagerPlugin.Instance.NotifyMainWindowLoaded(this);
         }
 
+#if !LIBRARY
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e) {
             base.OnClosing(e);
             try {
@@ -175,8 +184,6 @@ namespace Poderosa.Forms {
             }
         }
 
-
-
         public void ReloadMenu(MainWindowMenu menu, bool with_toolbar) {
             this.SuspendLayout();
             if (_mainMenu != null)
@@ -184,9 +191,6 @@ namespace Poderosa.Forms {
             _mainMenu = new MenuStrip();
             menu.FullBuild(_mainMenu, this);
             this.MainMenuStrip = _mainMenu;
-#if LIBRARY
-            this.MainMenuStrip.Visible = false;
-#endif
             this.Controls.Add(_mainMenu);
 
             if (with_toolbar && _toolStripContainer != null)
@@ -194,10 +198,14 @@ namespace Poderosa.Forms {
 
             this.ResumeLayout();
         }
+#endif
+
         public void ReloadPreference(ICoreServicePreference pref) {
+#if !LIBRARY
             IPoderosaAboutBoxFactory af = AboutBoxUtil.GetCurrentAboutBoxFactory();
             if (af != null)
                 this.Icon = af.ApplicationIcon;
+#endif
             _toolStripContainer.ReloadPreference(pref);
         }
 

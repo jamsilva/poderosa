@@ -84,6 +84,7 @@ namespace Poderosa.Sessions {
             _reproduceCommand = new ReproduceCommand();
             _coreServices.CommandManager.Register(_reproduceCommand);
 
+#if !LIBRARY
             ReproduceMenuGroup rmg = new ReproduceMenuGroup();
             IExtensionPoint consolemenu = pm.FindExtensionPoint("org.poderosa.menu.console");
             consolemenu.RegisterExtension(rmg);
@@ -93,6 +94,7 @@ namespace Poderosa.Sessions {
 
             IExtensionPoint documentContext = pm.FindExtensionPoint("org.poderosa.terminalemulator.documentContextMenu");
             documentContext.RegisterExtension(rmg);
+#endif
         }
 
         public static TerminalSessionsPlugin Instance {
@@ -161,13 +163,13 @@ namespace Poderosa.Sessions {
             }
         }
 
-        #region ITerminalSessionService
+#region ITerminalSessionService
         public ITerminalSessionStartCommand TerminalSessionStartCommand {
             get {
                 return _startCommand;
             }
         }
-        #endregion
+#endregion
 
         public ReproduceCommand ReproduceCommand {
             get {
@@ -258,7 +260,7 @@ namespace Poderosa.Sessions {
             }
         }
 
-        #region ITelnetSSHLoginDialogInitializeInfo
+#region ITelnetSSHLoginDialogInitializeInfo
         public void AddHost(string value) {
             if (!_hosts.Contains(value) && value.Length > 0)
                 _hosts.Add(value);
@@ -282,6 +284,6 @@ namespace Poderosa.Sessions {
         public IAdaptable GetAdapter(Type adapter) {
             return TerminalSessionsPlugin.Instance.PoderosaWorld.AdapterManager.GetAdapter(this, adapter);
         }
-        #endregion
+#endregion
     }
 }

@@ -73,10 +73,12 @@ namespace Poderosa.Sessions {
             cm.Register(open);
             cm.Register(save);
 
+#if !LIBRARY
             IExtensionPoint filemenu = pm.FindExtensionPoint("org.poderosa.menu.file");
             filemenu.RegisterExtension(new PoderosaMenuGroupImpl(new IPoderosaMenu[] {
                 new PoderosaMenuItemImpl(open, sr, "Menu.OpenShortcutFile"),
                 new PoderosaMenuItemImpl(save, sr, "Menu.SaveShortcutFile") }).SetPosition(PositionType.NextTo, CygwinPlugin.Instance.CygwinMenuGroupTemp));
+#endif
 
             ShortcutFileToolBarComponent tb = new ShortcutFileToolBarComponent(open, save);
             pm.FindExtensionPoint("org.poderosa.core.window.toolbar").RegisterExtension(tb);
@@ -122,14 +124,14 @@ namespace Poderosa.Sessions {
             public IAdaptable GetAdapter(Type adapter) {
                 return TerminalSessionsPlugin.Instance.PoderosaWorld.AdapterManager.GetAdapter(this, adapter);
             }
-            #region IActiveDocumentChangeListener
+#region IActiveDocumentChangeListener
             public void OnDocumentActivated(IPoderosaMainWindow window, IPoderosaDocument document) {
                 window.ToolBar.RefreshComponent(this);
             }
             public void OnDocumentDeactivated(IPoderosaMainWindow window) {
                 window.ToolBar.RefreshComponent(this);
             }
-            #endregion
+#endregion
 
         }
 

@@ -106,6 +106,7 @@ namespace Poderosa.Sessions {
         }
     }
 
+#if !LIBRARY
     internal class ReproduceMenuGroup : IPoderosaMenuGroup, IPositionDesignation {
         public IPoderosaMenu[] ChildMenus {
             get {
@@ -171,5 +172,5 @@ namespace Poderosa.Sessions {
             }
         }
     }
-
+#endif
 }

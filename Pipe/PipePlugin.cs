@@ -176,15 +176,18 @@ namespace Poderosa.Pipe {
             _openPipeCommand = new OpenPipeCommand();
 
             IPluginManager pm = poderosa.PluginManager;
+#if !LIBRARY
             pm.FindExtensionPoint("org.poderosa.menu.file").RegisterExtension(new PipeMenuGroup(_openPipeCommand));
 
             // Toolbar button has not been added yet
             //pm.FindExtensionPoint("org.poderosa.core.window.toolbar").RegisterExtension(new PipeToolBarComponent());
+#endif
 
             pm.FindExtensionPoint("org.poderosa.termianlsessions.terminalConnectionFactory").RegisterExtension(new PipeConnectionFactory());
         }
     }
 
+#if !LIBRARY
     /// <summary>
     /// Menu group
     /// </summary>
@@ -212,6 +215,7 @@ namespace Poderosa.Pipe {
             : base(command, PipePlugin.Instance.Strings, "Menu.OpenPipe") {
         }
     }
+#endif
 
     /// <summary>
     /// Open pipe command
@@ -256,6 +260,7 @@ namespace Poderosa.Pipe {
 
             CommandResult commandResult = CommandResult.Failed;
 
+#if !LIBRARY
             using (OpenPipeDialog dialog = new OpenPipeDialog()) {
 
                 dialog.OpenPipe =
@@ -273,6 +278,7 @@ namespace Poderosa.Pipe {
                 if (dialogResult == DialogResult.Cancel)
                     commandResult = CommandResult.Cancelled;
             }
+#endif
 
             return commandResult;
         }

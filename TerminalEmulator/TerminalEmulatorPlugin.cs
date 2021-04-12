@@ -98,6 +98,7 @@ namespace Poderosa.Terminal {
             //PromptChecker
             _promptCheckerWithTimer = new PromptCheckerWithTimer();
 
+#if !LIBRARY
             //Edit Menuに追加
             IExtensionPoint editmenu = pm.FindExtensionPoint("org.poderosa.menu.edit");
             editmenu.RegisterExtension(new AdvancedCopyPasteMenuGroup());
@@ -108,6 +109,7 @@ namespace Poderosa.Terminal {
             IExtensionPoint consolemenu = pm.FindExtensionPoint("org.poderosa.menu.console");
             consolemenu.RegisterExtension(new TerminalSettingMenuGroup());
             consolemenu.RegisterExtension(new IntelliSenseMenuGroup());
+#endif
 
             //Context Menu
             _contextMenu = pm.CreateExtensionPoint(TerminalEmulatorConstants.TERMINAL_CONTEXT_MENU_EXTENSIONPOINT, typeof(IPoderosaMenuGroup), this);
@@ -154,7 +156,7 @@ namespace Poderosa.Terminal {
         }
 #endif
 
-        #region ITerminalEmulatorPlugin
+#region ITerminalEmulatorPlugin
         public ITerminalEmulatorOptions TerminalEmulatorOptions {
             get {
                 return GEnv.Options;
@@ -172,6 +174,7 @@ namespace Poderosa.Terminal {
         public ISimpleLogSettings CreateDefaultSimpleLogSettings() {
             return new SimpleLogSettings();
         }
+
         public IPoderosaMenuGroup[] ContextMenu {
             get {
                 return (IPoderosaMenuGroup[])_contextMenu.GetExtensions();
@@ -182,6 +185,7 @@ namespace Poderosa.Terminal {
                 return (IPoderosaMenuGroup[])_documentContextMenu.GetExtensions();
             }
         }
+
         public IIntelliSenseCandidateExtension[] IntelliSenseExtensions {
             get {
                 return (IIntelliSenseCandidateExtension[])_intelliSenseExtension.GetExtensions();
@@ -213,7 +217,7 @@ namespace Poderosa.Terminal {
                 return _shellSchemeCollection;
             }
         }
-        #endregion
+#endregion
 
         public ISessionManager GetSessionManager() {
             return _coreServices.SessionManager;

@@ -23,6 +23,7 @@ using Poderosa.Util;
 
 namespace Poderosa.Forms {
     internal class MenuUtil {
+#if !LIBRARY
         public static ToolStripMenuItem CreateMenuItem(MainMenuItem item, ICommandTarget target) {
             item.Create();
             ToolStripMenuItem ui_menu = new ToolStripMenuItem();
@@ -37,6 +38,7 @@ namespace Poderosa.Forms {
 
             return ui_menu;
         }
+#endif
 
         //既存メニューの中身を構築：MainMenuItemおよび子のfolder用
         public static void BuildMenuContents(ToolStripMenuItem menuitem, IPoderosaMenuFolder contents) {

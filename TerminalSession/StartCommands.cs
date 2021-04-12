@@ -207,14 +207,15 @@ namespace Poderosa.Sessions {
             public ITerminalConnection EstablishConnection(IPoderosaMainWindow window, ITerminalParameter destination, ITerminalSettings settings) {
                 ISSHLoginParameter ssh = (ISSHLoginParameter)destination.GetAdapter(typeof(ISSHLoginParameter));
                 if (ssh.LetUserInputPassword && ssh.AuthenticationType != Granados.AuthenticationType.KeyboardInteractive) { //ダイアログで入力を促して接続
+#if !LIBRARY
                     SSHShortcutLoginDialog dlg = new SSHShortcutLoginDialog(window, ssh, settings);
                     if (dlg.ShowDialog(window.AsForm()) == DialogResult.OK) {
                         ITerminalConnection con = dlg.Result;
                         AdjustCaptionAndText(settings, ((ITCPParameter)con.Destination.GetAdapter(typeof(ITCPParameter))).Destination, StartCommandIcon.NewConnection);
                         return con;
                     }
-                    else
-                        return null;
+#endif
+                    return null;
                 }
                 else { //主にReproduceやマクロ。設定済みのパスワードで接続
                     IProtocolService protocolservice = TerminalSessionsPlugin.Instance.ProtocolService;
@@ -261,10 +262,10 @@ namespace Poderosa.Sessions {
             return view;
         }
 
-        #region IAdaptable
+#region IAdaptable
         public IAdaptable GetAdapter(Type adapter) {
             return TerminalSessionsPlugin.Instance.PoderosaWorld.AdapterManager.GetAdapter(this, adapter);
         }
-        #endregion
+#endregion
     }
 }

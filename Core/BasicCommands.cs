@@ -142,8 +142,10 @@ namespace Poderosa.Commands {
             CreateCategories();
 
             ICommandManager cm = CommandManagerPlugin.Instance;
+#if !LIBRARY
             cm.Register(new BasicCommand("org.poderosa.core.application.newwindow",
                 "Command.NewWindow", _file, CtrlShift(Keys.N), new ExecuteDelegate(CmdNewWindow)));
+#endif
             cm.Register(new BasicCommand("org.poderosa.core.application.quit",
                 "Command.Quit", _file, CtrlShift(Keys.W), new ExecuteDelegate(CmdQuit)));
 
@@ -175,10 +177,12 @@ namespace Poderosa.Commands {
                 "Command.PluginList", _dialog, Keys.None, new ExecuteDelegate(CmdPluginList)));
             cm.Register(new BasicCommand("org.poderosa.core.dialog.extensionpointlist",
                 "Command.ExtensionPointList", _dialog, Keys.None, new ExecuteDelegate(CmdExtensionPointList)));
+#if !LIBRARY
             cm.Register(new BasicCommand("org.poderosa.core.dialog.aboutbox",
                 "Command.AboutBox", _dialog, Keys.None, new ExecuteDelegate(CmdAboutBox)));
             cm.Register(new BasicCommand("org.poderosa.core.application.openweb",
                 "Command.PoderosaWeb", _dialog, Keys.None, new ExecuteDelegate(CmdOpenWeb)));
+#endif
 
             //これはGeneralCommandではない
             _docActivationCommand = new DocActivationCommand();
@@ -197,6 +201,7 @@ namespace Poderosa.Commands {
             _dialog = new CommandCategory("CommandCategory.Dialog").SetPosition(PositionType.NextTo, _window);
         }
 
+#if !LIBRARY
         private static CommandResult CmdNewWindow(ICommandTarget target) {
             IPoderosaMainWindow window = CommandTargetUtil.AsWindow(target);
             Form f = window.AsForm();
@@ -207,6 +212,7 @@ namespace Poderosa.Commands {
             WindowManagerPlugin.Instance.CreateNewWindow(arg);
             return CommandResult.Succeeded;
         }
+#endif
         private static CommandResult CmdQuit(ICommandTarget target) {
             WindowManagerPlugin p = WindowManagerPlugin.Instance;
             return p.CloseAllWindows();
@@ -402,6 +408,7 @@ namespace Poderosa.Commands {
             return CommandResult.Succeeded;
         }
 
+#if !LIBRARY
         //AboutBox表示のメニューとコマンド
         private static CommandResult CmdAboutBox(ICommandTarget target) {
             IPoderosaMainWindow window = CommandTargetUtil.AsWindow(target);
@@ -427,6 +434,7 @@ namespace Poderosa.Commands {
                 return CommandResult.Failed;
             }
         }
+#endif
 
         //delegate util
         public static CanExecuteDelegate DoesExistCurrentDocument {

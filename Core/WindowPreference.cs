@@ -195,7 +195,9 @@ namespace Poderosa.Forms {
             _adapter = new CoreServicePreferenceAdapter(folder);
             _adapter.DefineItems(builder);
 
+#if !LIBRARY
             AboutBoxUtil.InitPreference(builder, folder);
+#endif
 
             _windowTemplatePreference = builder.DefineFolderArray(folder, this, "mainwindow");
             _windowArrayPreference = folder.FindChildFolderArray("mainwindow");
@@ -258,7 +260,7 @@ namespace Poderosa.Forms {
 
         public void ValidateFolder(IPreferenceFolder folder, IPreferenceValidationResult output) {
         }
-        #endregion
+#endregion
 
         public ICoreServicePreference OriginalPreference {
             get {

@@ -311,11 +311,13 @@ namespace Poderosa.Terminal {
         }
         private delegate void CharDecodeErrorDialogDelegate(IPoderosaMainWindow window, string msg);
         private void CharDecodeErrorDialog(IPoderosaMainWindow window, string msg) {
+#if !LIBRARY
             WarningWithDisableOption dlg = new WarningWithDisableOption(msg);
             dlg.ShowDialog(window.AsForm());
             if (dlg.CheckedDisableOption) {
                 GEnv.Options.CharDecodeErrorBehavior = WarningOption.Ignore;
             }
+#endif
         }
 
         public void Reset() {
@@ -375,7 +377,7 @@ namespace Poderosa.Terminal {
             return false;
         }
 
-        #region IByteAsyncInputStream
+#region IByteAsyncInputStream
         public void OnReception(ByteDataFragment data) {
             try {
                 bool pass_to_terminal = true;
@@ -473,7 +475,7 @@ namespace Poderosa.Terminal {
         public void OnNormalTermination() {
             Cleanup(null);
         }
-        #endregion
+#endregion
 
         private void Cleanup(string msg) {
             CleanupCommon();
