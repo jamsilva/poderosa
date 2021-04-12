@@ -486,6 +486,7 @@ namespace Poderosa.Forms {
             get;
         }
 
+#if !LIBRARY
         /// <summary>
         /// <ja>
         /// ステータスバーを示すオブジェクトを返します。
@@ -497,6 +498,7 @@ namespace Poderosa.Forms {
         IPoderosaStatusBar StatusBar {
             get;
         }
+#endif
 
         /// <summary>
         /// <ja>

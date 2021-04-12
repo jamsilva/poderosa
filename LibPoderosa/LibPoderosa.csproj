@@ -139,10 +139,6 @@
     <Compile Include="..\Core\SplittableView.cs">
       <Link>Core\SplittableView.cs</Link>
     </Compile>
-    <Compile Include="..\Core\StatusBar.cs">
-      <SubType>Component</SubType>
-      <Link>Core\StatusBar.cs</Link>
-    </Compile>
     <Compile Include="..\Core\TextDecoration.cs">
       <Link>Core\TextDecoration.cs</Link>
     </Compile>

@@ -43,7 +43,9 @@ namespace Poderosa.Forms {
 #endif
         private TabBarTable _tabBarTable;
         private PoderosaToolStripContainer _toolStripContainer;
+#if !LIBRARY
         private PoderosaStatusBar _statusBar;
+#endif
         private TabBarManager _tabBarManager;
 
 #if LIBRARY
@@ -100,14 +102,11 @@ namespace Poderosa.Forms {
             _tabBarTable.Dock = DockStyle.Top;
             _tabBarManager = new TabBarManager(_tabBarTable);
 
+#if !LIBRARY
             _statusBar = new PoderosaStatusBar();
-
-#if LIBRARY
-            _statusBar.Visible = false;
-#else
             _toolStripContainer.ContentPanel.Controls.Add(_tabBarTable);
-#endif
             this.Controls.Add(_statusBar); //こうでなく、_toolStripContainer.BottomToolStripPanelに_statusBarを追加してもよさそうだが、そうするとツールバー項目がステータスバーの上下に挿入可能になってしまう
+#endif
 
             _tabBarTable.Create(rowcount);
 
@@ -145,11 +144,14 @@ namespace Poderosa.Forms {
                 return _toolStripContainer;
             }
         }
+
+#if !LIBRARY
         public IPoderosaStatusBar StatusBar {
             get {
                 return _statusBar;
             }
         }
+#endif
 
 #endregion
 

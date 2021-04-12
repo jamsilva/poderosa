@@ -40,9 +40,11 @@ namespace Poderosa.Sessions {
     /// </summary>
     /// <exclude/>
     public interface ICygwinPlugin : IAdaptable {
+#if !LIBRARY
         IPoderosaMenuGroup CygwinMenuGroupTemp {
             get;
         }
+#endif
         IToolBarComponent CygwinToolBarComponentTemp {
             get;
         }
@@ -61,7 +63,9 @@ namespace Poderosa.Sessions {
         }
         private ICommandManager _commandManager;
         private CygwinLoginDialogCommand _loginDialogCommand;
+#if !LIBRARY
         private IPoderosaMenuGroup _cygwinMenuGroup;
+#endif
         private IToolBarComponent _cygwinToolBarComponent;
         private IMacroEngine _macroEngine;
 
@@ -242,12 +246,13 @@ namespace Poderosa.Sessions {
 
         }
 
-
+#if !LIBRARY
         public IPoderosaMenuGroup CygwinMenuGroupTemp {
             get {
                 return _cygwinMenuGroup;
             }
         }
+#endif
 
         public IToolBarComponent CygwinToolBarComponentTemp {
             get {

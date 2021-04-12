@@ -301,7 +301,9 @@ namespace Poderosa.Terminal {
             Monitor.Exit(GetDocument()); //これは忘れるな
             switch (GEnv.Options.CharDecodeErrorBehavior) {
                 case WarningOption.StatusBar:
+#if !LIBRARY
                     window.StatusBar.SetMainText(msg);
+#endif
                     break;
                 case WarningOption.MessageBox:
                     window.AsForm().Invoke(new CharDecodeErrorDialogDelegate(CharDecodeErrorDialog), window, msg);
@@ -462,7 +464,9 @@ namespace Poderosa.Terminal {
 
                     switch (GEnv.Options.DisconnectNotification) {
                         case WarningOption.StatusBar:
+#if !LIBRARY
                             window.StatusBar.SetMainText(msg);
+#endif
                             break;
                         case WarningOption.MessageBox:
                             window.Warning(msg); //TODO Disableオプションつきのサポート
@@ -554,9 +558,11 @@ namespace Poderosa.Terminal {
             IPoderosaMainWindow window = _session.OwnerWindow;
             if (window != null) {
                 Debug.Assert(window.AsForm().IsHandleCreated);
+#if !LIBRARY
                 Monitor.Exit(GetDocument());
                 window.StatusBar.SetStatusIcon(Properties.Resources.Bell16x16);
                 Monitor.Enter(GetDocument());
+#endif
             }
             if (GEnv.Options.BeepOnBellChar)
                 Win32.MessageBeep(-1);
