@@ -387,11 +387,11 @@ namespace Poderosa.PortForwarding {
         //ISocketWithTimeoutClient これらはこのウィンドウとは別のスレッドで実行されるので慎重に
         public void SuccessfullyExit(object result) {
             _result = (ChannelFactory)result;
-            Debug.Assert(IsHandleCreated);
+            Debug.Assert(InvokeRequired);
             this.Invoke(new ExitDelegate(SuccessfullyExitX));
         }
         public void ConnectionFailed(string message) {
-            Debug.Assert(IsHandleCreated);
+            Debug.Assert(InvokeRequired);
             this.Invoke(new ShowErrorDelegate(ShowErrorX), message);
         }
         public void CancelTimer() {

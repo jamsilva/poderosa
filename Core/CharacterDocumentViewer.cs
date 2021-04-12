@@ -177,13 +177,13 @@ namespace Poderosa.View {
         }
 
 
-#region IAdaptable
+        #region IAdaptable
         public virtual IAdaptable GetAdapter(Type adapter) {
             return SessionManagerPlugin.Instance.PoderosaWorld.AdapterManager.GetAdapter(this, adapter);
         }
-#endregion
+        #endregion
 
-#region OnPaint time measurement
+        #region OnPaint time measurement
 
         public void SetOnPaintTimeObserver(OnPaintTimeObserver observer) {
 #if ONPAINT_TIME_MEASUREMENT
@@ -191,7 +191,7 @@ namespace Poderosa.View {
 #endif
         }
 
-#endregion
+        #endregion
 
         //派生型であることを強制することなどのためにoverrideすることを許す
         public virtual void SetContent(CharacterDocument doc) {
@@ -710,7 +710,7 @@ namespace Poderosa.View {
 
 
         //SplitMark関係
-#region SplitMark.ISite
+        #region SplitMark.ISite
         protected override void OnMouseLeave(EventArgs e) {
             base.OnMouseLeave(e);
             if (_splitMark.IsSplitMarkVisible)
@@ -754,7 +754,7 @@ namespace Poderosa.View {
             }
         }
 
-#endregion
+        #endregion
 
         private ISplittableViewManager GetSplittableViewManager() {
             IContentReplaceableView v = AsControlReplaceableView();
@@ -768,7 +768,7 @@ namespace Poderosa.View {
             return site == null ? null : site.CurrentContentReplaceableView;
         }
 
-#region ISelectionListener
+        #region ISelectionListener
         public void OnSelectionStarted() {
         }
         public void OnSelectionFixed() {
@@ -790,7 +790,7 @@ namespace Poderosa.View {
             }
 
         }
-#endregion
+        #endregion
 
     }
 

@@ -104,6 +104,7 @@ namespace Poderosa.Forms {
 
 #if !LIBRARY
             _statusBar = new PoderosaStatusBar();
+
             _toolStripContainer.ContentPanel.Controls.Add(_tabBarTable);
             this.Controls.Add(_statusBar); //こうでなく、_toolStripContainer.BottomToolStripPanelに_statusBarを追加してもよさそうだが、そうするとツールバー項目がステータスバーの上下に挿入可能になってしまう
 #endif
@@ -119,7 +120,7 @@ namespace Poderosa.Forms {
             }
         }
 
-#region IPoderosaMainWindow & IPoderosaForm
+        #region IPoderosaMainWindow & IPoderosaForm
         public IViewManager ViewManager {
             get {
                 return _viewManager;
@@ -144,7 +145,6 @@ namespace Poderosa.Forms {
                 return _toolStripContainer;
             }
         }
-
 #if !LIBRARY
         public IPoderosaStatusBar StatusBar {
             get {
@@ -153,7 +153,7 @@ namespace Poderosa.Forms {
         }
 #endif
 
-#endregion
+        #endregion
 
 
         protected override void OnLoad(EventArgs e) {
@@ -186,6 +186,8 @@ namespace Poderosa.Forms {
             }
         }
 
+
+
         public void ReloadMenu(MainWindowMenu menu, bool with_toolbar) {
             this.SuspendLayout();
             if (_mainMenu != null)
@@ -201,7 +203,6 @@ namespace Poderosa.Forms {
             this.ResumeLayout();
         }
 #endif
-
         public void ReloadPreference(ICoreServicePreference pref) {
 #if !LIBRARY
             IPoderosaAboutBoxFactory af = AboutBoxUtil.GetCurrentAboutBoxFactory();
@@ -220,8 +221,8 @@ namespace Poderosa.Forms {
             catch (Exception ex) {
                 RuntimeUtil.ReportException(ex);
             }
-    }
-    protected override void OnDragDrop(DragEventArgs args) {
+        }
+        protected override void OnDragDrop(DragEventArgs args) {
             base.OnDragDrop(args);
             try {
                 WindowManagerPlugin.Instance.BypassDragDrop(this, args);
@@ -246,7 +247,7 @@ namespace Poderosa.Forms {
             return KeysToDocuments(_tabBarTable.GetAllDocuments());
         }
 
-#region IDocumentTabFeature
+        #region IDocumentTabFeature
         public IPoderosaDocument ActiveDocument {
             get {
                 return KeyToDocument(_tabBarTable.ActiveTabKey);
@@ -323,9 +324,9 @@ namespace Poderosa.Forms {
             return WindowManagerPlugin.Instance.PoderosaWorld.AdapterManager.GetAdapter(this, adapter);
         }
 
-#endregion
+        #endregion
 
-#region TabBarTable.IUIHandler
+        #region TabBarTable.IUIHandler
         public void ActivateTab(TabKey key) {
             SessionManagerPlugin.Instance.ActivateDocument(KeyToDocument(key), ActivateReason.TabClick);
         }
@@ -353,13 +354,11 @@ namespace Poderosa.Forms {
             IPoderosaForm f = (IPoderosaForm)_tabBarTable.ParentForm;
             f.ShowContextMenu(ctx_pt.ContextMenu, doc, Control.MousePosition, ContextMenuFlags.None);
         }
-
 #if !LIBRARY
         public void StartTabDrag(TabKey key) {
             WindowManagerPlugin.Instance.SetDraggingTabBar(key);
         }
 #endif
-
         public void AllocateTabToControl(TabKey key, Control target) {
             IAdaptable ad = target as IAdaptable;
             if (ad == null)
@@ -371,7 +370,6 @@ namespace Poderosa.Forms {
 
             SessionManagerPlugin.Instance.AttachDocumentAndView(KeyToDocument(key), view);
         }
-
 #if !LIBRARY
         public void BypassDragEnter(DragEventArgs args) {
             try {
@@ -390,7 +388,7 @@ namespace Poderosa.Forms {
             }
         }
 #endif
-#endregion
+        #endregion
 
 
         private static IPoderosaDocument KeyToDocument(TabKey key) {

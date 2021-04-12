@@ -208,11 +208,10 @@ namespace Poderosa.Forms {
             _windows.Remove(w);
             NotifyMainWindowUnloaded(w);
 #if !LIBRARY
-            if (_windows.Count == 0 && GetStartMode() == StartMode.StandAlone)
-            {
+            if (_windows.Count == 0 && GetStartMode() == StartMode.StandAlone) {
                 CloseAllPopupWindows();
                 _appContext.ExitThread();
-        }
+            }
 #endif
         }
 
@@ -237,7 +236,7 @@ namespace Poderosa.Forms {
         }
 
 
-#region IWindowManager
+        #region IWindowManager
         public IPoderosaMainWindow[] MainWindows {
             get {
                 return _windows.ToArray();
@@ -293,31 +292,31 @@ namespace Poderosa.Forms {
         }
 #endif
 
-#endregion
+
+        #endregion
 
 
-#region IKeyBindChangeListener
+        #region IKeyBindChangeListener
         public void OnKeyBindChanged(IKeyBinds newvalues) {
 #if !LIBRARY
             foreach (MainWindow w in _windows)
                 w.ReloadMenu(_menu, false);
 #endif
         }
-#endregion
+        #endregion
 
 
-#region ICultureChangeListener
+        #region ICultureChangeListener
         public void OnCultureChanged(CultureInfo newculture) {
             //メニューのリロード含め全部やる
             CoreUtil.Strings.OnCultureChanged(newculture); //先にリソース更新
             ReloadMenu();
         }
-#endregion
+        #endregion
 
         public ITimerSite CreateTimer(int interval, TimerDelegate callback) {
             return new TimerSite(interval, callback);
         }
-
 #if !LIBRARY
         public MainWindowMenu MainMenu {
             get {
@@ -335,9 +334,8 @@ namespace Poderosa.Forms {
                 return _viewFactoryManager;
             }
         }
-
 #if !LIBRARY
-#region IWinFormsService
+        #region IWinFormsService
         public object GetDraggingObject(IDataObject data, Type required_type) {
             //TODO IDataObject使わなくていいの？
             if (_draggingObject == null)
@@ -381,7 +379,7 @@ namespace Poderosa.Forms {
                 }
             }
         }
-#endregion
+        #endregion
 
         public void SetDraggingTabBar(TabKey value) {
             _draggingObject = value;
@@ -604,7 +602,7 @@ namespace Poderosa.Forms {
             }
             else {
                 //正規表現内のコメント: ソースを表示するフォント次第ではおかしいかも
-                //                      (<FormWindowState>, left,      ,     top,         ,    width       ,     height   )
+                //                      (<FormWindowState>, left,      ,     top,         ,    width       ,     height   )  
                 Regex re = new Regex("\\((Max,|Min,)?\\s*(-?[\\d]+)\\s*,\\s*(-?[\\d]+)\\s*,\\s*([\\d]+)\\s*,\\s*([\\d]+)\\)");
 
                 MainWindowArgument[] result = new MainWindowArgument[count];

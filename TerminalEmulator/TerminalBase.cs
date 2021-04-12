@@ -28,11 +28,6 @@ using Poderosa.ConnectionParam;
 using Poderosa.Protocols;
 using Poderosa.Forms;
 using Poderosa.View;
-#if LIBRARY
-using Poderosa.Properties;
-#else
-using Poderosa.TerminalEmulator.Properties;
-#endif
 
 namespace Poderosa.Terminal {
 
@@ -211,21 +206,18 @@ namespace Poderosa.Terminal {
                 return _intelliSense;
             }
         }
-
 #if !LIBRARY
         internal PopupStyleCommandResultRecognizer PopupStyleCommandResultRecognizer {
             get {
                 return _commandResultRecognizer;
             }
         }
-
         public IShellCommandExecutor ShellCommandExecutor {
             get {
                 return _commandResultRecognizer;
             }
         }
 #endif
-
         public IAbstractTerminalHost TerminalHost {
             get {
                 return _session;
@@ -271,7 +263,7 @@ namespace Poderosa.Terminal {
             }
         }
 
-#region ICharProcessor
+        #region ICharProcessor
         ProcessCharResult ICharProcessor.State {
             get {
                 return _processCharResult;
@@ -289,7 +281,7 @@ namespace Poderosa.Terminal {
         public void InvalidCharDetected(byte[] buf) {
             CharDecodeError(String.Format(GEnv.Strings.GetString("Message.AbstractTerminal.UnexpectedChar"), _encodingProfile.Encoding.WebName));
         }
-#endregion
+        #endregion
 
         //受信側からの簡易呼び出し
         protected void TransmitDirect(byte[] data) {
@@ -390,7 +382,7 @@ namespace Poderosa.Terminal {
             return false;
         }
 
-#region IByteAsyncInputStream
+        #region IByteAsyncInputStream
         public void OnReception(ByteDataFragment data) {
             try {
                 bool pass_to_terminal = true;
@@ -490,7 +482,7 @@ namespace Poderosa.Terminal {
         public void OnNormalTermination() {
             Cleanup(null);
         }
-#endregion
+        #endregion
 
         private void Cleanup(string msg) {
             CleanupCommon();
@@ -566,15 +558,15 @@ namespace Poderosa.Terminal {
 
         //ドキュメントロック中でないと呼んではだめ
         public void IndicateBell() {
+#if !LIBRARY
             IPoderosaMainWindow window = _session.OwnerWindow;
             if (window != null) {
-                Debug.Assert(window.AsForm().IsHandleCreated);
-#if !LIBRARY
+                Debug.Assert(window.AsForm().InvokeRequired);
                 Monitor.Exit(GetDocument());
-                window.StatusBar.SetStatusIcon(Properties.Resources.Bell16x16);
+                window.StatusBar.SetStatusIcon(Poderosa.TerminalEmulator.Properties.Resources.Bell16x16);
                 Monitor.Enter(GetDocument());
-#endif
             }
+#endif
             if (GEnv.Options.BeepOnBellChar)
                 Win32.MessageBeep(-1);
         }

@@ -124,14 +124,14 @@ namespace Poderosa.Sessions {
             public IAdaptable GetAdapter(Type adapter) {
                 return TerminalSessionsPlugin.Instance.PoderosaWorld.AdapterManager.GetAdapter(this, adapter);
             }
-#region IActiveDocumentChangeListener
+            #region IActiveDocumentChangeListener
             public void OnDocumentActivated(IPoderosaMainWindow window, IPoderosaDocument document) {
                 window.ToolBar.RefreshComponent(this);
             }
             public void OnDocumentDeactivated(IPoderosaMainWindow window) {
                 window.ToolBar.RefreshComponent(this);
             }
-#endregion
+            #endregion
 
         }
 

@@ -130,7 +130,7 @@ namespace Poderosa.Sessions {
 #endif
         }
 
-#region ICommandResultProcessor
+        #region ICommandResultProcessor
         public void StartCommand(AbstractTerminal terminal, string command_text, GLine prompt_line) {
         }
 
@@ -148,7 +148,7 @@ namespace Poderosa.Sessions {
                 ProcessNextAction();
         }
 
-#endregion
+        #endregion
 
         public static string[] AsStringArrayResult(List<GLine> command_result) {
             List<string> r = new List<string>();

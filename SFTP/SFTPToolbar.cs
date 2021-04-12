@@ -27,13 +27,9 @@ using Poderosa.Sessions;
 using Poderosa.Util.Collections;
 using Poderosa.Terminal;
 using Poderosa.Protocols;
+using Poderosa.SFTP.Properties;
 using Granados.Poderosa.SCP;
 using System.Windows.Forms;
-#if LIBRARY
-using Poderosa.Properties;
-#else
-using Poderosa.SFTP.Properties;
-#endif
 
 namespace Poderosa.SFTP {
 

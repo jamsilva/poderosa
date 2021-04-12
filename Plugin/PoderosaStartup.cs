@@ -33,6 +33,7 @@ namespace Poderosa.Boot {
     /// </summary>
     /// <exclude/>
     public static class PoderosaStartup {
+
         // for compatibility
         public static IPoderosaApplication CreatePoderosaApplication(string[] args) {
             return CreatePoderosaApplication(args, false);
@@ -113,8 +114,7 @@ namespace Poderosa.Boot {
             else
                 return value;
         }
-
-    private static string ConfirmDirectory(string dir) {
+        private static string ConfirmDirectory(string dir) {
             string r = dir + "\\Poderosa";
             if (!Directory.Exists(r))
                 Directory.CreateDirectory(r);
@@ -378,4 +378,5 @@ namespace Poderosa.Boot {
         }
 #endif
     }
+
 }

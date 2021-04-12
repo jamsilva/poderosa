@@ -156,10 +156,10 @@ namespace Poderosa.Forms {
             _contextMenusToDispose.Clear();
         }
 
-#region IAdaptable
+        #region IAdaptable
         public IAdaptable GetAdapter(Type adapter) {
             return WindowManagerPlugin.Instance.PoderosaWorld.AdapterManager.GetAdapter(this, adapter);
         }
-#endregion
+        #endregion
     }
 }

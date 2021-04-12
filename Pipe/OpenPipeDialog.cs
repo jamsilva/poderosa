@@ -26,11 +26,6 @@ using Poderosa.Protocols;
 using Poderosa.Terminal;
 using Poderosa.Sessions;
 using Poderosa.Util;
-#if LIBRARY
-using Poderosa.Properties;
-#else
-using Poderosa.Pipe.Properties;
-#endif
 
 namespace Poderosa.Pipe {
 
@@ -272,7 +267,7 @@ namespace Poderosa.Pipe {
 
                 settingsTmp.BeginUpdate();
                 settingsTmp.Caption = caption;
-                settingsTmp.Icon = Properties.Resources.Pipe16x16;
+                settingsTmp.Icon = Poderosa.Pipe.Properties.Resources.Icon16x16;
                 settingsTmp.Encoding = ((EnumListItem<EncodingType>)_comboBoxEncoding.SelectedItem).Value;
                 settingsTmp.LocalEcho = _comboBoxLocalEcho.SelectedIndex == 1;
                 settingsTmp.TransmitNL = ((EnumListItem<NewLine>)_comboBoxNewLine.SelectedItem).Value;

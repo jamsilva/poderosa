@@ -163,13 +163,13 @@ namespace Poderosa.Sessions {
             }
         }
 
-#region ITerminalSessionService
+        #region ITerminalSessionService
         public ITerminalSessionStartCommand TerminalSessionStartCommand {
             get {
                 return _startCommand;
             }
         }
-#endregion
+        #endregion
 
         public ReproduceCommand ReproduceCommand {
             get {
@@ -260,7 +260,7 @@ namespace Poderosa.Sessions {
             }
         }
 
-#region ITelnetSSHLoginDialogInitializeInfo
+        #region ITelnetSSHLoginDialogInitializeInfo
         public void AddHost(string value) {
             if (!_hosts.Contains(value) && value.Length > 0)
                 _hosts.Add(value);
@@ -284,6 +284,6 @@ namespace Poderosa.Sessions {
         public IAdaptable GetAdapter(Type adapter) {
             return TerminalSessionsPlugin.Instance.PoderosaWorld.AdapterManager.GetAdapter(this, adapter);
         }
-#endregion
+        #endregion
     }
 }

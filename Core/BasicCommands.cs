@@ -399,7 +399,6 @@ namespace Poderosa.Commands {
             dlg.ShowDialog(window.AsForm());
             return CommandResult.Succeeded;
         }
-
         private static CommandResult CmdExtensionPointList(ICommandTarget target) {
             IPoderosaMainWindow window = CommandTargetUtil.AsWindow(target);
             if (window == null)

@@ -721,7 +721,7 @@ namespace Granados.Mono.Math {
 		#endregion
 
 		#region Compare
- 
+
 #if !LIBRARY && !INSIDE_CORLIB
 		[CLSCompliant (false)]
 #endif 

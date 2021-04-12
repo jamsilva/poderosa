@@ -80,7 +80,6 @@ namespace Poderosa.Sessions {
             }
         }
 #endif
-
         public IToolBarComponent TelnetSSHToolBar {
             get {
                 return _loginToolBarComponent;

@@ -260,7 +260,7 @@ namespace Poderosa.Forms {
 
         public void ValidateFolder(IPreferenceFolder folder, IPreferenceValidationResult output) {
         }
-#endregion
+        #endregion
 
         public ICoreServicePreference OriginalPreference {
             get {

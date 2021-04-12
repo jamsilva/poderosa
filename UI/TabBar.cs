@@ -818,7 +818,7 @@ namespace Poderosa.Forms {
         private void DrawButtonInternal(Graphics g) {
             Size clientSize = this.ClientSize;
 
-#if false   // this is not so nice effect...
+#if false	// this is not so nice effect...
             int offsetY = _mouseDown ? 1 : 0;
 #else
             const int offsetY = 0;
@@ -1200,7 +1200,6 @@ namespace Poderosa.Forms {
                         _bars.Remove(bar);
                         this.Controls.Remove(bar);
                     }
-
 #if !LIBRARY
                     Rebalance(state, docs);
 #endif
@@ -1337,7 +1336,6 @@ namespace Poderosa.Forms {
         public void OnMouseRightButton(TabKey key) {
             DoRightButtonAction(key);
         }
-
         //ユーザインタフェースによるDragAndDrop
         public void OnStartButtonDragByUI(TabKey key) {
             _uiHandler.StartTabDrag(key);

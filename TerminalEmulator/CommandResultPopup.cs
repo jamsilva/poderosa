@@ -102,7 +102,7 @@ namespace Poderosa.Terminal {
             if (tc == null)
                 return;
 
-            Debug.Assert(tc.IsHandleCreated);
+            Debug.Assert(tc.InvokeRequired);
 
             IAsyncResult ar = tc.BeginInvoke(CommandResultSession.Start, _terminal, doc);
             AsyncResultQuickHack(tc, ar);
@@ -132,7 +132,7 @@ namespace Poderosa.Terminal {
                 if (tc == null)
                     return;
 
-                Debug.Assert(tc.IsHandleCreated);
+                Debug.Assert(tc.InvokeRequired);
                 IAsyncResult ar = tc.BeginInvoke(new CopyToClipboardDelegate(CopyToClipboard), bld.ToString());
                 AsyncResultQuickHack(tc, ar);
             }

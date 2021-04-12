@@ -262,7 +262,6 @@ namespace Poderosa.Forms {
             base.OnCreateControl();
             this.RefreshAll();
         }
-
 #if !LIBRARY
         protected override void OnDragEnter(DragEventArgs drgevent) {
             base.OnDragEnter(drgevent);
