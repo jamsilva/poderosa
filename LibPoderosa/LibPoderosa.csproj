@@ -79,14 +79,6 @@
     <Compile Include="..\Core\DocumentAndViewEx.cs">
       <Link>Core\DocumentAndViewEx.cs</Link>
     </Compile>
-    <Compile Include="..\Core\ExtensionPointList.cs">
-      <SubType>Form</SubType>
-      <Link>Core\ExtensionPointList.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\ExtensionPointList.Designer.cs">
-      <DependentUpon>ExtensionPointList.cs</DependentUpon>
-      <Link>Core\ExtensionPointList.Designer.cs</Link>
-    </Compile>
     <Compile Include="..\Core\GenericsUtil.cs">
       <Link>Core\GenericsUtil.cs</Link>
     </Compile>
@@ -105,14 +97,6 @@
     </Compile>
     <Compile Include="..\Core\MenuUtil.cs">
       <Link>Core\MenuUtil.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\PluginList.cs">
-      <SubType>Form</SubType>
-      <Link>Core\PluginList.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\PluginList.Designer.cs">
-      <DependentUpon>PluginList.cs</DependentUpon>
-      <Link>Core\PluginList.Designer.cs</Link>
     </Compile>
     <Compile Include="..\Core\PoderosaForm.cs">
       <SubType>Form</SubType>
@@ -750,25 +734,6 @@
     <Compile Include="..\UI\WinFormsUtil.cs">
       <Link>UI\WinFormsUtil.cs</Link>
     </Compile>
-    <Compile Include="..\Usability\OrderedCollection.cs">
-      <Link>Usability\OrderedCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\PoderosaLogViewerPlugin.cs">
-      <Link>Usability\PoderosaLogViewerPlugin.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\PoderosaLogViewerSession.cs">
-      <SubType>Component</SubType>
-      <Link>Usability\PoderosaLogViewerSession.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\StartupActionPlugin.cs">
-      <Link>Usability\StartupActionPlugin.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\TerminalUIPlugin.cs">
-      <Link>Usability\TerminalUIPlugin.cs</Link>
-    </Compile>
-    <Compile Include="..\Usability\UsabilityPlugin.cs">
-      <Link>Usability\UsabilityPlugin.cs</Link>
-    </Compile>
     <Compile Include="Library\Internals.cs" />
     <Compile Include="Library\LibPoderosa.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -781,11 +746,6 @@
     <EmbeddedResource Include="..\Core\icons.resx">
       <SubType>Designer</SubType>
       <Link>Core\icons.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Core\PluginList.resx">
-      <DependentUpon>PluginList.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>Core\PluginList.resx</Link>
     </EmbeddedResource>
     <EmbeddedResource Include="..\Core\strings.resx">
       <SubType>Designer</SubType>
@@ -859,18 +819,6 @@
       <DependentUpon>ThreeButtonMessageBox.cs</DependentUpon>
       <SubType>Designer</SubType>
       <Link>UI\ThreeButtonMessageBox.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Usability\icons.resx">
-      <SubType>Designer</SubType>
-      <Link>Usability\icons.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Usability\strings.resx">
-      <SubType>Designer</SubType>
-      <Link>Usability\strings.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Usability\strings_ja.resx">
-      <SubType>Designer</SubType>
-      <Link>Usability\strings_ja.resx</Link>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -173,11 +173,11 @@ namespace Poderosa.Commands {
             cm.Register(new BasicCommand("org.poderosa.core.window.prevtab",
                 "Command.PreviousTab", _window, Keys.None, new ExecuteDelegate(CmdPrevTab), DoesExistAnyDocument));
 
+#if !LIBRARY
             cm.Register(new BasicCommand("org.poderosa.core.dialog.pluginlist",
                 "Command.PluginList", _dialog, Keys.None, new ExecuteDelegate(CmdPluginList)));
             cm.Register(new BasicCommand("org.poderosa.core.dialog.extensionpointlist",
                 "Command.ExtensionPointList", _dialog, Keys.None, new ExecuteDelegate(CmdExtensionPointList)));
-#if !LIBRARY
             cm.Register(new BasicCommand("org.poderosa.core.dialog.aboutbox",
                 "Command.AboutBox", _dialog, Keys.None, new ExecuteDelegate(CmdAboutBox)));
             cm.Register(new BasicCommand("org.poderosa.core.application.openweb",
@@ -388,6 +388,7 @@ namespace Poderosa.Commands {
             return CommandResult.Succeeded;
         }
 
+#if !LIBRARY
         //プラグインリスト表示のメニューとコマンド
         private static CommandResult CmdPluginList(ICommandTarget target) {
             IPoderosaMainWindow window = CommandTargetUtil.AsWindow(target);
@@ -398,6 +399,7 @@ namespace Poderosa.Commands {
             dlg.ShowDialog(window.AsForm());
             return CommandResult.Succeeded;
         }
+
         private static CommandResult CmdExtensionPointList(ICommandTarget target) {
             IPoderosaMainWindow window = CommandTargetUtil.AsWindow(target);
             if (window == null)
@@ -408,7 +410,6 @@ namespace Poderosa.Commands {
             return CommandResult.Succeeded;
         }
 
-#if !LIBRARY
         //AboutBox表示のメニューとコマンド
         private static CommandResult CmdAboutBox(ICommandTarget target) {
             IPoderosaMainWindow window = CommandTargetUtil.AsWindow(target);

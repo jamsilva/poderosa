@@ -32,9 +32,9 @@ namespace Poderosa.Usability {
         private static StringResource _stringResource;
         private ICommandManager _commandManager;
         private IWindowManager _windowManager;
-#if !LIBRARY
+
+
         private SSHKnownHosts _sshKnownHosts;
-#endif
         public static UsabilityPlugin Instance {
             get {
                 return _instance;
@@ -55,7 +55,6 @@ namespace Poderosa.Usability {
             _windowManager = cs.WindowManager;
             Debug.Assert(_windowManager != null);
 
-#if !LIBRARY
             //Guevara AboutBox
             pm.FindExtensionPoint("org.poderosa.window.aboutbox").RegisterExtension(new GuevaraAboutBoxFactory());
 
@@ -63,14 +62,11 @@ namespace Poderosa.Usability {
             _sshKnownHosts = new SSHKnownHosts();
             cs.PreferenceExtensionPoint.RegisterExtension(_sshKnownHosts);
             pm.FindExtensionPoint(ProtocolsPluginConstants.HOSTKEYCHECKER_EXTENSION).RegisterExtension(_sshKnownHosts);
-#endif
         }
         public override void TerminatePlugin() {
             base.TerminatePlugin();
-#if !LIBRARY
             if (_sshKnownHosts.Modified)
                 _sshKnownHosts.Flush();
-#endif
         }
 
         public IWindowManager WindowManager {

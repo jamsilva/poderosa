@@ -48,14 +48,12 @@ namespace Poderosa.LogViewer {
             poderosa.PluginManager.FindExtensionPoint(WindowManagerConstants.VIEW_FACTORY_ID).RegisterExtension(_viewFactory);
             _session = new PoderosaLogViewerSession();
 
-#if !LIBRARY
             ICommandManager cm = _coreServices.CommandManager;
             //Command and Menu
             _command = new GeneralCommandImpl("org.poderosa.poderosalogviewer.show", _strings, "Command.PoderosaLog", cm.CommandCategories.Dialogs,
                 new ExecuteDelegate(CmdShowPoderosaLog));
             poderosa.PluginManager.FindExtensionPoint("org.poderosa.menu.tool").RegisterExtension(
                 new PoderosaMenuGroupImpl(new PoderosaMenuItemImpl(_command, _strings, "Menu.PoderosaLog")));
-#endif
         }
 
         public static PoderosaLogViewerPlugin Instance {

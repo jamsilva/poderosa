@@ -27,11 +27,7 @@ using Poderosa.Forms;
 [assembly: PluginDeclaration(typeof(Poderosa.Usability.TerminalUIPlugin))]
 
 namespace Poderosa.Usability {
-#if LIBRARY
-    [PluginInfo(ID = "org.poderosa.terminalui", Version = VersionInfo.PODEROSA_VERSION, Author = VersionInfo.PROJECT_NAME, Dependencies = "org.poderosa.terminalsessions")]
-#else
     [PluginInfo(ID = "org.poderosa.terminalui", Version = VersionInfo.PODEROSA_VERSION, Author = VersionInfo.PROJECT_NAME, Dependencies = "org.poderosa.terminalsessions;org.poderosa.optiondialog")]
-#endif
     internal class TerminalUIPlugin : PluginBase {
         private static TerminalUIPlugin _instance;
         private ITerminalEmulatorService _terminalEmulatorPlugin;
@@ -46,7 +42,6 @@ namespace Poderosa.Usability {
             _terminalEmulatorPlugin = (ITerminalEmulatorService)pm.FindPlugin("org.poderosa.terminalemulator", typeof(ITerminalEmulatorService));
             Debug.Assert(_terminalEmulatorPlugin != null);
 
-#if !LIBRARY
             TerminalUICommand.Register(_coreServices.CommandManager);
 
             TerminalUIMenuGroup uimenu = new TerminalUIMenuGroup();
@@ -64,7 +59,6 @@ namespace Poderosa.Usability {
 
             IExtensionPoint toolmenu = pm.FindExtensionPoint("org.poderosa.menu.tool");
             toolmenu.RegisterExtension(new ShellSchemeEditMenuGroup());
-#endif
         }
         public static TerminalUIPlugin Instance {
             get {
