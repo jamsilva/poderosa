@@ -616,6 +616,7 @@ namespace Poderosa.Terminal {
             }
         }
 
+#if !LIBRARY
         //既存のファイルであったり、書き込み不可能だったら警告する
         public static LogFileCheckResult CheckLogFileName(string path, Form parent) {
             try {
@@ -663,6 +664,6 @@ namespace Poderosa.Terminal {
                 return LogFileCheckResult.Error;
             }
         }
-
+#endif
     }
 }

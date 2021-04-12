@@ -109,6 +109,7 @@ namespace Poderosa.Terminal {
             return r;
         }
 
+#if !LIBRARY
         public string Format() {
             StringBuilder bld = new StringBuilder();
             foreach (Entry e in _elements) {
@@ -120,6 +121,7 @@ namespace Poderosa.Terminal {
             }
             return bld.ToString();
         }
+#endif
 
         public static KeyFunction Parse(string format) {
             string[] elements = format.Split(',');

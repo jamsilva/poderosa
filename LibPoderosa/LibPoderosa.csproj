@@ -662,14 +662,6 @@
     <Compile Include="..\TerminalSession\TerminalSessionPlugin.cs">
       <Link>TerminalSession\TerminalSessionPlugin.cs</Link>
     </Compile>
-    <Compile Include="..\UI\ColorButton.cs">
-      <SubType>Component</SubType>
-      <Link>UI\ColorButton.cs</Link>
-    </Compile>
-    <Compile Include="..\UI\ColorDialog.cs">
-      <SubType>Form</SubType>
-      <Link>UI\ColorDialog.cs</Link>
-    </Compile>
     <Compile Include="..\UI\ColorUtil.cs">
       <Link>UI\ColorUtil.cs</Link>
     </Compile>
@@ -679,10 +671,6 @@
     <Compile Include="..\UI\GButton.cs">
       <SubType>UserControl</SubType>
       <Link>UI\GButton.cs</Link>
-    </Compile>
-    <Compile Include="..\UI\GMenuItem.cs">
-      <SubType>Component</SubType>
-      <Link>UI\GMenuItem.cs</Link>
     </Compile>
     <Compile Include="..\UI\ListItem.cs">
       <Link>UI\ListItem.cs</Link>
@@ -697,10 +685,6 @@
     <Compile Include="..\UI\TabBar.cs">
       <SubType>UserControl</SubType>
       <Link>UI\TabBar.cs</Link>
-    </Compile>
-    <Compile Include="..\UI\ThreeButtonMessageBox.cs">
-      <SubType>Form</SubType>
-      <Link>UI\ThreeButtonMessageBox.cs</Link>
     </Compile>
     <Compile Include="..\UI\Util.cs">
       <Link>UI\Util.cs</Link>
@@ -791,11 +775,6 @@
     <EmbeddedResource Include="..\TerminalSession\strings_ja.resx">
       <SubType>Designer</SubType>
       <Link>TerminalSession\strings_ja.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\UI\ThreeButtonMessageBox.resx">
-      <DependentUpon>ThreeButtonMessageBox.cs</DependentUpon>
-      <SubType>Designer</SubType>
-      <Link>UI\ThreeButtonMessageBox.resx</Link>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

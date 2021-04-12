@@ -11,7 +11,7 @@ namespace LibPoderosaExample
         {
             InitializeComponent();
             TelnetSession telnetSession = new TelnetSession();
-            telnetSession.ConnectionParameters.Destination = "towel.blinkenlights.nl";
+            telnetSession.ConnectionParameters.Destination = "1984.ws";
             SSHSession sshSession = new SSHSession();
             sshSession.ConnectionParameters.Destination = "test.rebex.net";
             sshSession.ProtocolParameters.Account = "demo";
