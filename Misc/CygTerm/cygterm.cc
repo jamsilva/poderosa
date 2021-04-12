@@ -109,6 +109,11 @@
 //   Written by IWAMOTO Kouichi. (doda)
 //
 
+extern "C"
+{
+	char *ptsname (int);
+}
+
 static char Program[] = "CygTerm+";
 static char Version[] = "version 1.07_20 (2010/10/20)";
 

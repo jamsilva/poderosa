@@ -92,7 +92,7 @@ namespace Poderosa.Usability {
             //比較結果に基づく処理
             IPoderosaForm form = UsabilityPlugin.Instance.WindowManager.ActiveWindow;
 #if !LIBRARY
-            Debug.Assert(form.AsForm().InvokeRequired); //別スレッドで実行しているはず
+            Debug.Assert(form.AsForm().IsHandleCreated); //別スレッドで実行しているはず
 #endif
 
             //fingerprint

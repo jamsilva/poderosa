@@ -134,7 +134,7 @@ namespace Poderosa.Sessions {
 
         public void EndCommand(List<GLine> command_result) {
             string[] stringarray_result = AsStringArrayResult(command_result);
-            Debug.Assert(_window.AsForm().InvokeRequired);
+            Debug.Assert(_window.AsForm().IsHandleCreated);
             //この処理中に次のアクションがセットされることもある
             if (_currentAction.ReceiverThreadAction != null)
                 _currentAction.ReceiverThreadAction(stringarray_result);

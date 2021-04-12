@@ -27,7 +27,12 @@ using Poderosa.View;
 using Poderosa.MacroEngine;
 
 namespace Poderosa.SerialPort {
-    internal class SerialTerminalParam : ITerminalParameter, IAutoExecMacroParameter {
+#if LIBRARY
+    public
+#else
+    internal
+#endif
+    class SerialTerminalParam : ITerminalParameter, IAutoExecMacroParameter {
         private string _portName;
         private string _terminalType;
         private string _autoExecMacro;

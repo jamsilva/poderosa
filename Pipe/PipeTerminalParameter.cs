@@ -22,7 +22,12 @@ namespace Poderosa.Pipe {
     /// <summary>
     /// Terminal Parameters
     /// </summary>
-    internal class PipeTerminalParameter : ITerminalParameter, IAutoExecMacroParameter {
+#if LIBRARY
+    public
+#else
+    internal
+#endif
+    class PipeTerminalParameter : ITerminalParameter, IAutoExecMacroParameter {
 
         /// <summary>
         /// Environment variable entry

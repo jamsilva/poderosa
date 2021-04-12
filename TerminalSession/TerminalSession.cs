@@ -139,7 +139,7 @@ namespace Poderosa.Sessions {
                 return;
             IPoderosaMainWindow window = this.OwnerWindow;
             if (window != null) {
-                Debug.Assert(window.AsControl().InvokeRequired);
+                Debug.Assert(window.AsControl().IsHandleCreated);
                 //TerminalSessionはコントロールを保有しないので、ウィンドウで代用する
                 window.AsControl().Invoke(new HostCauseCloseDelagate(HostCauseClose), msg);
             }

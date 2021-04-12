@@ -608,7 +608,9 @@ namespace Poderosa.Terminal {
 
             if (!IsConnectionClosed() && (ts.Width != GetDocument().TerminalWidth || ts.Height != GetDocument().TerminalHeight)) {
                 ResizeTerminal(ts.Width, ts.Height);
+#if !LIBRARY
                 ShowSizeTip(ts.Width, ts.Height);
+#endif
                 CommitTransientScrollBar();
             }
         }

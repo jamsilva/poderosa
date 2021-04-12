@@ -142,9 +142,13 @@ namespace Poderosa.Forms {
             w.Text = "Poderosa";
             w.FormClosed += new FormClosedEventHandler(WindowClosedHandler);
             w.Activated += delegate(object sender, EventArgs args) {
-                _activeWindow = (MainWindow)sender; //最後にアクティブになったものを指定する
+                _activeWindow = (MainWindow) sender; //最後にアクティブになったものを指定する
             };
             _windows.Add(w);
+            w.FormBorderStyle = FormBorderStyle.None;
+            w.TopLevel = false;
+            w.ViewManager.RootControl.Visible = true;
+            w.Visible = true;
             return w;
         }
 #endif
@@ -568,7 +572,7 @@ namespace Poderosa.Forms {
             }
             else {
                 //正規表現内のコメント: ソースを表示するフォント次第ではおかしいかも
-                //                      (<FormWindowState>, left,      ,     top,         ,    width       ,     height   )  
+                //                      (<FormWindowState>, left,      ,     top,         ,    width       ,     height   )
                 Regex re = new Regex("\\((Max,|Min,)?\\s*(-?[\\d]+)\\s*,\\s*(-?[\\d]+)\\s*,\\s*([\\d]+)\\s*,\\s*([\\d]+)\\)");
 
                 MainWindowArgument[] result = new MainWindowArgument[count];
