@@ -211,8 +211,8 @@ namespace Poderosa.Forms {
             _toolStripContainer.ReloadPreference(pref);
         }
 
-        protected override void OnDragEnter(DragEventArgs args) {
 #if !LIBRARY
+        protected override void OnDragEnter(DragEventArgs args) {
             base.OnDragEnter(args);
             try {
                 WindowManagerPlugin.Instance.BypassDragEnter(this, args);
@@ -220,10 +220,8 @@ namespace Poderosa.Forms {
             catch (Exception ex) {
                 RuntimeUtil.ReportException(ex);
             }
-#endif
-        }
-        protected override void OnDragDrop(DragEventArgs args) {
-#if !LIBRARY
+    }
+    protected override void OnDragDrop(DragEventArgs args) {
             base.OnDragDrop(args);
             try {
                 WindowManagerPlugin.Instance.BypassDragDrop(this, args);
@@ -231,8 +229,8 @@ namespace Poderosa.Forms {
             catch (Exception ex) {
                 RuntimeUtil.ReportException(ex);
             }
-#endif
         }
+#endif
     }
 
     internal class TabBarManager : IDocumentTabFeature, TabBarTable.IUIHandler {
@@ -355,9 +353,13 @@ namespace Poderosa.Forms {
             IPoderosaForm f = (IPoderosaForm)_tabBarTable.ParentForm;
             f.ShowContextMenu(ctx_pt.ContextMenu, doc, Control.MousePosition, ContextMenuFlags.None);
         }
+
+#if !LIBRARY
         public void StartTabDrag(TabKey key) {
             WindowManagerPlugin.Instance.SetDraggingTabBar(key);
         }
+#endif
+
         public void AllocateTabToControl(TabKey key, Control target) {
             IAdaptable ad = target as IAdaptable;
             if (ad == null)
@@ -369,6 +371,8 @@ namespace Poderosa.Forms {
 
             SessionManagerPlugin.Instance.AttachDocumentAndView(KeyToDocument(key), view);
         }
+
+#if !LIBRARY
         public void BypassDragEnter(DragEventArgs args) {
             try {
                 WindowManagerPlugin.Instance.BypassDragEnter(_tabBarTable.ParentForm, args);
@@ -385,6 +389,7 @@ namespace Poderosa.Forms {
                 RuntimeUtil.ReportException(ex);
             }
         }
+#endif
 #endregion
 
 

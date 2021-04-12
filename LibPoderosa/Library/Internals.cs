@@ -20,9 +20,8 @@ namespace Poderosa.Library
 
         public InternalPoderosaInstance()
         {
-            string assemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             string homeDirectory = Directory.GetCurrentDirectory();
-            _internalPoderosaWorld = new InternalPoderosaWorld(new PoderosaStartupContext(PluginManifest.CreateByFileSystem(assemblyDirectory), homeDirectory, homeDirectory, null, null));
+            _internalPoderosaWorld = new InternalPoderosaWorld(new PoderosaStartupContext(PluginManifest.CreateLibraryManifest(), homeDirectory, homeDirectory, null, null));
             _internalPoderosaWorld.Start();
         }
 

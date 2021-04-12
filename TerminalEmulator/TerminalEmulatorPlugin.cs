@@ -133,9 +133,11 @@ namespace Poderosa.Terminal {
             _autoLogFileFormatter = pm.CreateExtensionPoint(TerminalEmulatorConstants.LOG_FILENAME_FORMATTER_EXTENSIONPOINT, typeof(IAutoLogFileFormatter), this);
             _dynamicCaptionFormatter = pm.CreateExtensionPoint(TerminalEmulatorConstants.DYNAMIC_CAPTION_FORMATTER_EXTENSIONPOINT, typeof(IDynamicCaptionFormatter), this);
 
+#if !LIBRARY
             //Command Popup
             CommandResultSession.Init(poderosa);
             PopupStyleCommandResultRecognizer.CreateExtensionPointAndDefaultCommands(pm);
+#endif
 
             // Preferences for PromptRecognizer
             cs.PreferenceExtensionPoint.RegisterExtension(PromptRecognizerPreferences.Instance);

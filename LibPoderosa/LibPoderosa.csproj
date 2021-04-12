@@ -11,7 +11,6 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -101,10 +100,6 @@
     <Compile Include="..\Core\PoderosaForm.cs">
       <SubType>Form</SubType>
       <Link>Core\PoderosaForm.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\PopupViewContainer.cs">
-      <SubType>Form</SubType>
-      <Link>Core\PopupViewContainer.cs</Link>
     </Compile>
     <Compile Include="..\Core\Preferences.cs">
       <Link>Core\Preferences.cs</Link>
@@ -425,9 +420,6 @@
     <Compile Include="..\Plugin\PoderosaWorldEx.cs">
       <Link>Plugin\PoderosaWorldEx.cs</Link>
     </Compile>
-    <Compile Include="..\Plugin\Remoting.cs">
-      <Link>Plugin\Remoting.cs</Link>
-    </Compile>
     <Compile Include="..\Plugin\StringResource.cs">
       <Link>Plugin\StringResource.cs</Link>
     </Compile>
@@ -529,13 +521,6 @@
     </Compile>
     <Compile Include="..\TerminalEmulator\CommandResultEx.cs">
       <Link>TerminalEmulator\CommandResultEx.cs</Link>
-    </Compile>
-    <Compile Include="..\TerminalEmulator\CommandResultPopup.cs">
-      <Link>TerminalEmulator\CommandResultPopup.cs</Link>
-    </Compile>
-    <Compile Include="..\TerminalEmulator\CommandResultPopupSession.cs">
-      <SubType>Component</SubType>
-      <Link>TerminalEmulator\CommandResultPopupSession.cs</Link>
     </Compile>
     <Compile Include="..\TerminalEmulator\Encoding.cs">
       <Link>TerminalEmulator\Encoding.cs</Link>
@@ -699,10 +684,6 @@
       <SubType>Component</SubType>
       <Link>UI\GMenuItem.cs</Link>
     </Compile>
-    <Compile Include="..\UI\HotKey.cs">
-      <SubType>Component</SubType>
-      <Link>UI\HotKey.cs</Link>
-    </Compile>
     <Compile Include="..\UI\ListItem.cs">
       <Link>UI\ListItem.cs</Link>
     </Compile>
@@ -826,7 +807,6 @@
       <Link>Pipe\Resources\Pipe16x16.png</Link>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="..\SerialPort\Resources\Serial16x16.png">
       <Link>SerialPort\Resources\Serial16x16.png</Link>

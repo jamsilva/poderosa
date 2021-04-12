@@ -148,7 +148,9 @@ namespace Poderosa.Forms {
     public class TabBar : UserControl {
 
         private static IComparer<TabBarButton> _widthComparer; //幅順の並び替え
+#if !LIBRARY
         private static DragAndDropSupport _dragAndDrop; //本当はstaticではなく別途もらってくる？
+#endif
         private static TabBarDrawing _normalDrawing; //描画についての情報
         private static TabBarDrawing _activeDrawing;
 
@@ -173,7 +175,9 @@ namespace Poderosa.Forms {
         //初期化
         static TabBar() {
             _widthComparer = new TabBarButton.WidthComparer();
+#if !LIBRARY
             _dragAndDrop = new DragAndDropSupport();
+#endif
         }
 
         public TabBar(TabBarTable parent) {
@@ -298,7 +302,9 @@ namespace Poderosa.Forms {
                 TabBarButton btn = sender as TabBarButton;
                 Debug.Assert(btn != null);
                 btn.ClearMouseTrackingFlags();
+#if !LIBRARY
                 _dragAndDrop.StartDrag(btn);
+#endif
             }
         }
         private void RootActivator(object sender, EventArgs args) {
@@ -465,10 +471,12 @@ namespace Poderosa.Forms {
                 p = SystemPens.ControlLight;
                 g.DrawLine(p, 0, 1, Width, 1);
 
+#if !LIBRARY
                 //DropPoint Effect
                 if (_dragAndDrop.OwnsDropPoint(this)) {
                     DrawDropPointEffect(g, _dragAndDrop.CurrentDropPoint.PosX(2) - 1, BUTTON_Y);
                 }
+#endif
             }
         }
 
@@ -477,6 +485,7 @@ namespace Poderosa.Forms {
             this.ArrangeButtons();
         }
 
+#if !LIBRARY
         //Drag & Drop関係
         protected override void OnDragEnter(DragEventArgs drgevent) {
             base.OnDragEnter(drgevent);
@@ -591,7 +600,7 @@ namespace Poderosa.Forms {
             g.DrawLine(SystemPens.ControlText, x, y, x, y + height);
             g.DrawLine(SystemPens.ControlDark, x + 1, y, x + 1, y + height);
         }
-
+#endif
     }
 
 
@@ -809,7 +818,7 @@ namespace Poderosa.Forms {
         private void DrawButtonInternal(Graphics g) {
             Size clientSize = this.ClientSize;
 
-#if false	// this is not so nice effect...
+#if false   // this is not so nice effect...
             int offsetY = _mouseDown ? 1 : 0;
 #else
             const int offsetY = 0;
@@ -865,7 +874,7 @@ namespace Poderosa.Forms {
         }
     }
 
-
+#if !LIBRARY
     internal class DragAndDropSupport {
         internal class DropPoint {
             private TabBar _tabBar;
@@ -1064,6 +1073,7 @@ namespace Poderosa.Forms {
             return DropResult.Moved;
         }
     }
+#endif
 
     //多段構成にするときに使う、TabBarのコレクション。ActiveなものはTable内で一つだけになる
     /// <summary>
@@ -1075,10 +1085,14 @@ namespace Poderosa.Forms {
             void ActivateTab(TabKey key);
             void MouseMiddleButton(TabKey key);
             void MouseRightButton(TabKey key);
+#if !LIBRARY
             void StartTabDrag(TabKey key);
+#endif
             void AllocateTabToControl(TabKey key, Control target);
+#if !LIBRARY
             void BypassDragEnter(DragEventArgs args);
             void BypassDragDrop(DragEventArgs args);
+#endif
         }
         private IUIHandler _uiHandler;
 
@@ -1186,7 +1200,10 @@ namespace Poderosa.Forms {
                         _bars.Remove(bar);
                         this.Controls.Remove(bar);
                     }
+
+#if !LIBRARY
                     Rebalance(state, docs);
+#endif
                 }
 
                 this.Height = ROW_HEIGHT * count;
@@ -1309,6 +1326,7 @@ namespace Poderosa.Forms {
             }
         }
 
+#if !LIBRARY
         //ユーザインタフェースによるActivate
         public void OnActivatedByUI(TabKey key) {
             _uiHandler.ActivateTab(key);
@@ -1319,10 +1337,12 @@ namespace Poderosa.Forms {
         public void OnMouseRightButton(TabKey key) {
             DoRightButtonAction(key);
         }
+
         //ユーザインタフェースによるDragAndDrop
         public void OnStartButtonDragByUI(TabKey key) {
             _uiHandler.StartTabDrag(key);
         }
+#endif
 
         public void AddTab(TabKey key) {
             using (TabBarUpdateState state = new TabBarUpdateState("addtab")) {
@@ -1348,7 +1368,9 @@ namespace Poderosa.Forms {
                 else {
                     bar = _bars[_bars.Count - 1]; //仕方なく最後を使う
                     bar.AddTab(state, key, GetAllTabCount());
+#if !LIBRARY
                     Rebalance(state, GetAllDocuments());
+#endif
                 }
             }
         }
@@ -1388,6 +1410,7 @@ namespace Poderosa.Forms {
             }
         }
 
+#if !LIBRARY
         public void Rebalance(TabBarUpdateState state, TabKey[] keys) {
             //タブの個数に応じて均等になるようにバランスを取る
             int count = keys.Length / _bars.Count;
@@ -1401,6 +1424,7 @@ namespace Poderosa.Forms {
                 index += length;
             }
         }
+#endif
 
         public TabKey[] GetAllDocuments() {
             List<TabKey> r = new List<TabKey>();
@@ -1427,6 +1451,7 @@ namespace Poderosa.Forms {
             return null;
         }
 
+#if !LIBRARY
         //子のボタンでハンドルできなかったDragDrop
         public void ByPassDragEnter(DragEventArgs args) {
             _uiHandler.BypassDragEnter(args);
@@ -1434,6 +1459,7 @@ namespace Poderosa.Forms {
         public void ByPassDragDrop(DragEventArgs args) {
             _uiHandler.BypassDragDrop(args);
         }
+#endif
 
         /*
         protected override void OnPaint(PaintEventArgs e) {

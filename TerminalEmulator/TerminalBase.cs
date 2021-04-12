@@ -81,7 +81,9 @@ namespace Poderosa.Terminal {
         private IModalTerminalTask _modalTerminalTask;
         private PromptRecognizer _promptRecognizer;
         private IntelliSense _intelliSense;
+#if !LIBRARY
         private PopupStyleCommandResultRecognizer _commandResultRecognizer;
+#endif
         private Cursor _documentCursor = null;
 
         private bool _cleanup = false;
@@ -126,7 +128,9 @@ namespace Poderosa.Terminal {
             _logService = new LogService(info.TerminalParameter, _session.TerminalSettings);
             _promptRecognizer = new PromptRecognizer(this);
             _intelliSense = new IntelliSense(this);
+#if !LIBRARY
             _commandResultRecognizer = new PopupStyleCommandResultRecognizer(this);
+#endif
 
             if (info.Session.TerminalSettings.LogSettings != null)
                 _logService.ApplyLogSettings(_session.TerminalSettings.LogSettings, false);
@@ -207,16 +211,21 @@ namespace Poderosa.Terminal {
                 return _intelliSense;
             }
         }
+
+#if !LIBRARY
         internal PopupStyleCommandResultRecognizer PopupStyleCommandResultRecognizer {
             get {
                 return _commandResultRecognizer;
             }
         }
+
         public IShellCommandExecutor ShellCommandExecutor {
             get {
                 return _commandResultRecognizer;
             }
         }
+#endif
+
         public IAbstractTerminalHost TerminalHost {
             get {
                 return _session;
@@ -262,7 +271,7 @@ namespace Poderosa.Terminal {
             }
         }
 
-        #region ICharProcessor
+#region ICharProcessor
         ProcessCharResult ICharProcessor.State {
             get {
                 return _processCharResult;
@@ -280,7 +289,7 @@ namespace Poderosa.Terminal {
         public void InvalidCharDetected(byte[] buf) {
             CharDecodeError(String.Format(GEnv.Strings.GetString("Message.AbstractTerminal.UnexpectedChar"), _encodingProfile.Encoding.WebName));
         }
-        #endregion
+#endregion
 
         //受信側からの簡易呼び出し
         protected void TransmitDirect(byte[] data) {
@@ -357,10 +366,12 @@ namespace Poderosa.Terminal {
             }
         }
 
+#if !LIBRARY
         //コマンド結果の処理割り込み
         public void ProcessCommandResult(ICommandResultProcessor processor, bool start_with_linebreak) {
             _commandResultRecognizer.StartCommandResultProcessor(processor, start_with_linebreak);
         }
+#endif
 
         /// <summary>
         /// Hande mouse action.

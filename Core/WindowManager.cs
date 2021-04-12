@@ -20,6 +20,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Globalization;
+using System.ServiceModel;
+using System.Threading.Tasks;
 
 using Poderosa.Util;
 using Poderosa.Plugins;
@@ -27,9 +29,9 @@ using Poderosa.Sessions;
 using Poderosa.Preferences;
 using Poderosa.View;
 using Poderosa.Commands;
-using System.ServiceModel;
+#if !LIBRARY
 using Poderosa.Plugin.Remoting;
-using System.Threading.Tasks;
+#endif
 
 [assembly: PluginDeclaration(typeof(Poderosa.Forms.WindowManagerPlugin))]
 
@@ -45,7 +47,9 @@ namespace Poderosa.Forms {
         public const string PLUGIN_ID = "org.poderosa.core.window";
 
         private List<MainWindow> _windows;
+#if !LIBRARY
         private List<PopupViewContainer> _popupWindows;
+#endif
         private MainWindow _activeWindow;
 #if !LIBRARY
         private PoderosaAppContext _appContext;
@@ -54,7 +58,9 @@ namespace Poderosa.Forms {
         private WindowPreference _preferences;
         private ViewFactoryManager _viewFactoryManager;
 
+#if !LIBRARY
         private object _draggingObject;
+#endif
         private SelectionService _selectionService;
 
         private bool _executingAllWindowClose;
@@ -99,9 +105,9 @@ namespace Poderosa.Forms {
                 .RegisterExtension(new DefaultViewManagerFactory());
 
             _windows = new List<MainWindow>();
+#if !LIBRARY
             _popupWindows = new List<PopupViewContainer>();
 
-#if !LIBRARY
             _menu = new MainWindowMenu();
             _appContext = new PoderosaAppContext();
 #endif
@@ -111,7 +117,9 @@ namespace Poderosa.Forms {
             CommandManagerPlugin.Instance.AddKeyBindChangeListener(this);
             poderosa.Culture.AddChangeListener(this);
 
+#if !LIBRARY
             PoderosaRemotingServiceHost.Start(new PoderosaRemotingService(this));
+#endif
         }
 
         public void RunExtension() {
@@ -199,21 +207,26 @@ namespace Poderosa.Forms {
             }
             _windows.Remove(w);
             NotifyMainWindowUnloaded(w);
-            if (_windows.Count == 0 && GetStartMode() == StartMode.StandAlone) {
-                CloseAllPopupWindows();
 #if !LIBRARY
+            if (_windows.Count == 0 && GetStartMode() == StartMode.StandAlone)
+            {
+                CloseAllPopupWindows();
                 _appContext.ExitThread();
+        }
 #endif
-            }
         }
 
         public override void TerminatePlugin() {
             base.TerminatePlugin();
 
+#if !LIBRARY
             PoderosaRemotingServiceHost.Shutdown();
+#endif
 
             if (_windows.Count > 0) {
+#if !LIBRARY
                 CloseAllPopupWindows();
+#endif
                 MainWindow[] t = _windows.ToArray(); //クローズイベント内で_windowsの要素が変化するのでローカルコピーが必要
                 foreach (MainWindow w in t)
                     w.Close();
@@ -264,6 +277,7 @@ namespace Poderosa.Forms {
             ReloadPreference(_preferences.OriginalPreference);
         }
 
+#if !LIBRARY
         //Popup作成
         public IPoderosaPopupWindow CreatePopupView(PopupViewCreationParam viewcreation) {
             PopupViewContainer vc = new PopupViewContainer(viewcreation);
@@ -277,7 +291,7 @@ namespace Poderosa.Forms {
 
             return vc;
         }
-
+#endif
 
 #endregion
 
@@ -321,6 +335,8 @@ namespace Poderosa.Forms {
                 return _viewFactoryManager;
             }
         }
+
+#if !LIBRARY
 #region IWinFormsService
         public object GetDraggingObject(IDataObject data, Type required_type) {
             //TODO IDataObject使わなくていいの？
@@ -333,7 +349,6 @@ namespace Poderosa.Forms {
             }
         }
         public void BypassDragEnter(Control target, DragEventArgs args) {
-#if !LIBRARY
             ICommandTarget ct = CommandTargetUtil.AsCommandTarget(target as IAdaptable);
             if (ct == null)
                 return;
@@ -349,10 +364,8 @@ namespace Poderosa.Forms {
                     }
                 }
             }
-#endif
         }
         public void BypassDragDrop(Control target, DragEventArgs args) {
-#if !LIBRARY
             ICommandTarget ct = CommandTargetUtil.AsCommandTarget(target as IAdaptable);
             if (ct == null)
                 return;
@@ -367,13 +380,13 @@ namespace Poderosa.Forms {
                     }
                 }
             }
-#endif
         }
 #endregion
 
         public void SetDraggingTabBar(TabKey value) {
             _draggingObject = value;
         }
+#endif
 
         private StartMode GetStartMode() {
 #if UNITTEST
@@ -384,11 +397,13 @@ namespace Poderosa.Forms {
 #endif
         }
 
+#if !LIBRARY
         private void CloseAllPopupWindows() {
             PopupViewContainer[] ws = _popupWindows.ToArray();
             foreach (PopupViewContainer w in ws)
                 w.Close();
         }
+#endif
 
         //ウィンドウ開閉イベント通知
         public void NotifyMainWindowLoaded(MainWindow w) {
@@ -446,6 +461,7 @@ namespace Poderosa.Forms {
             return true;
         }
 
+#if !LIBRARY
         /// <summary>
         /// An implementation of the <see cref="IPoderosaRemotingService"/> interface.
         /// </summary>
@@ -471,6 +487,7 @@ namespace Poderosa.Forms {
                 return _windowManagerPlugin.OpenShortcutFile(path);
             }
         }
+#endif
     }
 
     internal class TimerSite : ITimerSite {

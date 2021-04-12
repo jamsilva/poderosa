@@ -123,12 +123,14 @@ namespace Poderosa.Sessions {
         private void ProcessAction(Action act) {
             _currentAction = act;
 
+#if !LIBRARY
             //TODO ユーザによる操作のロック
             //コマンド実行開始
             _currentAction.TargetSession.Terminal.ShellCommandExecutor.StartCommandResultProcessor(this, _currentAction.CommandString, true);
+#endif
         }
 
-        #region ICommandResultProcessor
+#region ICommandResultProcessor
         public void StartCommand(AbstractTerminal terminal, string command_text, GLine prompt_line) {
         }
 
@@ -146,7 +148,7 @@ namespace Poderosa.Sessions {
                 ProcessNextAction();
         }
 
-        #endregion
+#endregion
 
         public static string[] AsStringArrayResult(List<GLine> command_result) {
             List<string> r = new List<string>();

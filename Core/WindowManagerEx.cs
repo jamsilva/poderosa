@@ -308,6 +308,7 @@ namespace Poderosa.Forms {
             get;
         }
 
+#if !LIBRARY
         //PopupView作成 : コレで作成したビューは、セッションマネージャのAttachDocAndView->Activateをすることで初めて見えるようになる。CreatePopupViewだけでは見えるようにはならないことに注意
         /// <summary>
         /// <ja>
@@ -331,6 +332,7 @@ namespace Poderosa.Forms {
         /// </remarks>
         /// <exclude/>
         IPoderosaPopupWindow CreatePopupView(PopupViewCreationParam viewcreation);
+#endif
 
         //Reload
         /// <summary>
@@ -381,10 +383,12 @@ namespace Poderosa.Forms {
         //Timer Support
         ITimerSite CreateTimer(int interval, TimerDelegate callback);
 
+#if !LIBRARY
         //Drag & Drop
         object GetDraggingObject(IDataObject data, Type required_type);
         void BypassDragEnter(Control target, DragEventArgs args);
         void BypassDragDrop(Control target, DragEventArgs args);
+#endif
     }
 
     //event handler

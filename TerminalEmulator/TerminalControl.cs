@@ -454,8 +454,10 @@ namespace Poderosa.Terminal {
 
             if (_session.Terminal.IntelliSense.ProcessKey(modifiers, keybody))
                 return true;
+#if !LIBRARY
             else if (_session.Terminal.PopupStyleCommandResultRecognizer.ProcessKey(modifiers, keybody))
                 return true;
+#endif
             else
                 return false;
         }
@@ -817,6 +819,8 @@ namespace Poderosa.Terminal {
             if (_inIMEComposition)
                 ClearIMEComposition();
         }
+
+#if !LIBRARY
         //Drag&Drop関係
         protected override void OnDragEnter(DragEventArgs args) {
             base.OnDragEnter(args);
@@ -849,6 +853,7 @@ namespace Poderosa.Terminal {
                 RuntimeUtil.ReportException(ex);
             }
         }
+#endif
 
         private void ProcessVScrollMessage(int cmd) {
             int newval = _VScrollBar.Value;

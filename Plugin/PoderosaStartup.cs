@@ -21,17 +21,18 @@ using System.IO;
 using System.Reflection;
 
 using Poderosa.Plugins;
+#if !LIBRARY
 using Poderosa.Plugin.Remoting;
+#endif
 
 namespace Poderosa.Boot {
-
+#if !LIBRARY
     //ブート用のエントリポイント
     /// <summary>
     /// 
     /// </summary>
     /// <exclude/>
     public static class PoderosaStartup {
-
         // for compatibility
         public static IPoderosaApplication CreatePoderosaApplication(string[] args) {
             return CreatePoderosaApplication(args, false);
@@ -112,7 +113,8 @@ namespace Poderosa.Boot {
             else
                 return value;
         }
-        private static string ConfirmDirectory(string dir) {
+
+    private static string ConfirmDirectory(string dir) {
             string r = dir + "\\Poderosa";
             if (!Directory.Exists(r))
                 Directory.CreateDirectory(r);
@@ -133,6 +135,7 @@ namespace Poderosa.Boot {
             return succeeded;
         }
     }
+#endif
 
 
     //起動時のパラメータ　コマンドライン引数などから構築
@@ -317,6 +320,14 @@ namespace Poderosa.Boot {
             return entry;
         }
 
+#if LIBRARY
+        public static PluginManifest CreateLibraryManifest()
+        {
+            PluginManifest m = new PluginManifest();
+            m.AddAssembly(Assembly.GetExecutingAssembly().Location);
+            return m;
+        }
+#else
         //文字列形式から作成
         public static PluginManifest CreateByText(string text) {
             PluginManifest m = new PluginManifest();
@@ -365,6 +376,6 @@ namespace Poderosa.Boot {
             PluginManifest m = new PluginManifest();
             return m;
         }
+#endif
     }
-
 }

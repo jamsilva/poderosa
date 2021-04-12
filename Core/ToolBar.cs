@@ -262,6 +262,8 @@ namespace Poderosa.Forms {
             base.OnCreateControl();
             this.RefreshAll();
         }
+
+#if !LIBRARY
         protected override void OnDragEnter(DragEventArgs drgevent) {
             base.OnDragEnter(drgevent);
             try {
@@ -280,6 +282,7 @@ namespace Poderosa.Forms {
                 RuntimeUtil.ReportException(ex);
             }
         }
+#endif
 
         private abstract class ControlTagBase {
             private IToolBarComponent _ownerComponent;
