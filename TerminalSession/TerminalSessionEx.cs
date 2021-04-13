@@ -345,7 +345,9 @@ namespace Poderosa.Sessions {
         /// <exclude/>
         ITerminalConnection OpenConnection(IPoderosaMainWindow window, ITerminalParameter destination, ITerminalSettings settings);
 
+#if !LIBRARY
         void OpenShortcutFile(ICommandTarget target, string filename);
+#endif
     }
 
     //ITerminalParameterをインスタンシエートしてITerminalConnectionにするExtensionPointのインタフェース

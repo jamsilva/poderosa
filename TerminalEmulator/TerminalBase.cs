@@ -75,8 +75,8 @@ namespace Poderosa.Terminal {
         private LogService _logService;
         private IModalTerminalTask _modalTerminalTask;
         private PromptRecognizer _promptRecognizer;
-        private IntelliSense _intelliSense;
 #if !LIBRARY
+        private IntelliSense _intelliSense;
         private PopupStyleCommandResultRecognizer _commandResultRecognizer;
 #endif
         private Cursor _documentCursor = null;
@@ -122,8 +122,8 @@ namespace Poderosa.Terminal {
             _scrollBarValues = new ScrollBarValues();
             _logService = new LogService(info.TerminalParameter, _session.TerminalSettings);
             _promptRecognizer = new PromptRecognizer(this);
-            _intelliSense = new IntelliSense(this);
 #if !LIBRARY
+            _intelliSense = new IntelliSense(this);
             _commandResultRecognizer = new PopupStyleCommandResultRecognizer(this);
 #endif
 
@@ -201,12 +201,12 @@ namespace Poderosa.Terminal {
                 return _promptRecognizer;
             }
         }
+#if !LIBRARY
         internal IntelliSense IntelliSense {
             get {
                 return _intelliSense;
             }
         }
-#if !LIBRARY
         internal PopupStyleCommandResultRecognizer PopupStyleCommandResultRecognizer {
             get {
                 return _commandResultRecognizer;

@@ -91,7 +91,9 @@ namespace Poderosa.Commands {
 
     internal static class BasicCommandImplementation {
         private static BasicCommand _closeAll;
+#if !LIBRARY
         private static DocActivationCommand _docActivationCommand;
+#endif
 
         //この２つはなぜ要るんだっけ
         public static BasicCommand CloseAll {
@@ -99,11 +101,13 @@ namespace Poderosa.Commands {
                 return _closeAll;
             }
         }
+#if !LIBRARY
         public static DocActivationCommand DocActivationCommand {
             get {
                 return _docActivationCommand;
             }
         }
+#endif
 
         internal class DefaultCommandCategories : IDefaultCommandCategories {
             public ICommandCategory File {
@@ -182,10 +186,10 @@ namespace Poderosa.Commands {
                 "Command.AboutBox", _dialog, Keys.None, new ExecuteDelegate(CmdAboutBox)));
             cm.Register(new BasicCommand("org.poderosa.core.application.openweb",
                 "Command.PoderosaWeb", _dialog, Keys.None, new ExecuteDelegate(CmdOpenWeb)));
-#endif
 
             //これはGeneralCommandではない
             _docActivationCommand = new DocActivationCommand();
+#endif
         }
 
         public static IDefaultCommandCategories DefaultCategories {

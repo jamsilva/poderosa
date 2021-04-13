@@ -74,13 +74,16 @@ namespace Poderosa.Terminal {
         char DefaultDelimiter {
             get;
         }
+#if !LIBRARY
         IIntelliSenseItemCollection CommandHistory {
             get;
         }
+#endif
 
         IShellScheme Clone();
     }
 
+#if !LIBRARY
     /// <summary>
     /// 
     /// </summary>
@@ -126,4 +129,5 @@ namespace Poderosa.Terminal {
     public interface IIntelliSenseCandidateExtension {
         void AdjustItem(AbstractTerminal terminal, IIntelliSenseCandidateList list, string[] input);
     }
+#endif
 }

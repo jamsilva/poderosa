@@ -159,9 +159,11 @@ namespace Poderosa.Sessions {
             throw new ArgumentException("Failed to make an ITerminalConnection using extension point."); //ましなエラーメッセージ
         }
 
+#if !LIBRARY
         public void OpenShortcutFile(ICommandTarget target, string filename) {
             ShortcutFileCommands.OpenShortcutFile(target, filename);
         }
+#endif
 
         private class CygwinConnectionFactory : ITerminalConnectionFactory {
             public bool IsSupporting(ITerminalParameter param, ITerminalSettings settings) {
@@ -262,10 +264,10 @@ namespace Poderosa.Sessions {
             return view;
         }
 
-        #region IAdaptable
+#region IAdaptable
         public IAdaptable GetAdapter(Type adapter) {
             return TerminalSessionsPlugin.Instance.PoderosaWorld.AdapterManager.GetAdapter(this, adapter);
         }
-        #endregion
+#endregion
     }
 }

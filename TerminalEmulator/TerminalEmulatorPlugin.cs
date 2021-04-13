@@ -54,7 +54,9 @@ namespace Poderosa.Terminal {
         private ICommandManager _commandManager;
         private IExtensionPoint _contextMenu;
         private IExtensionPoint _documentContextMenu;
+#if !LIBRARY
         private IExtensionPoint _intelliSenseExtension;
+#endif
         private IExtensionPoint _autoLogFileFormatter;
         private IExtensionPoint _dynamicCaptionFormatter;
         private TerminalOptionsSupplier _optionSupplier;
@@ -115,7 +117,9 @@ namespace Poderosa.Terminal {
             _contextMenu = pm.CreateExtensionPoint(TerminalEmulatorConstants.TERMINAL_CONTEXT_MENU_EXTENSIONPOINT, typeof(IPoderosaMenuGroup), this);
             _contextMenu.RegisterExtension(new BasicCopyPasteMenuGroup());
             _contextMenu.RegisterExtension(new TerminalSettingMenuGroup());
+#if !LIBRARY
             _contextMenu.RegisterExtension(new IntelliSenseMenuGroup());
+#endif
 
             //タブのコンテキストメニュー
             _documentContextMenu = pm.CreateExtensionPoint(TerminalEmulatorConstants.DOCUMENT_CONTEXT_MENU_EXTENSIONPOINT, typeof(IPoderosaMenuGroup), this);
@@ -129,7 +133,9 @@ namespace Poderosa.Terminal {
             GetSessionManager().AddActiveDocumentChangeListener(terminaltoolbar);
 
             //その他 Extension
+#if !LIBRARY
             _intelliSenseExtension = pm.CreateExtensionPoint(TerminalEmulatorConstants.INTELLISENSE_CANDIDATE_EXTENSIONPOINT, typeof(IIntelliSenseCandidateExtension), this);
+#endif
             _autoLogFileFormatter = pm.CreateExtensionPoint(TerminalEmulatorConstants.LOG_FILENAME_FORMATTER_EXTENSIONPOINT, typeof(IAutoLogFileFormatter), this);
             _dynamicCaptionFormatter = pm.CreateExtensionPoint(TerminalEmulatorConstants.DYNAMIC_CAPTION_FORMATTER_EXTENSIONPOINT, typeof(IDynamicCaptionFormatter), this);
 
@@ -169,7 +175,9 @@ namespace Poderosa.Terminal {
             t.BeginUpdate();
             t.Icon = icon;
             t.Caption = caption;
+#if !LIBRARY
             t.EnabledCharTriggerIntelliSense = GEnv.Options.EnableComplementForNewConnections;
+#endif
             t.EndUpdate();
             return t;
         }
@@ -186,11 +194,13 @@ namespace Poderosa.Terminal {
                 return (IPoderosaMenuGroup[])_documentContextMenu.GetExtensions();
             }
         }
+#if !LIBRARY
         public IIntelliSenseCandidateExtension[] IntelliSenseExtensions {
             get {
                 return (IIntelliSenseCandidateExtension[])_intelliSenseExtension.GetExtensions();
             }
         }
+#endif
         public IAutoLogFileFormatter[] AutoLogFileFormatter {
             get {
                 return (IAutoLogFileFormatter[])_autoLogFileFormatter.GetExtensions();

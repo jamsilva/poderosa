@@ -366,6 +366,7 @@ namespace Poderosa.Terminal {
             get;
             set;
         }
+#if !LIBRARY
         /// <summary>
         /// <ja>
         /// 通常の文字入力に伴うインテリセンスを有効にするか否かの設定です。
@@ -397,6 +398,7 @@ namespace Poderosa.Terminal {
             get;
             set;
         }
+#endif
 
         /// <summary>
         /// <ja>

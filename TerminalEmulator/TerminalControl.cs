@@ -413,9 +413,11 @@ namespace Poderosa.Terminal {
                     SendCharArray(custom);
                     return true;
                 }
+#if !LIBRARY
                 else if (ProcessAdvancedFeatureKey(modifiers, keybody)) {
                     return true;
                 }
+#endif
                 else if (keybody == Keys.Enter && modifiers == Keys.None) {
                     _escForVI = false;
                     SendCharArray(TerminalUtil.NewLineChars(GetTerminalSettings().TransmitNL));
@@ -448,19 +450,19 @@ namespace Poderosa.Terminal {
             return base.ProcessDialogKey(key);
         }
 
+#if !LIBRARY
         private bool ProcessAdvancedFeatureKey(Keys modifiers, Keys keybody) {
             if (_session.Terminal.TerminalMode == TerminalMode.Application)
                 return false;
 
             if (_session.Terminal.IntelliSense.ProcessKey(modifiers, keybody))
                 return true;
-#if !LIBRARY
             else if (_session.Terminal.PopupStyleCommandResultRecognizer.ProcessKey(modifiers, keybody))
                 return true;
-#endif
             else
                 return false;
         }
+#endif
 
         private static bool IsSequenceKey(Keys key) {
             return ((int)Keys.F1 <= (int)key && (int)key <= (int)Keys.F12) ||
@@ -518,8 +520,10 @@ namespace Poderosa.Terminal {
             }
             else {
                 this.SendChar(e.KeyChar);
+#if !LIBRARY
                 if (_session.TerminalSettings.EnabledCharTriggerIntelliSense && _session.Terminal.TerminalMode == TerminalMode.Normal)
                     _session.Terminal.IntelliSense.ProcessChar(e.KeyChar);
+#endif
             }
         }
 

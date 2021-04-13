@@ -237,8 +237,10 @@ namespace Poderosa.Terminal {
             cm.Register(new TerminalCommand("org.poderosa.terminalemulator.resetterminal",
                 "Command.ResetTerminal", _terminal, new ExecuteDelegate(CmdResetTerminal), DoesOpenTargetSession));
 
+#if !LIBRARY
             //IntelliSense
             cm.Register(new ToggleIntelliSenseCommand());
+#endif
         }
 
 

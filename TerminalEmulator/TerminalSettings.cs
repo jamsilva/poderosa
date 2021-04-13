@@ -42,7 +42,9 @@ namespace Poderosa.Terminal {
         private Image _icon;
         private IShellScheme _shellScheme;
         private string _shellSchemeName;
+#if !LIBRARY
         private bool _enabledCharTriggerIntelliSense;
+#endif
 
         private ListenerList<ITerminalSettingsChangeListener> _listeners;
         private bool _updating;
@@ -64,7 +66,9 @@ namespace Poderosa.Terminal {
             _transmitnl = NewLine.CR;
             _renderProfile = null;
             _shellSchemeName = ShellSchemeCollection.DEFAULT_SCHEME_NAME;
+#if !LIBRARY
             _enabledCharTriggerIntelliSense = false;
+#endif
             _multiLogSettings = new MultiLogSettings();
 
             _listeners = new ListenerList<ITerminalSettingsChangeListener>();
@@ -91,7 +95,9 @@ namespace Poderosa.Terminal {
                 _shellScheme = src_r._shellScheme;
                 TerminalEmulatorPlugin.Instance.ShellSchemeCollection.AddDynamicChangeListener(this);
             }
+#if !LIBRARY
             _enabledCharTriggerIntelliSense = src.EnabledCharTriggerIntelliSense;
+#endif
             _renderProfile = src.RenderProfile == null ? null : (RenderProfile)src.RenderProfile.Clone();
             _multiLogSettings = src.LogSettings == null ? null : (IMultiLogSettings)_multiLogSettings.Clone();
         }
@@ -214,6 +220,7 @@ namespace Poderosa.Terminal {
                 _shellScheme = value;
             }
         }
+#if !LIBRARY
         public bool EnabledCharTriggerIntelliSense {
             get {
                 return _enabledCharTriggerIntelliSense;
@@ -223,6 +230,7 @@ namespace Poderosa.Terminal {
                 _enabledCharTriggerIntelliSense = value;
             }
         }
+#endif
 
         public virtual IAdaptable GetAdapter(Type adapter) {
             return TerminalEmulatorPlugin.Instance.PoderosaWorld.AdapterManager.GetAdapter(this, adapter);

@@ -212,16 +212,20 @@ namespace Poderosa.Terminal {
                 return TerminalCommandTarget.AsOpenTerminal(target) != null;
             }
 
+#if !LIBRARY
             public override bool IsChecked(ICommandTarget target) {
                 ITerminalControlHost session = TerminalCommandTarget.AsOpenTerminal(target);
                 return session.TerminalSettings.EnabledCharTriggerIntelliSense;
             }
+#endif
 
             public override void OnChange(ICommandTarget target, bool is_checked) {
                 ITerminalControlHost session = TerminalCommandTarget.AsOpenTerminal(target);
                 ITerminalSettings ts = session.TerminalSettings;
                 ts.BeginUpdate();
+#if !LIBRARY
                 ts.EnabledCharTriggerIntelliSense = is_checked;
+#endif
                 ts.EndUpdate();
             }
         }

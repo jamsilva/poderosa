@@ -72,9 +72,6 @@
     <Compile Include="..\Core\CoreServicesEx.cs">
       <Link>Core\CoreServicesEx.cs</Link>
     </Compile>
-    <Compile Include="..\Core\DocActivationCommands.cs">
-      <Link>Core\DocActivationCommands.cs</Link>
-    </Compile>
     <Compile Include="..\Core\DocumentAndViewEx.cs">
       <Link>Core\DocumentAndViewEx.cs</Link>
     </Compile>
@@ -426,9 +423,6 @@
     <Compile Include="..\Plugin\StructuredText.cs">
       <Link>Plugin\StructuredText.cs</Link>
     </Compile>
-    <Compile Include="..\Plugin\StructuredTextXML.cs">
-      <Link>Plugin\StructuredTextXML.cs</Link>
-    </Compile>
     <Compile Include="..\Plugin\Tracer.cs">
       <Link>Plugin\Tracer.cs</Link>
     </Compile>
@@ -528,21 +522,8 @@
     <Compile Include="..\TerminalEmulator\GEnv.cs">
       <Link>TerminalEmulator\GEnv.cs</Link>
     </Compile>
-    <Compile Include="..\TerminalEmulator\IntelliSense.cs">
-      <Link>TerminalEmulator\IntelliSense.cs</Link>
-    </Compile>
-    <Compile Include="..\TerminalEmulator\IntelliSenseCommand.cs">
-      <Link>TerminalEmulator\IntelliSenseCommand.cs</Link>
-    </Compile>
     <Compile Include="..\TerminalEmulator\IntelliSenseEx.cs">
       <Link>TerminalEmulator\IntelliSenseEx.cs</Link>
-    </Compile>
-    <Compile Include="..\TerminalEmulator\IntelliSenseItem.cs">
-      <Link>TerminalEmulator\IntelliSenseItem.cs</Link>
-    </Compile>
-    <Compile Include="..\TerminalEmulator\IntelliSenseWindow.cs">
-      <SubType>Component</SubType>
-      <Link>TerminalEmulator\IntelliSenseWindow.cs</Link>
     </Compile>
     <Compile Include="..\TerminalEmulator\KeepAlive.cs">
       <Link>TerminalEmulator\KeepAlive.cs</Link>
@@ -620,9 +601,6 @@
     <Compile Include="..\TerminalEmulator\XTerm.cs">
       <Link>TerminalEmulator\XTerm.cs</Link>
     </Compile>
-    <Compile Include="..\TerminalSession\AutoShellExecutor.cs">
-      <Link>TerminalSession\AutoShellExecutor.cs</Link>
-    </Compile>
     <Compile Include="..\TerminalSession\CopyPaste.cs">
       <Link>TerminalSession\CopyPaste.cs</Link>
     </Compile>
@@ -635,17 +613,8 @@
     <Compile Include="..\TerminalSession\Reproduce.cs">
       <Link>TerminalSession\Reproduce.cs</Link>
     </Compile>
-    <Compile Include="..\TerminalSession\ShortcutFile.cs">
-      <Link>TerminalSession\ShortcutFile.cs</Link>
-    </Compile>
-    <Compile Include="..\TerminalSession\ShortcutFileCommands.cs">
-      <Link>TerminalSession\ShortcutFileCommands.cs</Link>
-    </Compile>
     <Compile Include="..\TerminalSession\StartCommands.cs">
       <Link>TerminalSession\StartCommands.cs</Link>
-    </Compile>
-    <Compile Include="..\TerminalSession\StoragePerWindow.cs">
-      <Link>TerminalSession\StoragePerWindow.cs</Link>
     </Compile>
     <Compile Include="..\TerminalSession\TelnetSSHPlugin.cs">
       <Link>TerminalSession\TelnetSSHPlugin.cs</Link>
@@ -661,9 +630,6 @@
     </Compile>
     <Compile Include="..\TerminalSession\TerminalSessionPlugin.cs">
       <Link>TerminalSession\TerminalSessionPlugin.cs</Link>
-    </Compile>
-    <Compile Include="..\UI\ColorUtil.cs">
-      <Link>UI\ColorUtil.cs</Link>
     </Compile>
     <Compile Include="..\UI\DrawUtil.cs">
       <Link>UI\DrawUtil.cs</Link>
@@ -828,11 +794,6 @@
   <ItemGroup>
     <None Include="..\TerminalSession\Resources\Cygwin16x16.png">
       <Link>TerminalSession\Resources\Cygwin16x16.png</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\TerminalSession\Resources\MacroSmall.png">
-      <Link>TerminalSession\Resources\MacroSmall.png</Link>
     </None>
   </ItemGroup>
   <ItemGroup>
