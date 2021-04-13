@@ -52,7 +52,9 @@ namespace Poderosa.Commands {
             _keyBind = new KeyBindConfiguration();
             _keyBindChangeListener = new ListenerList<IKeyBindChangeListener>();
 
+#if !LIBRARY
             BasicCommandImplementation.Build();
+#endif
 
             poderosa.PluginManager.FindExtensionPoint(PreferencePlugin.EXTENSIONPOINT_NAME).RegisterExtension(this);
         }
@@ -87,11 +89,13 @@ namespace Poderosa.Commands {
             }
         }
 
+#if !LIBRARY
         public IDefaultCommandCategories CommandCategories {
             get {
                 return BasicCommandImplementation.DefaultCategories;
             }
         }
+#endif
 
         public static CommandManagerPlugin Instance {
             get {

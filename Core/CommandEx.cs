@@ -634,6 +634,7 @@ namespace Poderosa.Commands {
         }
     }
 
+#if !LIBRARY
     /// <summary>
     /// <ja>
     /// 定義済みコマンドカテゴリを示します
@@ -688,6 +689,7 @@ namespace Poderosa.Commands {
             get;
         }
     }
+#endif
 
     //GeneralCommandのコレクション
     /// <summary>
@@ -936,6 +938,7 @@ namespace Poderosa.Commands {
         /// <exclude/>
         IKeyBinds GetKeyBinds(IPreferenceFolder folder); //ちょっと違和感。別インタフェースに分ける？
 
+#if !LIBRARY
         /// <summary>
         /// <ja>
         /// 定義済みコマンドカテゴリを取得するためのインターフェイスです。
@@ -947,6 +950,7 @@ namespace Poderosa.Commands {
         IDefaultCommandCategories CommandCategories {
             get;
         }
+#endif
     }
 
     //キーバインド設定

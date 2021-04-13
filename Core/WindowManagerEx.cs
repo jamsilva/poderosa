@@ -82,6 +82,7 @@ namespace Poderosa.Forms {
         /// </remarks>
         CommandResult CancellableClose();
 
+#if !LIBRARY
         //ポップアップメニュー
         /// <summary>
         /// <ja>
@@ -96,6 +97,7 @@ namespace Poderosa.Forms {
         /// <param name="point_screen"><ja>表示する位置です。</ja><en>It is a displayed position. </en></param>
         /// <param name="flags"><ja>メニューを表示するときに先頭の項目を選択状態にするかどうかのフラグです</ja><en>Flag whether to put the first item into state of selection when menu is displayed</en></param>
         void ShowContextMenu(IPoderosaMenuGroup[] menus, ICommandTarget target, Point point_screen, ContextMenuFlags flags);
+#endif
 
         //ユーザに対する警告系。このFormを所有していないスレッドからも呼ばれることを考慮すること Note: 別インタフェースに分離するか？
         /// <summary>

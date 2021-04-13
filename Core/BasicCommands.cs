@@ -88,12 +88,10 @@ namespace Poderosa.Commands {
 
     }
 
-
+#if !LIBRARY
     internal static class BasicCommandImplementation {
         private static BasicCommand _closeAll;
-#if !LIBRARY
         private static DocActivationCommand _docActivationCommand;
-#endif
 
         //この２つはなぜ要るんだっけ
         public static BasicCommand CloseAll {
@@ -101,13 +99,11 @@ namespace Poderosa.Commands {
                 return _closeAll;
             }
         }
-#if !LIBRARY
         public static DocActivationCommand DocActivationCommand {
             get {
                 return _docActivationCommand;
             }
         }
-#endif
 
         internal class DefaultCommandCategories : IDefaultCommandCategories {
             public ICommandCategory File {
@@ -146,10 +142,8 @@ namespace Poderosa.Commands {
             CreateCategories();
 
             ICommandManager cm = CommandManagerPlugin.Instance;
-#if !LIBRARY
             cm.Register(new BasicCommand("org.poderosa.core.application.newwindow",
                 "Command.NewWindow", _file, CtrlShift(Keys.N), new ExecuteDelegate(CmdNewWindow)));
-#endif
             cm.Register(new BasicCommand("org.poderosa.core.application.quit",
                 "Command.Quit", _file, CtrlShift(Keys.W), new ExecuteDelegate(CmdQuit)));
 
@@ -177,7 +171,6 @@ namespace Poderosa.Commands {
             cm.Register(new BasicCommand("org.poderosa.core.window.prevtab",
                 "Command.PreviousTab", _window, Keys.None, new ExecuteDelegate(CmdPrevTab), DoesExistAnyDocument));
 
-#if !LIBRARY
             cm.Register(new BasicCommand("org.poderosa.core.dialog.pluginlist",
                 "Command.PluginList", _dialog, Keys.None, new ExecuteDelegate(CmdPluginList)));
             cm.Register(new BasicCommand("org.poderosa.core.dialog.extensionpointlist",
@@ -189,7 +182,6 @@ namespace Poderosa.Commands {
 
             //これはGeneralCommandではない
             _docActivationCommand = new DocActivationCommand();
-#endif
         }
 
         public static IDefaultCommandCategories DefaultCategories {
@@ -205,7 +197,6 @@ namespace Poderosa.Commands {
             _dialog = new CommandCategory("CommandCategory.Dialog").SetPosition(PositionType.NextTo, _window);
         }
 
-#if !LIBRARY
         private static CommandResult CmdNewWindow(ICommandTarget target) {
             IPoderosaMainWindow window = CommandTargetUtil.AsWindow(target);
             Form f = window.AsForm();
@@ -216,7 +207,6 @@ namespace Poderosa.Commands {
             WindowManagerPlugin.Instance.CreateNewWindow(arg);
             return CommandResult.Succeeded;
         }
-#endif
         private static CommandResult CmdQuit(ICommandTarget target) {
             WindowManagerPlugin p = WindowManagerPlugin.Instance;
             return p.CloseAllWindows();
@@ -392,7 +382,6 @@ namespace Poderosa.Commands {
             return CommandResult.Succeeded;
         }
 
-#if !LIBRARY
         //プラグインリスト表示のメニューとコマンド
         private static CommandResult CmdPluginList(ICommandTarget target) {
             IPoderosaMainWindow window = CommandTargetUtil.AsWindow(target);
@@ -438,7 +427,6 @@ namespace Poderosa.Commands {
                 return CommandResult.Failed;
             }
         }
-#endif
 
         //delegate util
         public static CanExecuteDelegate DoesExistCurrentDocument {
@@ -465,7 +453,7 @@ namespace Poderosa.Commands {
             return Keys.Control | Keys.Shift | key;
         }
     }
-
+#endif
 
     //メインメニューの項目は、ICommandTarget経由で起動元のフォームが取れるようになっている。
     /// <summary>

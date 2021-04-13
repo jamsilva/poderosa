@@ -279,8 +279,10 @@ namespace Poderosa.Forms {
 
         private void OnMouseUp(object sender, MouseEventArgs args) {
             if (args.Button == MouseButtons.Right) {
+#if !LIBRARY
                 TabKey key = ((TabBarButton)sender).TabKey;
                 _parentTable.DoRightButtonAction(key);
+#endif
             }
             else if (args.Button == MouseButtons.Middle) {
                 TabKey key = ((TabBarButton)sender).TabKey;
@@ -1084,8 +1086,8 @@ namespace Poderosa.Forms {
         public interface IUIHandler {
             void ActivateTab(TabKey key);
             void MouseMiddleButton(TabKey key);
-            void MouseRightButton(TabKey key);
 #if !LIBRARY
+            void MouseRightButton(TabKey key);
             void StartTabDrag(TabKey key);
 #endif
             void AllocateTabToControl(TabKey key, Control target);
@@ -1291,9 +1293,11 @@ namespace Poderosa.Forms {
         public void DoMiddleButtonAction(TabKey key) {
             _uiHandler.MouseMiddleButton(key);
         }
+#if !LIBRARY
         public void DoRightButtonAction(TabKey key) {
             _uiHandler.MouseRightButton(key);
         }
+#endif
 
         private void ActivateInternal(TabBarUpdateState state, TabBarButton button) {
             Debug.Assert(button.ParentTabBar.ParentTable == this);

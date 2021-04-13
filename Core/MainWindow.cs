@@ -343,6 +343,7 @@ namespace Poderosa.Forms {
                 sm.ActivateDocument(view.Document, ActivateReason.InternalAction);
             }
         }
+#if !LIBRARY
         public void MouseRightButton(TabKey key) {
             IPoderosaDocument doc = KeyToDocument(key);
             IPoderosaContextMenuPoint ctx_pt = (IPoderosaContextMenuPoint)doc.GetAdapter(typeof(IPoderosaContextMenuPoint));
@@ -354,7 +355,6 @@ namespace Poderosa.Forms {
             IPoderosaForm f = (IPoderosaForm)_tabBarTable.ParentForm;
             f.ShowContextMenu(ctx_pt.ContextMenu, doc, Control.MousePosition, ContextMenuFlags.None);
         }
-#if !LIBRARY
         public void StartTabDrag(TabKey key) {
             WindowManagerPlugin.Instance.SetDraggingTabBar(key);
         }

@@ -30,21 +30,24 @@ namespace Poderosa.Forms {
     internal abstract class PoderosaForm : Form, IPoderosaForm {
 #endif
         private System.ComponentModel.IContainer components = null;
+#if !LIBRARY
         private Timer _contextMenuDisposeTimer;
 
         private List<ContextMenuStrip> _contextMenusToDispose;
-
+#endif
         protected KeyboardHandlerManager _commandKeyHandler;
 
         private delegate DialogResult MessageBoxInternalDelegate(string msg, MessageBoxButtons buttons, MessageBoxIcon icon);
         private MessageBoxInternalDelegate _messageBoxInternalDelegate;
 
         public PoderosaForm() {
+#if !LIBRARY
             _contextMenusToDispose = new List<ContextMenuStrip>();
 
             components = new System.ComponentModel.Container();
             _contextMenuDisposeTimer = new Timer(components);
             _contextMenuDisposeTimer.Tick += new EventHandler(ContextMenuDisposeTimerTick);
+#endif
 
             _messageBoxInternalDelegate = new MessageBoxInternalDelegate(this.MessageBoxInternal);
 
@@ -74,6 +77,7 @@ namespace Poderosa.Forms {
             return this;
         }
 
+#if !LIBRARY
         //コンテキストメニュー表示
         public void ShowContextMenu(IPoderosaMenuGroup[] menus, ICommandTarget target, Point point_screen, ContextMenuFlags flags) {
             //まずソート
@@ -113,6 +117,7 @@ namespace Poderosa.Forms {
                 }
             }
         }
+#endif
 
         void IPoderosaForm.Warning(string msg) {
             MessageBoxInternal(msg, MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -148,6 +153,7 @@ namespace Poderosa.Forms {
             return _closeCancelled ? CommandResult.Cancelled : CommandResult.Succeeded;
         }
 
+#if !LIBRARY
         private void ContextMenuDisposeTimerTick(object sender, EventArgs e) {
             _contextMenuDisposeTimer.Stop();
             foreach (ContextMenuStrip cm in _contextMenusToDispose) {
@@ -155,6 +161,7 @@ namespace Poderosa.Forms {
             }
             _contextMenusToDispose.Clear();
         }
+#endif
 
         #region IAdaptable
         public IAdaptable GetAdapter(Type adapter) {

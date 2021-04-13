@@ -91,9 +91,6 @@
       <SubType>Form</SubType>
       <Link>Core\MainWindow.cs</Link>
     </Compile>
-    <Compile Include="..\Core\MenuUtil.cs">
-      <Link>Core\MenuUtil.cs</Link>
-    </Compile>
     <Compile Include="..\Core\PoderosaForm.cs">
       <SubType>Form</SubType>
       <Link>Core\PoderosaForm.cs</Link>

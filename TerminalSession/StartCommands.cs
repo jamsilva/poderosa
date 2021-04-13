@@ -50,11 +50,13 @@ namespace Poderosa.Sessions {
 
         public static ConnectCommandCategory _instance = new ConnectCommandCategory();
 
+#if !LIBRARY
         public IAdaptable DesignationTarget {
             get {
                 return TerminalSessionsPlugin.Instance.CommandManager.CommandCategories.File;
             }
         }
+#endif
 
         public PositionType DesignationPosition {
             get {

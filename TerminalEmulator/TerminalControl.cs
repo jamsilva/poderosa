@@ -437,6 +437,7 @@ namespace Poderosa.Terminal {
                 }
             }
 
+#if !LIBRARY
             //常に送れるキー
             if (keybody == Keys.Apps) { //コンテキストメニュー
                 TerminalDocument document = GetDocument();
@@ -446,6 +447,7 @@ namespace Poderosa.Terminal {
                 _terminalEmulatorMouseHandler.ShowContextMenu(new Point((int)(p.Width * x), (int)(p.Height * y)));
                 return true;
             }
+#endif
 
             return base.ProcessDialogKey(key);
         }
@@ -1268,8 +1270,11 @@ namespace Poderosa.Terminal {
                 ITerminalEmulatorOptions opt = TerminalEmulatorPlugin.Instance.TerminalEmulatorOptions;
                 MouseButtonAction act = args.Button == MouseButtons.Right ? opt.RightButtonAction : opt.MiddleButtonAction;
                 if (act != MouseButtonAction.None) {
-                    if (Control.ModifierKeys == Keys.Shift ^ act == MouseButtonAction.ContextMenu) //シフトキーで動作反転
+                    if (Control.ModifierKeys == Keys.Shift ^ act == MouseButtonAction.ContextMenu) { //シフトキーで動作反転
+#if !LIBRARY
                         ShowContextMenu(new Point(args.X, args.Y));
+#endif
+                    }
                     else { //Paste
                         IGeneralViewCommands vc = (IGeneralViewCommands)_control.GetAdapter(typeof(IGeneralViewCommands));
                         TerminalEmulatorPlugin.Instance.GetCommandManager().Execute(vc.Paste, (ICommandTarget)vc.GetAdapter(typeof(ICommandTarget)));
@@ -1285,6 +1290,7 @@ namespace Poderosa.Terminal {
             return UIHandleResult.Pass;
         }
 
+#if !LIBRARY
         public void ShowContextMenu(Point pt) {
             IPoderosaView view = (IPoderosaView)_control.GetAdapter(typeof(IPoderosaView));
             view.ParentForm.ShowContextMenu(TerminalEmulatorPlugin.Instance.ContextMenu, view, _control.PointToScreen(pt), ContextMenuFlags.None);
@@ -1292,6 +1298,7 @@ namespace Poderosa.Terminal {
             if (!_control.Focused)
                 _control.Focus();
         }
+#endif
     }
 
     //描画パフォーマンス調査用クラス
