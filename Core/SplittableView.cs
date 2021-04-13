@@ -95,9 +95,14 @@ namespace Poderosa.Forms {
         }
     }
 
+#if LIBRARY
+    internal class SplittableViewManager : IViewManager {
+        private SplittableViewPane _singlePane;
+#else
     internal class SplittableViewManager : ISplittableViewManager, PaneDivision.IUIActionHandler {
         private PaneDivision.IPane _singlePane; //分割していないときにのみ非null
         private PaneDivision _paneDivision;
+#endif
         private IViewFactory _defaultViewFactory;
         private IPoderosaMainWindow _parent;
 
@@ -105,15 +110,25 @@ namespace Poderosa.Forms {
             _parent = parent;
             _defaultViewFactory = defaultviewfactory;
 
+#if LIBRARY
+            _singlePane = new SplittableViewPane(this, _defaultViewFactory.CreateNew(_parent));
+            _singlePane.AsDotNet().Dock = DockStyle.Fill;
+#else
             Debug.Assert(_paneDivision == null);
             _singlePane = CreateNewPane(_defaultViewFactory, DockStyle.Fill); //先頭のFactoryで作ってしまうというのはどうかな
 
             _paneDivision = new PaneDivision();
             _paneDivision.CountLimit = WindowManagerPlugin.Instance.WindowPreference.OriginalPreference.SplitLimitCount;
             _paneDivision.UIActionHandler = this;
+#endif
         }
 
         #region IPaneManager
+#if LIBRARY
+        public IPoderosaView GetCandidateViewForNewDocument() {
+            return _singlePane;
+        }
+#else
         public IPoderosaView GetCandidateViewForNewDocument() {
             Debug.Assert(_paneDivision != null);
             if (_singlePane != null) {
@@ -155,12 +170,14 @@ namespace Poderosa.Forms {
             }
             return result.ToArray();
         }
+#endif
 
         public IPoderosaMainWindow ParentWindow {
             get {
                 return _parent;
             }
         }
+#if !LIBRARY
         public CommandResult SplitHorizontal(IContentReplaceableView view, IViewFactory factory) {
             if (factory == null)
                 factory = _defaultViewFactory;
@@ -246,18 +263,19 @@ namespace Poderosa.Forms {
                 RuntimeUtil.ReportException(ex);
             }
         }
-
+#endif
 
         public Control RootControl {
             get {
+#if !LIBRARY
                 if (_singlePane == null) { //分割済み
                     Debug.Assert(_paneDivision != null);
                     return _paneDivision.RootControl;
                 }
-                else { //分割していない
-                    Debug.Assert(_paneDivision.IsEmpty);
-                    return _singlePane.AsDotNet();
-                }
+                //分割していない
+                Debug.Assert(_paneDivision.IsEmpty);
+#endif
+                return _singlePane.AsDotNet();
             }
         }
         #endregion
@@ -268,6 +286,7 @@ namespace Poderosa.Forms {
         }
         #endregion
 
+#if !LIBRARY
         //分割・結合メソッド
         public void SplitHorizontal(PaneDivision.IPane view, IViewFactory factory) {
             InternalSplit(view, factory, PaneDivision.Direction.TB);
@@ -338,10 +357,14 @@ namespace Poderosa.Forms {
                 eh.OnUnify(this);
             }
         }
-
+#endif
     }
 
+#if LIBRARY
+    internal class SplittableViewPane : IContentReplaceableView, IGeneralViewCommands {
+#else
     internal class SplittableViewPane : PaneDivision.IPane, IContentReplaceableView, IGeneralViewCommands {
+#endif
         private IPoderosaView _content;
         private SplittableViewManager _parent;
 

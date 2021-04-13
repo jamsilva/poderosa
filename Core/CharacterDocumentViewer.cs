@@ -40,8 +40,11 @@ namespace Poderosa.View {
     /// 
     /// </summary>
     /// <exclude/>
+#if LIBRARY
+    public class CharacterDocumentViewer : Control, IPoderosaControl, ISelectionListener {
+#else
     public class CharacterDocumentViewer : Control, IPoderosaControl, ISelectionListener, SplitMarkSupport.ISite {
-
+#endif
         public const int BORDER = 2; //内側の枠線のサイズ
         internal const int TIMER_INTERVAL = 50; //再描画最適化とキャレット処理を行うタイマーの間隔
 
@@ -51,7 +54,9 @@ namespace Poderosa.View {
         private readonly List<GLine> _glinePool;
         private bool _requiresPeriodicRedraw;
         private TextSelection _textSelection;
+#if !LIBRARY
         private SplitMarkSupport _splitMark;
+#endif
         private bool _enabled; //ドキュメントがアタッチされていないときを示す 変更するときはEnabledExプロパティで！
 
         private Cursor _documentCursor = Cursors.IBeam;
@@ -78,10 +83,12 @@ namespace Poderosa.View {
             this.DoubleBuffered = true;
             _caret = new Caret();
 
+#if !LIBRARY
             _splitMark = new SplitMarkSupport(this, this);
             Pen p = new Pen(SystemColors.ControlDark);
             p.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
             _splitMark.Pen = p;
+#endif
 
             _textSelection = new TextSelection(this);
             _textSelection.AddSelectionListener(this);
@@ -130,7 +137,9 @@ namespace Poderosa.View {
             set {
                 _enabled = value;
                 _VScrollBar.Visible = value; //スクロールバーとは連動
+#if !LIBRARY
                 _splitMark.Pen.Color = value ? SystemColors.ControlDark : SystemColors.Window; //このBackColorと逆で
+#endif
                 this.Cursor = GetDocumentCursor(); //Splitter.ISiteを援用
                 this.BackColor = value ? GetRenderProfile().BackColor : SystemColors.ControlDark;
                 this.ImeMode = value ? ImeMode.NoControl : ImeMode.Disable;
@@ -387,7 +396,9 @@ namespace Poderosa.View {
                 _caret.Dispose();
                 if (_timer != null)
                     _timer.Close();
+#if !LIBRARY
                 _splitMark.Pen.Dispose();
+#endif
             }
         }
 
@@ -464,8 +475,10 @@ namespace Poderosa.View {
                             DrawUnderLineCaret(g, param, _caret.X, _caret.Y);
                     }
                 }
+#if !LIBRARY
                 //マークの描画
                 _splitMark.OnPaint(e);
+#endif
             }
             catch (Exception ex) {
                 if (!_errorRaisedInDrawing) { //この中で一度例外が発生すると繰り返し起こってしまうことがままある。なので初回のみ表示してとりあえず切り抜ける
@@ -708,7 +721,7 @@ namespace Poderosa.View {
             OnMouseWheelCore(e);
         }
 
-
+#if !LIBRARY
         //SplitMark関係
         #region SplitMark.ISite
         protected override void OnMouseLeave(EventArgs e) {
@@ -767,6 +780,7 @@ namespace Poderosa.View {
             IContentReplaceableViewSite site = (IContentReplaceableViewSite)this.GetAdapter(typeof(IContentReplaceableViewSite));
             return site == null ? null : site.CurrentContentReplaceableView;
         }
+#endif
 
         #region ISelectionListener
         public void OnSelectionStarted() {
@@ -941,6 +955,7 @@ namespace Poderosa.View {
         }
     }
 
+#if !LIBRARY
     //スプリットマークのハンドラ
     internal class SplitMarkUIHandler : DefaultMouseHandler {
         private SplitMarkSupport _splitMark;
@@ -970,6 +985,6 @@ namespace Poderosa.View {
                 return UIHandleResult.Pass;
         }
     }
-
+#endif
 
 }

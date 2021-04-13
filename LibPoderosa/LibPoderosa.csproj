@@ -57,8 +57,8 @@
       <Link>Core\CharacterDocument.cs</Link>
     </Compile>
     <Compile Include="..\Core\CharacterDocumentViewer.cs">
-      <SubType>Component</SubType>
       <Link>Core\CharacterDocumentViewer.cs</Link>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="..\Core\CommandEx.cs">
       <Link>Core\CommandEx.cs</Link>
@@ -578,8 +578,8 @@
       <Link>TerminalEmulator\TerminalCommands.cs</Link>
     </Compile>
     <Compile Include="..\TerminalEmulator\TerminalControl.cs">
-      <SubType>Component</SubType>
       <Link>TerminalEmulator\TerminalControl.cs</Link>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="..\TerminalEmulator\TerminalDocument.cs">
       <Link>TerminalEmulator\TerminalDocument.cs</Link>
@@ -668,19 +668,8 @@
     <Compile Include="..\UI\DrawUtil.cs">
       <Link>UI\DrawUtil.cs</Link>
     </Compile>
-    <Compile Include="..\UI\GButton.cs">
-      <SubType>UserControl</SubType>
-      <Link>UI\GButton.cs</Link>
-    </Compile>
     <Compile Include="..\UI\ListItem.cs">
       <Link>UI\ListItem.cs</Link>
-    </Compile>
-    <Compile Include="..\UI\PaneDivision.cs">
-      <Link>UI\PaneDivision.cs</Link>
-    </Compile>
-    <Compile Include="..\UI\PaneSplitter.cs">
-      <SubType>Component</SubType>
-      <Link>UI\PaneSplitter.cs</Link>
     </Compile>
     <Compile Include="..\UI\TabBar.cs">
       <SubType>UserControl</SubType>
