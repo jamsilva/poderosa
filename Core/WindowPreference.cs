@@ -278,12 +278,16 @@ namespace Poderosa.Forms {
             _windowArrayPreference.ConvertItem(element, _windowPositionPreference).AsString().Value = String.Format("({0}{1},{2},{3},{4})",
                 st == FormWindowState.Maximized ? "Max," : "",
                 rc.Left, rc.Top, rc.Width, rc.Height);
+#if !LIBRARY
             //TODO PreferenceItemのテンプレートをViewManager側に移動したほうが汎用的
             ISplittableViewManager vm = (ISplittableViewManager)f.ViewManager.GetAdapter(typeof(ISplittableViewManager));
             if (vm != null)
                 _windowArrayPreference.ConvertItem(element, _windowSplitFormatPreference).AsString().Value = vm.FormatSplitInfo();
+#endif
             _windowArrayPreference.ConvertItem(element, _toolBarFormatPreference).AsString().Value = f.ToolBar.FormatLocations();
+#if !LIBRARY
             _windowArrayPreference.ConvertItem(element, _tabRowCountPreference).AsInt().Value = f.DocumentTabFeature.TabRowCount;
+#endif
         }
 
 

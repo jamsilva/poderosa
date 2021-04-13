@@ -10,28 +10,19 @@ LDFLAGS = -mwindows
 EXE = cygterm.exe
 SRC = $(EXE:.exe=.cc)
 CFG = $(EXE:.exe=.cfg)
-RES = $(EXE:.exe=.res)
-ICO = $(EXE:.exe=.ico)
-RC  = $(EXE:.exe=.rc)
 
 all : $(EXE)
 
 $(EXE) : $(SRC) $(RES)
   ifeq (0, $(shell nm /usr/lib/crt0.o | grep -c WinMainCRTStartup))
-	$(CC) $(CFLAGS) $(LDFLAGS) -DNO_WIN_MAIN -o $(EXE) $(SRC) $(RES)
+	$(CC) $(CFLAGS) $(LDFLAGS) -DNO_WIN_MAIN -o $(EXE) $(SRC)
   else
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $(EXE) $(SRC) $(RES)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $(EXE) $(SRC)
   endif
 	strip $(EXE)
 
-$(RC):
-	echo 'icon ICON $(ICO)' > $(RC)
-
-$(RES): $(ICO) $(RC)
-	windres -O coff -o $(RES) $(RC)
-
 clean :
-	rm -f $(EXE) $(RC) $(RES)
+	rm -f $(EXE)
 
 install : $(EXE)
 	@ install -v $(EXE) $(BINDIR)/$(EXE)

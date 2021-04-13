@@ -27,10 +27,12 @@ using Poderosa.Util;
 [assembly: PluginDeclaration(typeof(Poderosa.Sessions.SessionManagerPlugin))]
 
 namespace Poderosa.Sessions {
+#if !LIBRARY
     //PoderosaMainWindowが呼ぶためのインタフェース
     internal interface ISessionManagerForPoderosaWindow {
         PrepareCloseResult CloseMultipleDocuments(ClosingContext context, IPoderosaDocument[] documents);
     }
+#endif
 
     internal interface ISessionManagerForViewSplitter {
         void ChangeLastAttachedViewForAllDocuments(IPoderosaView closing_view, IPoderosaView alternative);
@@ -41,13 +43,18 @@ namespace Poderosa.Sessions {
     [PluginInfo(ID = SessionManagerPlugin.PLUGIN_ID, Version = VersionInfo.PODEROSA_VERSION, Author = VersionInfo.PROJECT_NAME, Dependencies = "org.poderosa.core.window")]
     internal class SessionManagerPlugin :
         PluginBase,
-        ISessionManager,
-        ISessionManagerForViewSplitter {
+#if !LIBRARY
+        ISessionManagerForViewSplitter,
+#endif
+        ISessionManager
+    {
         public const string PLUGIN_ID = "org.poderosa.core.sessions";
         private static SessionManagerPlugin _instance;
         private TypedHashtable<ISession, SessionHost> _sessionMap;
         private TypedHashtable<IPoderosaDocument, DocumentHost> _documentMap;
+#if !LIBRARY
         private ActivateContext _activateContext;
+#endif
         private IExtensionPoint _docViewRelationHandler;
         private ListenerList<IActiveDocumentChangeListener> _activeDocumentChangeListeners;
         private ListenerList<ISessionListener> _sessionListeners;
@@ -85,6 +92,7 @@ namespace Poderosa.Sessions {
             }
         }
 
+#if !LIBRARY
         public IPoderosaDocument[] GetDocuments(IPoderosaMainWindow window) {
             List<IPoderosaDocument> r = new List<IPoderosaDocument>();
             foreach (DocumentHost dh in _documentMap.Values) {
@@ -93,6 +101,7 @@ namespace Poderosa.Sessions {
             }
             return r.ToArray();
         }
+#endif
 
         public void StartNewSession(ISession session, IPoderosaView firstView) {
             firstView = AdjustToOuterView(firstView);
@@ -141,22 +150,27 @@ namespace Poderosa.Sessions {
             Debug.Assert(view.Document == null && dh.CurrentView == null); //Attach準備ができていること確認
             dh.AttachView(view);
 
+#if !LIBRARY
             //移動することで新規に見えるようになるドキュメントを探索
             if (previous_view != null && previous_view != view) {
                 DocumentHost new_visible_doc = ShowBackgroundDocument(previous_view);
                 Debug.Assert(new_visible_doc != dh);
             }
+#endif
 
             //ドキュメントを保有するウィンドウが変化したら通知。初回Attachではlast_mainwindow==nullであることに注意
             if (last_window != view.ParentForm) {
+#if !LIBRARY
                 if (last_window != null)
                     NotifyRemove(last_window, document);
+#endif
                 NotifyAdd(ViewToForm(view), document);
             }
 
             FireDocViewRelationChange();
         }
 
+#if !LIBRARY
         //ISessionManagerの終了系　細かいのはドキュメントあり
         public PrepareCloseResult CloseDocument(IPoderosaDocument document) {
             DocumentHost dh = FindDocumentHost(document);
@@ -233,6 +247,7 @@ namespace Poderosa.Sessions {
             else
                 ((IPoderosaPopupWindow)f.GetAdapter(typeof(IPoderosaPopupWindow))).UpdateStatus();
         }
+#endif
 
         private void CleanupDocument(DocumentHost dh) {
             IPoderosaForm owner_window = ViewToForm(dh.LastAttachedView);
@@ -251,6 +266,7 @@ namespace Poderosa.Sessions {
             dh.SessionHost.CloseDocument(dh.Document);
             _documentMap.Remove(dh.Document);
 
+#if !LIBRARY
             //閉じたドキュメントのビューが見えていた場合は、その位置の別のドキュメントを見せる
             //TODO ウィンドウを閉じるときはこの処理は不要
             if (visible_view != null && visible_view.ParentForm.GetAdapter(typeof(IPoderosaMainWindow)) != null) {
@@ -258,6 +274,7 @@ namespace Poderosa.Sessions {
                 if (was_active && visible_view.Document != null)
                     ActivateDocument(visible_view.Document, ActivateReason.InternalAction);
             }
+#endif
         }
         internal void CleanupSession(SessionHost sh) { //SessionHostからも呼ばれるのでinternal
             foreach (ISessionListener listener in _sessionListeners)
@@ -282,12 +299,14 @@ namespace Poderosa.Sessions {
         public void ActivateDocument(IPoderosaDocument document, ActivateReason reason) {
             Debug.Assert(document != null);
 
+#if !LIBRARY
             //ネストの防止 Focus系イベントハンドラがあるとどうしても呼ばれてしまうので
             if (_activateContext != null)
                 return;
 
             try {
                 _activateContext = new ActivateContext(document, reason);
+#endif
 
                 DocumentHost dh = FindDocumentHost(document);
                 Debug.Assert(dh != null);
@@ -307,7 +326,7 @@ namespace Poderosa.Sessions {
 
                 Debug.Assert(dh.CurrentView.Document == document);
 
-
+#if !LIBRARY
                 //通知
                 NotifyActivation(ViewToForm(dh.CurrentView), document, reason);
             }
@@ -316,6 +335,7 @@ namespace Poderosa.Sessions {
                 if (DebugOpt.DumpDocumentRelation)
                     DumpDocumentRelation();
             }
+#endif
         }
 
         //SessionHostから呼ばれる系列
@@ -330,6 +350,7 @@ namespace Poderosa.Sessions {
             return _sessionMap[session];
         }
 
+#if !LIBRARY
         internal IEnumerable<DocumentHost> GetAllDocumentHosts() {
             return new ConvertingEnumerable<DocumentHost>(_documentMap.Values);
         }
@@ -388,6 +409,7 @@ namespace Poderosa.Sessions {
             }
             return null;
         }
+#endif
 
         private IPoderosaForm ViewToForm(IPoderosaView view) {
             if (view == null)
@@ -416,6 +438,7 @@ namespace Poderosa.Sessions {
             _sessionListeners.Remove(listener);
         }
 
+#if !LIBRARY
         private void NotifyActivation(IPoderosaForm form, IPoderosaDocument document, ActivateReason reason) {
             Debug.Assert(document != null);
             IPoderosaMainWindow window = (IPoderosaMainWindow)form.GetAdapter(typeof(IPoderosaMainWindow));
@@ -429,16 +452,24 @@ namespace Poderosa.Sessions {
                     listener.OnDocumentActivated(window, document);
             }
         }
+#endif
 
         private void NotifyAdd(IPoderosaForm form, IPoderosaDocument document) {
             IPoderosaMainWindow window = (IPoderosaMainWindow)form.GetAdapter(typeof(IPoderosaMainWindow));
             if (window != null)
+#if LIBRARY
+                window.SetDocument(document);
+#else
                 window.DocumentTabFeature.Add(document);
+#endif
         }
 
         private void NotifyRemove(IPoderosaForm form, IPoderosaDocument document) {
             IPoderosaMainWindow window = (IPoderosaMainWindow)form.GetAdapter(typeof(IPoderosaMainWindow));
             if (window != null) {
+#if LIBRARY
+                window.SetDocument(null);
+#else
                 IPoderosaDocument former = window.DocumentTabFeature.ActiveDocument;
                 window.DocumentTabFeature.Remove(document);
                 //TODO アクティブなのを記憶する場所を変えることでタブへの通知を先にする制約から解放される
@@ -446,9 +477,11 @@ namespace Poderosa.Sessions {
                     foreach (IActiveDocumentChangeListener listener in _activeDocumentChangeListeners)
                         listener.OnDocumentDeactivated(window);
                 }
+#endif
             }
         }
 
+#if !LIBRARY
         private IPoderosaDocument ViewToActiveDocument(IPoderosaView view) {
             IPoderosaForm form = view.ParentForm;
             IPoderosaMainWindow window = (IPoderosaMainWindow)form.GetAdapter(typeof(IPoderosaMainWindow));
@@ -457,6 +490,7 @@ namespace Poderosa.Sessions {
             else
                 return view.Document;
         }
+#endif
 
         //ビューにフォーカスをセットした状態にする。ポップアップウィンドウの場合、まだウィンドウがロードされていないケースもあるのでそこに注意！
         private void SetFocusToView(IPoderosaView view) {
@@ -482,12 +516,14 @@ namespace Poderosa.Sessions {
                 return view;
         }
 
+#if !LIBRARY
         private void DumpDocumentRelation() {
             Debug.WriteLine("[DocRelation]");
             foreach (DocumentHost dh in _documentMap.Values) {
                 Debug.WriteLine(String.Format("  doc {0}, current={1}, last={2}", dh.Document.GetType().Name, ViewName(dh.CurrentView), ViewName(dh.LastAttachedView)));
             }
         }
+#endif
         private static string ViewName(IPoderosaView view) {
             if (view == null)
                 return "null";
@@ -506,10 +542,12 @@ namespace Poderosa.Sessions {
         private ISession _session;
         private List<IPoderosaDocument> _documents;
 
+#if !LIBRARY
         //以下のメンバはSessionManager#CloseMultipleDocumentsにのみ使用。
         //スレッドセーフではなくなるがさすがに問題はないだろう
         private int _closingDocumentCount;
         private PrepareCloseResult _prepareCloseResult;
+#endif
 
         public SessionHost(SessionManagerPlugin parent, ISession session) {
             _parent = parent;
@@ -527,11 +565,13 @@ namespace Poderosa.Sessions {
                 return _documents.Count;
             }
         }
+#if !LIBRARY
         public IEnumerable<IPoderosaDocument> Documents {
             get {
                 return _documents;
             }
         }
+#endif
         public IPoderosaDocument DocumentAt(int index) {
             return _documents[index];
         }
@@ -567,6 +607,7 @@ namespace Poderosa.Sessions {
             _documents.Remove(document);
         }
 
+#if !LIBRARY
         //以下はCloseMultipleDocument内で使用する
         public int CMP_ClosingDocumentCount {
             get {
@@ -584,6 +625,7 @@ namespace Poderosa.Sessions {
                 _prepareCloseResult = value;
             }
         }
+#endif
     }
 
     internal class DocumentHost {
@@ -644,17 +686,19 @@ namespace Poderosa.Sessions {
             _currentView = null;
         }
 
+#if !LIBRARY
         //Viewが閉じられるなどで代替のビューに置換する
         public void AlternateView(IPoderosaView view) {
             if (_currentView != null)
                 DetachView();
             _lastAttachedView = view;
         }
-
+#endif
 
 
     }
 
+#if !LIBRARY
     internal class ClosingContext {
         private enum CloseType {
             OneDocument,
@@ -693,4 +737,5 @@ namespace Poderosa.Sessions {
             _reason = reason;
         }
     }
+#endif
 }

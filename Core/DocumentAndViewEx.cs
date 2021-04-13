@@ -298,6 +298,7 @@ namespace Poderosa.Sessions {
         }
     }
 
+#if !LIBRARY
     /// <summary>
     /// 
     /// </summary>
@@ -327,4 +328,5 @@ namespace Poderosa.Sessions {
         void OnSplit(ISplittableViewManager viewmanager);
         void OnUnify(ISplittableViewManager viewmanager);
     }
+#endif
 }

@@ -34,17 +34,10 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.JScript" />
     <Reference Include="System" />
-    <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Core\BasicCommands.cs">
@@ -633,10 +626,6 @@
     </Compile>
     <Compile Include="..\UI\ListItem.cs">
       <Link>UI\ListItem.cs</Link>
-    </Compile>
-    <Compile Include="..\UI\TabBar.cs">
-      <SubType>UserControl</SubType>
-      <Link>UI\TabBar.cs</Link>
     </Compile>
     <Compile Include="..\UI\Util.cs">
       <Link>UI\Util.cs</Link>

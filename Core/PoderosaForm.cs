@@ -35,6 +35,7 @@ namespace Poderosa.Forms {
 
         private List<ContextMenuStrip> _contextMenusToDispose;
 #endif
+
         protected KeyboardHandlerManager _commandKeyHandler;
 
         private delegate DialogResult MessageBoxInternalDelegate(string msg, MessageBoxButtons buttons, MessageBoxIcon icon);

@@ -63,16 +63,19 @@ namespace Poderosa.Sessions {
             _terminal = AbstractTerminal.Create(new TerminalInitializeInfo(this, connection.Destination));
             _output = new TerminalTransmission(_terminal, _terminalSettings, connection);
 
+#if !LIBRARY
             _terminalSettings.ChangeCaption += delegate(string caption) {
                 this.OwnerWindow.DocumentTabFeature.Update(_terminal.IDocument);
             };
-
+#endif
         }
 
         public void Revive(ITerminalConnection connection) {
             TerminalDocument doc = _terminal.GetDocument();
             _output.Revive(connection, doc.TerminalWidth, doc.TerminalHeight);
+#if !LIBRARY
             this.OwnerWindow.DocumentTabFeature.Update(_terminal.IDocument);
+#endif
             _output.Connection.Socket.RepeatAsyncRead(_terminal); //再受信
         }
 
@@ -147,10 +150,12 @@ namespace Poderosa.Sessions {
         private void HostCauseClose(string msg) {
             if (TerminalSessionsPlugin.Instance.TerminalEmulatorService.TerminalEmulatorOptions.CloseOnDisconnect)
                 _sessionHost.TerminateSession();
+#if !LIBRARY
             else {
                 IPoderosaMainWindow window = this.OwnerWindow;
                 window.DocumentTabFeature.Update(_terminal.IDocument);
             }
+#endif
         }
 
         //ISession

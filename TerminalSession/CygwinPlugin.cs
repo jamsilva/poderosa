@@ -61,9 +61,9 @@ namespace Poderosa.Sessions {
                 return _instance;
             }
         }
+#if !LIBRARY
         private ICommandManager _commandManager;
         private CygwinLoginDialogCommand _loginDialogCommand;
-#if !LIBRARY
         private IPoderosaMenuGroup _cygwinMenuGroup;
 #endif
         private IToolBarComponent _cygwinToolBarComponent;
@@ -73,12 +73,12 @@ namespace Poderosa.Sessions {
             base.InitializePlugin(poderosa);
             _instance = this;
 
+#if !LIBRARY
             IPluginManager pm = poderosa.PluginManager;
             _commandManager = (ICommandManager)pm.FindPlugin("org.poderosa.core.commands", typeof(ICommandManager));
             _loginDialogCommand = new CygwinLoginDialogCommand();
             _commandManager.Register(_loginDialogCommand);
 
-#if !LIBRARY
             IExtensionPoint ep = poderosa.PluginManager.FindExtensionPoint("org.poderosa.menu.file");
             _cygwinMenuGroup = new CygwinMenuGroup();
             ep.RegisterExtension(_cygwinMenuGroup);
@@ -173,7 +173,11 @@ namespace Poderosa.Sessions {
 
             public IToolBarElement[] ToolBarElements {
                 get {
+#if LIBRARY
+                    return new IToolBarElement[] {};
+#else
                     return new IToolBarElement[] { new ToolBarCommandButtonImpl(_instance._loginDialogCommand, Properties.Resources.Cygwin16x16) };
+#endif
                 }
             }
 
@@ -183,9 +187,9 @@ namespace Poderosa.Sessions {
 
         }
 
+#if !LIBRARY
         private class CygwinLoginDialogCommand : IGeneralCommand {
             public CommandResult InternalExecute(ICommandTarget target, params IAdaptable[] args) {
-#if !LIBRARY
                 IPoderosaMainWindow window = (IPoderosaMainWindow)target.GetAdapter(typeof(IPoderosaMainWindow));
                 if (window == null)
                     return CommandResult.Ignored;
@@ -211,7 +215,7 @@ namespace Poderosa.Sessions {
                         }
                     }
                 }
-#endif
+
                 return CommandResult.Cancelled;
             }
 
@@ -246,7 +250,7 @@ namespace Poderosa.Sessions {
 
         }
 
-#if !LIBRARY
+
         public IPoderosaMenuGroup CygwinMenuGroupTemp {
             get {
                 return _cygwinMenuGroup;

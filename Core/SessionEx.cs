@@ -84,6 +84,7 @@ namespace Poderosa.Sessions {
         IEnumerable<ISession> AllSessions {
             get;
         }
+#if !LIBRARY
         /// <summary>
         /// <ja>
         /// ウィンドウに結びつけられたドキュメントを配列として得ます。
@@ -95,6 +96,7 @@ namespace Poderosa.Sessions {
         /// <param name="window"><ja>対象となるウィンドウです。</ja><en>It is a window that becomes an object. </en></param>
         /// <returns><ja>ウィンドウに含まれるドキュメントの配列が返されます。</ja><en>The array of the document included in the window is returned. </en></returns>
         IPoderosaDocument[] GetDocuments(IPoderosaMainWindow window);
+#endif
 
         //Start/End
         /// <summary>
@@ -119,6 +121,7 @@ namespace Poderosa.Sessions {
         /// </remarks>
         void StartNewSession(ISession session, IPoderosaView firstView);
 
+#if !LIBRARY
         /// <summary>
         /// <ja>
         /// セッションを閉じます。
@@ -174,6 +177,7 @@ namespace Poderosa.Sessions {
         /// </en>
         /// </remarks>
         PrepareCloseResult CloseDocument(IPoderosaDocument document);
+#endif
 
         //Document Management
         /// <summary>
@@ -192,6 +196,7 @@ namespace Poderosa.Sessions {
         /// <en>View to assign.</en>
         /// </param>
         void AttachDocumentAndView(IPoderosaDocument document, IPoderosaView view);
+#if !LIBRARY
         /// <summary>
         /// <ja>
         /// ドキュメントのステータスを更新します。
@@ -202,6 +207,7 @@ namespace Poderosa.Sessions {
         /// </summary>
         /// <param name="document"><ja>更新するドキュメント</ja><en>Document to update.</en></param>
         void RefreshDocumentStatus(IPoderosaDocument document);
+#endif
 
         //Listener
         /// <summary>

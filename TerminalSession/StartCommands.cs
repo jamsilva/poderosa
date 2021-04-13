@@ -266,10 +266,10 @@ namespace Poderosa.Sessions {
             return view;
         }
 
-#region IAdaptable
+        #region IAdaptable
         public IAdaptable GetAdapter(Type adapter) {
             return TerminalSessionsPlugin.Instance.PoderosaWorld.AdapterManager.GetAdapter(this, adapter);
         }
-#endregion
+        #endregion
     }
 }

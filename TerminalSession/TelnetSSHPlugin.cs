@@ -39,9 +39,9 @@ namespace Poderosa.Sessions {
 
         private static TelnetSSHPlugin _instance;
 
+#if !LIBRARY
         private ICommandManager _commandManager;
         private LoginDialogCommand _loginDialogCommand;
-#if !LIBRARY
         private LoginMenuGroup _loginMenuGroup;
 #endif
         private LoginToolBarComponent _loginToolBarComponent;
@@ -58,11 +58,11 @@ namespace Poderosa.Sessions {
             _instance = this;
 
             IPluginManager pm = poderosa.PluginManager;
+#if !LIBRARY
             _commandManager = (ICommandManager)pm.FindPlugin("org.poderosa.core.commands", typeof(ICommandManager));
             _loginDialogCommand = new LoginDialogCommand();
             _commandManager.Register(_loginDialogCommand);
 
-#if !LIBRARY
             IExtensionPoint ep = pm.FindExtensionPoint("org.poderosa.menu.file");
             _loginMenuGroup = new LoginMenuGroup();
             ep.RegisterExtension(_loginMenuGroup);
@@ -178,7 +178,11 @@ namespace Poderosa.Sessions {
             }
             public IToolBarElement[] ToolBarElements {
                 get {
+#if LIBRARY
+                    return new IToolBarElement[] {};
+#else
                     return new IToolBarElement[] { new ToolBarCommandButtonImpl(_instance._loginDialogCommand, Properties.Resources.NewConnection16x16) };
+#endif
                 }
             }
 
@@ -188,10 +192,9 @@ namespace Poderosa.Sessions {
 
         }
 
-
+#if !LIBRARY
         private class LoginDialogCommand : IGeneralCommand {
             public CommandResult InternalExecute(ICommandTarget target, params IAdaptable[] args) {
-#if !LIBRARY
                 IPoderosaMainWindow window = (IPoderosaMainWindow)target.GetAdapter(typeof(IPoderosaMainWindow));
                 if (window == null)
                     return CommandResult.Ignored;
@@ -212,9 +215,8 @@ namespace Poderosa.Sessions {
                         }
                         return CommandResult.Succeeded;
                     }
+                    return CommandResult.Cancelled;
                 }
-#endif
-                return CommandResult.Cancelled;
             }
 
             public string CommandID {
@@ -246,5 +248,6 @@ namespace Poderosa.Sessions {
                 return _instance.PoderosaWorld.AdapterManager.GetAdapter(this, adapter);
             }
         }
+#endif
     }
 }

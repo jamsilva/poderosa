@@ -123,11 +123,9 @@ namespace Poderosa.Sessions {
         private void ProcessAction(Action act) {
             _currentAction = act;
 
-#if !LIBRARY
             //TODO ユーザによる操作のロック
             //コマンド実行開始
             _currentAction.TargetSession.Terminal.ShellCommandExecutor.StartCommandResultProcessor(this, _currentAction.CommandString, true);
-#endif
         }
 
         #region ICommandResultProcessor
@@ -136,7 +134,7 @@ namespace Poderosa.Sessions {
 
         public void EndCommand(List<GLine> command_result) {
             string[] stringarray_result = AsStringArrayResult(command_result);
-            Debug.Assert(_window.AsForm().IsHandleCreated);
+            Debug.Assert(_window.AsForm().InvokeRequired);
             //この処理中に次のアクションがセットされることもある
             if (_currentAction.ReceiverThreadAction != null)
                 _currentAction.ReceiverThreadAction(stringarray_result);

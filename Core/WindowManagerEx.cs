@@ -401,11 +401,13 @@ namespace Poderosa.Forms {
         void OnLastMainWindowUnloaded(IPoderosaMainWindow window);
     }
 
+#if !LIBRARY
     //File Drop : ファイル以外を扱うことはまずないだろうから考えない。そのときはまた別のインタフェースで。
     public interface IFileDropHandler : IAdaptable {
         bool CanAccept(ICommandTarget target, string[] filenames);
         void DoDropAction(ICommandTarget target, string[] filenames);
     }
+#endif
 
     /// <summary>
     /// 
@@ -469,6 +471,9 @@ namespace Poderosa.Forms {
             get;
         }
 
+#if LIBRARY
+        void SetDocument(IPoderosaDocument document);
+#else
         /// <summary>
         /// <ja>
         /// ドキュメントタブを示すオブジェクトを返します。
@@ -480,6 +485,7 @@ namespace Poderosa.Forms {
         IDocumentTabFeature DocumentTabFeature {
             get;
         }
+#endif
         /// <summary>
         /// <ja>
         /// ツールバーを示すオブジェクトを返します。

@@ -20,8 +20,10 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Globalization;
-using System.ServiceModel;
 using System.Threading.Tasks;
+#if !LIBRARY
+using System.ServiceModel;
+#endif
 
 using Poderosa.Util;
 using Poderosa.Plugins;
@@ -84,17 +86,21 @@ namespace Poderosa.Forms {
             //Coreアセンブリ内のプラグインを代表してここでAdapterFactoryをセット
             new CoreServices(poderosa);
 
+#if !LIBRARY
             TabBar.Init();
+#endif
 
             IPluginManager pm = poderosa.PluginManager;
             pm.FindExtensionPoint("org.poderosa.root").RegisterExtension(this);
             pm.CreateExtensionPoint(WindowManagerConstants.MAINWINDOWCONTENT_ID, typeof(IViewManagerFactory), this);
             pm.CreateExtensionPoint(WindowManagerConstants.VIEW_FACTORY_ID, typeof(IViewFactory), this);
+#if !LIBRARY
             pm.CreateExtensionPoint(WindowManagerConstants.VIEWFORMATEVENTHANDLER_ID, typeof(IViewFormatEventHandler), this);
+#endif
             pm.CreateExtensionPoint(WindowManagerConstants.TOOLBARCOMPONENT_ID, typeof(IToolBarComponent), this);
             pm.CreateExtensionPoint(WindowManagerConstants.MAINWINDOWEVENTHANDLER_ID, typeof(IMainWindowEventHandler), this);
-            pm.CreateExtensionPoint(WindowManagerConstants.FILEDROPHANDLER_ID, typeof(IFileDropHandler), this);
 #if !LIBRARY
+            pm.CreateExtensionPoint(WindowManagerConstants.FILEDROPHANDLER_ID, typeof(IFileDropHandler), this);
             AboutBoxUtil.DefineExtensionPoint(pm);
 #endif
 
@@ -423,6 +429,7 @@ namespace Poderosa.Forms {
             }
         }
 
+#if !LIBRARY
         /// <summary>
         /// Opens specified shortcut file.
         /// </summary>
@@ -459,7 +466,6 @@ namespace Poderosa.Forms {
             return true;
         }
 
-#if !LIBRARY
         /// <summary>
         /// An implementation of the <see cref="IPoderosaRemotingService"/> interface.
         /// </summary>
@@ -516,27 +522,37 @@ namespace Poderosa.Forms {
     internal class MainWindowArgument {
         private Rectangle _location;
         private FormWindowState _windowState;
+#if !LIBRARY
         private string _splitInfo;
+#endif
         private string _toolBarInfo;
+#if !LIBRARY
         private int _tabRowCount;
+#endif
 
         public MainWindowArgument(Rectangle location, FormWindowState state, string split, string toolbar, int tabrowcount) {
             _location = location;
             _windowState = state;
+#if !LIBRARY
             _splitInfo = split;
+#endif
             _toolBarInfo = toolbar;
+#if !LIBRARY
             _tabRowCount = tabrowcount;
+#endif
         }
         public string ToolBarInfo {
             get {
                 return _toolBarInfo;
             }
         }
+#if !LIBRARY
         public int TabRowCount {
             get {
                 return _tabRowCount;
             }
         }
+#endif
 
         //フォームへの適用は、OnLoadの前と後で分ける
         public void ApplyToUnloadedWindow(MainWindow f) {
@@ -578,12 +594,14 @@ namespace Poderosa.Forms {
             f.DesktopBounds = _location;
             f.WindowState = _windowState;
 
+#if !LIBRARY
             //頑張ればOnLoad以前にSplitInfoを適用できるかも
             if (_splitInfo.Length > 0) {
                 ISplittableViewManager vm = (ISplittableViewManager)f.ViewManager.GetAdapter(typeof(ISplittableViewManager));
                 if (vm != null)
                     vm.ApplySplitInfo(_splitInfo);
             }
+#endif
 
             //ToolBarのコンポーネント位置調整
             f.ToolBarInternal.RestoreLayout();
