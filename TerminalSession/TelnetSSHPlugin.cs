@@ -24,11 +24,8 @@ using Poderosa.Terminal;
 using Poderosa.ConnectionParam;
 using Poderosa.Protocols;
 using Poderosa.Forms;
+#if !LIBRARY
 using Poderosa.MacroEngine;
-#if LIBRARY
-using Poderosa.Properties;
-#else
-using Poderosa.TerminalSession.Properties;
 #endif
 
 [assembly: PluginDeclaration(typeof(Poderosa.Sessions.TelnetSSHPlugin))]
@@ -45,7 +42,9 @@ namespace Poderosa.Sessions {
         private LoginMenuGroup _loginMenuGroup;
 #endif
         private LoginToolBarComponent _loginToolBarComponent;
+#if !LIBRARY
         private IMacroEngine _macroEngine;
+#endif
 
         public static TelnetSSHPlugin Instance {
             get {
@@ -79,7 +78,6 @@ namespace Poderosa.Sessions {
                 return _loginMenuGroup;
             }
         }
-#endif
         public IToolBarComponent TelnetSSHToolBar {
             get {
                 return _loginToolBarComponent;
@@ -95,7 +93,6 @@ namespace Poderosa.Sessions {
             }
         }
 
-#if !LIBRARY
         private class LoginMenuGroup : IPoderosaMenuGroup, IPositionDesignation {
             public IPoderosaMenu[] ChildMenus {
                 get {
@@ -158,12 +155,13 @@ namespace Poderosa.Sessions {
 #endif
 
         private class LoginToolBarComponent : IToolBarComponent, IPositionDesignation {
-
+#if !LIBRARY
             public IAdaptable DesignationTarget {
                 get {
                     return null;
                 }
             }
+#endif
 
             public PositionType DesignationPosition {
                 get {
@@ -171,17 +169,19 @@ namespace Poderosa.Sessions {
                 }
             }
 
+#if !LIBRARY
             public bool ShowSeparator {
                 get {
                     return true;
                 }
             }
+#endif
             public IToolBarElement[] ToolBarElements {
                 get {
 #if LIBRARY
                     return new IToolBarElement[] {};
 #else
-                    return new IToolBarElement[] { new ToolBarCommandButtonImpl(_instance._loginDialogCommand, Properties.Resources.NewConnection16x16) };
+                    return new IToolBarElement[] { new ToolBarCommandButtonImpl(_instance._loginDialogCommand, Poderosa.TerminalSession.Properties.Resources.NewConnection16x16) };
 #endif
                 }
             }

@@ -31,11 +31,8 @@ using Poderosa.Commands;
 using Poderosa.Preferences;
 using Poderosa.Sessions;
 using Poderosa.Serializing;
+#if !LIBRARY
 using Poderosa.MacroEngine;
-#if LIBRARY
-using Poderosa.Properties;
-#else
-using Poderosa.SerialPort.Properties;
 #endif
 
 [assembly: PluginDeclaration(typeof(Poderosa.SerialPort.SerialPortPlugin))]
@@ -48,10 +45,14 @@ namespace Poderosa.SerialPort {
 
         private StringResource _stringResource;
         private ICoreServices _coreServices;
+#if !LIBRARY
         private IProtocolService _protocolService;
+#endif
         private ITerminalSessionsService _terminalSessionsService;
+#if !LIBRARY
         private ITerminalEmulatorService _terminalEmulatorService;
         private IMacroEngine _macroEngine;
+#endif
 
         private OpenSerialPortCommand _openSerialPortCommand;
 
@@ -85,6 +86,7 @@ namespace Poderosa.SerialPort {
             }
         }
 
+#if !LIBRARY
         public IProtocolService ProtocolService {
             get {
                 if (_protocolService == null)
@@ -92,6 +94,7 @@ namespace Poderosa.SerialPort {
                 return _protocolService;
             }
         }
+#endif
         public ITerminalSessionsService TerminalSessionsService {
             get {
                 if (_terminalSessionsService == null)
@@ -99,6 +102,7 @@ namespace Poderosa.SerialPort {
                 return _terminalSessionsService;
             }
         }
+#if !LIBRARY
         public ITerminalEmulatorService TerminalEmulatorService {
             get {
                 if (_terminalEmulatorService == null)
@@ -106,6 +110,7 @@ namespace Poderosa.SerialPort {
                 return _terminalEmulatorService;
             }
         }
+#endif
         public ISerializeService SerializeService {
             get {
                 return _coreServices.SerializeService;
@@ -125,6 +130,7 @@ namespace Poderosa.SerialPort {
             }
         }
 
+#if !LIBRARY
         public ICommandManager CommandManager {
             get {
                 return _coreServices.CommandManager;
@@ -141,11 +147,10 @@ namespace Poderosa.SerialPort {
         }
 
         public Image LoadIcon() {
-            return Properties.Resources.Serial16x16;
+            return Poderosa.SerialPort.Properties.Resources.Serial16x16;
         }
 
         //コマンド、メニュー、ツールバー
-#if !LIBRARY
         private class SerialPortMenuGroup : PoderosaMenuGroupImpl {
             public SerialPortMenuGroup()
                 : base(new SerialPortMenuItem()) {
@@ -162,12 +167,13 @@ namespace Poderosa.SerialPort {
 #endif
 
         private class SerialPortToolBarComponent : IToolBarComponent, IPositionDesignation {
-
+#if !LIBRARY
             public IAdaptable DesignationTarget {
                 get {
                     return _instance.CygwinPlugin.CygwinToolBarComponentTemp;
                 }
             }
+#endif
 
             public PositionType DesignationPosition {
                 get {
@@ -175,15 +181,21 @@ namespace Poderosa.SerialPort {
                 }
             }
 
+#if !LIBRARY
             public bool ShowSeparator {
                 get {
                     return true;
                 }
             }
+#endif
 
             public IToolBarElement[] ToolBarElements {
                 get {
+#if LIBRARY
+                    return new IToolBarElement[] {};
+#else
                     return new IToolBarElement[] { new ToolBarCommandButtonImpl(_instance._openSerialPortCommand, SerialPortPlugin.Instance.LoadIcon()) };
+#endif
                 }
             }
 

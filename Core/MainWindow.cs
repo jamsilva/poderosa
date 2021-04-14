@@ -37,8 +37,8 @@ namespace Poderosa.Forms {
     internal class MainWindow : PoderosaForm, IPoderosaMainWindow {
 
         private IViewManager _viewManager;
-        private MainWindowArgument _argument;
 #if !LIBRARY
+        private MainWindowArgument _argument;
         private MenuStrip _mainMenu;
         private TabBarTable _tabBarTable;
 #endif
@@ -51,13 +51,11 @@ namespace Poderosa.Forms {
 #endif
 
 #if LIBRARY
-        public MainWindow(MainWindowArgument arg) {
+        public MainWindow() {
 #else
         public MainWindow(MainWindowArgument arg, MainWindowMenu menu) {
-#endif
             _argument = arg;
             Debug.Assert(_argument != null);
-#if !LIBRARY
             _commandKeyHandler.AddLastHandler(new FixedShortcutKeyHandler(this));
 #endif
 
@@ -66,9 +64,9 @@ namespace Poderosa.Forms {
             this.AllowDrop = false;
 #else
             this.AllowDrop = true;
-#endif
 
             arg.ApplyToUnloadedWindow(this);
+#endif
 
             InitContent();
 
@@ -83,9 +81,11 @@ namespace Poderosa.Forms {
             IExtensionPoint creator_ext = WindowManagerPlugin.Instance.PoderosaWorld.PluginManager.FindExtensionPoint(WindowManagerConstants.MAINWINDOWCONTENT_ID);
             IViewManagerFactory f = ((IViewManagerFactory[])creator_ext.GetExtensions())[0];
 
-            _toolStripContainer = new PoderosaToolStripContainer(this, _argument.ToolBarInfo);
 #if LIBRARY
+            _toolStripContainer = new PoderosaToolStripContainer(this, "");
             _toolStripContainer.TopToolStripPanelVisible = false;
+#else
+            _toolStripContainer = new PoderosaToolStripContainer(this, _argument.ToolBarInfo);
 #endif
             this.Controls.Add(_toolStripContainer);
 
@@ -118,11 +118,13 @@ namespace Poderosa.Forms {
             this.ResumeLayout();
         }
 
+#if !LIBRARY
         public PoderosaToolStripContainer ToolBarInternal {
             get {
                 return _toolStripContainer;
             }
         }
+#endif
 
         #region IPoderosaMainWindow & IPoderosaForm
         public IViewManager ViewManager {
@@ -172,9 +174,11 @@ namespace Poderosa.Forms {
 
 
         protected override void OnLoad(EventArgs e) {
+#if !LIBRARY
             //NOTE なぜかは不明だが、ウィンドウの位置はForm.Show()の呼び出し前に指定しても無視されて適当な位置が設定されてしまう。
             //なのでここで行うようにした。
             _argument.ApplyToLoadedWindow(this);
+#endif
             base.OnLoad(e);
             //通知 クローズ時はWindowManagerが登録するイベントハンドラから
             WindowManagerPlugin.Instance.NotifyMainWindowLoaded(this);

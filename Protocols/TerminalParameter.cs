@@ -22,7 +22,9 @@ using Granados;
 using Granados.AgentForwarding;
 using Granados.X11Forwarding;
 
+#if !LIBRARY
 using Poderosa.MacroEngine;
+#endif
 
 namespace Poderosa.Protocols {
     /** TerminalParameter族の提供
@@ -30,25 +32,34 @@ namespace Poderosa.Protocols {
      *    包含関係を継承で表現していたところにムリが生じていた。複数インタフェースの実装のために便宜的に継承を使っているにすぎない
      */
 
+#if LIBRARY
+    internal abstract class TerminalParameter : ITerminalParameter, ICloneable {
+#else
     internal abstract class TerminalParameter : ITerminalParameter, IAutoExecMacroParameter, ICloneable {
-
+#endif
         public const string DEFAULT_TERMINAL_TYPE = "xterm";
 
         private int _initialWidth;  //シェルの幅
         private int _initialHeight; //シェルの高さ
         private string _terminalType;
+#if !LIBRARY
         private string _autoExecMacroPath;
+#endif
 
         public TerminalParameter() {
             SetTerminalName(DEFAULT_TERMINAL_TYPE);
             SetTerminalSize(80, 25); //何も設定しなくても
+#if !LIBRARY
             _autoExecMacroPath = null;
+#endif
         }
         public TerminalParameter(TerminalParameter src) {
             _terminalType = src._terminalType;
             _initialWidth = src._initialWidth;
             _initialHeight = src._initialHeight;
+#if !LIBRARY
             _autoExecMacroPath = src._autoExecMacroPath;
+#endif
         }
 
         public int InitialWidth {
@@ -74,6 +85,7 @@ namespace Poderosa.Protocols {
             _terminalType = terminaltype;
         }
 
+#if !LIBRARY
         #region IAutoExecMacroParameter
 
         public string AutoExecMacroPath {
@@ -86,6 +98,7 @@ namespace Poderosa.Protocols {
         }
 
         #endregion
+#endif
 
         //IAdaptable
         public virtual IAdaptable GetAdapter(Type adapter) {
@@ -122,7 +135,9 @@ namespace Poderosa.Protocols {
             _port = src._port;
         }
 
+#if !LIBRARY
         [MacroConnectionParameter]
+#endif
         public string Destination {
             get {
                 return _destination;
@@ -131,7 +146,9 @@ namespace Poderosa.Protocols {
                 _destination = value;
             }
         }
+#if !LIBRARY
         [MacroConnectionParameter]
+#endif
         public int Port {
             get {
                 return _port;
@@ -206,7 +223,9 @@ namespace Poderosa.Protocols {
             _authKeyProvider = src._authKeyProvider;
         }
 
+#if !LIBRARY
         [MacroConnectionParameter]
+#endif
         public AuthenticationType AuthenticationType {
             get {
                 return _authType;
@@ -215,7 +234,9 @@ namespace Poderosa.Protocols {
                 _authType = value;
             }
         }
+#if !LIBRARY
         [MacroConnectionParameter]
+#endif
         public string Account {
             get {
                 return _account;
@@ -224,7 +245,9 @@ namespace Poderosa.Protocols {
                 _account = value;
             }
         }
+#if !LIBRARY
         [MacroConnectionParameter]
+#endif
         public string IdentityFileName {
             get {
                 return _identityFile;
@@ -234,7 +257,9 @@ namespace Poderosa.Protocols {
                 _identityFile = value;
             }
         }
+#if !LIBRARY
         [MacroConnectionParameter]
+#endif
         public SSHProtocol Method {
             get {
                 return _method;
@@ -328,7 +353,9 @@ namespace Poderosa.Protocols {
             _cygwinDir = src._cygwinDir;
         }
 
+#if !LIBRARY
         [MacroConnectionParameter]
+#endif
         public string Home {
             get {
                 return _home;
@@ -337,7 +364,9 @@ namespace Poderosa.Protocols {
                 _home = value;
             }
         }
+#if !LIBRARY
         [MacroConnectionParameter]
+#endif
         public string ShellName {
             get {
                 return _shellName;
@@ -347,7 +376,9 @@ namespace Poderosa.Protocols {
             }
         }
         //引数なしのシェル名
+#if !LIBRARY
         [MacroConnectionParameter]
+#endif
         public string ShellBody {
             get {
                 int c = _shellName.IndexOf(' ');
@@ -357,7 +388,9 @@ namespace Poderosa.Protocols {
                     return _shellName;
             }
         }
+#if !LIBRARY
         [MacroConnectionParameter]
+#endif
         public string CygwinDir {
             get {
                 return _cygwinDir;

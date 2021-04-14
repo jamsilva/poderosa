@@ -19,12 +19,14 @@ using System.Windows.Forms;
 using Poderosa;
 using Poderosa.Commands;
 using Poderosa.Forms;
-using Poderosa.MacroEngine;
 using Poderosa.Plugins;
 using Poderosa.Protocols;
 using Poderosa.Terminal;
 using Poderosa.Sessions;
 using Poderosa.Serializing;
+#if !LIBRARY
+using Poderosa.MacroEngine;
+#endif
 
 [assembly: PluginDeclaration(typeof(Poderosa.Pipe.PipePlugin))]
 
@@ -66,12 +68,16 @@ namespace Poderosa.Pipe {
         private static PipePlugin _instance;
 
         private StringResource _stringResource;
+#if !LIBRARY
         private OpenPipeCommand _openPipeCommand;
+#endif
         private ITerminalSessionsService _terminalSessionsService;
         private ITerminalEmulatorService _terminalEmulatorService;
         private IAdapterManager _adapterManager;
         private ICoreServices _coreServices;
+#if !LIBRARY
         private IMacroEngine _macroEngine;
+#endif
         private ISerializeService _serializeService;
 
         /// <summary>
@@ -92,6 +98,7 @@ namespace Poderosa.Pipe {
             }
         }
 
+#if !LIBRARY
         /// <summary>
         /// Get implementation of ITerminalSessionsService
         /// </summary>
@@ -109,6 +116,7 @@ namespace Poderosa.Pipe {
                 return _terminalEmulatorService;
             }
         }
+#endif
 
         /// <summary>
         /// Get implementation of IAdapterManager
@@ -119,6 +127,7 @@ namespace Poderosa.Pipe {
             }
         }
 
+#if !LIBRARY
         /// <summary>
         /// Get implementation of ICommandManager
         /// </summary>
@@ -139,6 +148,7 @@ namespace Poderosa.Pipe {
                 return _macroEngine;
             }
         }
+#endif
 
         /// <summary>
         /// Get implementation of ISerializeService
@@ -173,7 +183,9 @@ namespace Poderosa.Pipe {
             extSer.RegisterExtension(new PipeTerminalParameterSerializer());
             extSer.RegisterExtension(new PipeTerminalSettingsSerializer());
 
+#if !LIBRARY
             _openPipeCommand = new OpenPipeCommand();
+#endif
 
             IPluginManager pm = poderosa.PluginManager;
 #if !LIBRARY
@@ -215,7 +227,6 @@ namespace Poderosa.Pipe {
             : base(command, PipePlugin.Instance.Strings, "Menu.OpenPipe") {
         }
     }
-#endif
 
     /// <summary>
     /// Open pipe command
@@ -260,7 +271,6 @@ namespace Poderosa.Pipe {
 
             CommandResult commandResult = CommandResult.Failed;
 
-#if !LIBRARY
             using (OpenPipeDialog dialog = new OpenPipeDialog()) {
 
                 dialog.OpenPipe =
@@ -278,11 +288,11 @@ namespace Poderosa.Pipe {
                 if (dialogResult == DialogResult.Cancel)
                     commandResult = CommandResult.Cancelled;
             }
-#endif
 
             return commandResult;
         }
     }
+#endif
 
     /// <summary>
     /// Implementation of ITerminalConnectionFactory

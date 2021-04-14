@@ -77,9 +77,6 @@
     <Compile Include="..\Core\ListenerList.cs">
       <Link>Core\ListenerList.cs</Link>
     </Compile>
-    <Compile Include="..\Core\MacroEngineEx.cs">
-      <Link>Core\MacroEngineEx.cs</Link>
-    </Compile>
     <Compile Include="..\Core\MainWindow.cs">
       <SubType>Form</SubType>
       <Link>Core\MainWindow.cs</Link>
@@ -638,25 +635,8 @@
     </Compile>
     <Compile Include="Library\Internals.cs" />
     <Compile Include="Library\LibPoderosa.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\Core\icons.resx">
-      <SubType>Designer</SubType>
-      <Link>Core\icons.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Core\strings.resx">
-      <SubType>Designer</SubType>
-      <Link>Core\strings.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Core\strings_ja.resx">
-      <SubType>Designer</SubType>
-      <Link>Core\strings_ja.resx</Link>
-    </EmbeddedResource>
     <EmbeddedResource Include="..\Granados\strings.resx">
       <SubType>Designer</SubType>
       <Link>Granados\strings.resx</Link>
@@ -697,10 +677,6 @@
       <SubType>Designer</SubType>
       <Link>SerialPort\strings_ja.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\TerminalEmulator\rulechars.resx">
-      <SubType>Designer</SubType>
-      <Link>TerminalEmulator\rulechars.resx</Link>
-    </EmbeddedResource>
     <EmbeddedResource Include="..\TerminalEmulator\strings.resx">
       <SubType>Designer</SubType>
       <Link>TerminalEmulator\strings.resx</Link>
@@ -717,109 +693,6 @@
       <SubType>Designer</SubType>
       <Link>TerminalSession\strings_ja.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Pipe\Resources\Pipe16x16.png">
-      <Link>Pipe\Resources\Pipe16x16.png</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\SerialPort\Resources\Serial16x16.png">
-      <Link>SerialPort\Resources\Serial16x16.png</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\TerminalEmulator\Resources\Bell16x16.png">
-      <Link>TerminalEmulator\Resources\Bell16x16.png</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\TerminalEmulator\Resources\CommentLog16x16.png">
-      <Link>TerminalEmulator\Resources\CommentLog16x16.png</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\TerminalEmulator\Resources\Info16x16.png">
-      <Link>TerminalEmulator\Resources\Info16x16.png</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\TerminalEmulator\Resources\Intellisense16x16.png">
-      <Link>TerminalEmulator\Resources\Intellisense16x16.png</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\TerminalEmulator\Resources\LineFeed16x16.png">
-      <Link>TerminalEmulator\Resources\LineFeed16x16.png</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\TerminalEmulator\Resources\LocalEcho16x16.png">
-      <Link>TerminalEmulator\Resources\LocalEcho16x16.png</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\TerminalEmulator\Resources\Poderosa16x16.png">
-      <Link>TerminalEmulator\Resources\Poderosa16x16.png</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\TerminalEmulator\Resources\SuspendLog16x16.png">
-      <Link>TerminalEmulator\Resources\SuspendLog16x16.png</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\TerminalSession\Resources\AuthSmall.png">
-      <Link>TerminalSession\Resources\AuthSmall.png</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\TerminalSession\Resources\Cygwin16x16.png">
-      <Link>TerminalSession\Resources\Cygwin16x16.png</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\TerminalSession\Resources\NewConnection16x16.png">
-      <Link>TerminalSession\Resources\NewConnection16x16.png</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\TerminalSession\Resources\Open16x16.png">
-      <Link>TerminalSession\Resources\Open16x16.png</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\TerminalSession\Resources\Save16x16.png">
-      <Link>TerminalSession\Resources\Save16x16.png</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\TerminalSession\Resources\SFU16x16.png">
-      <Link>TerminalSession\Resources\SFU16x16.png</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\TerminalSession\Resources\Single16x16.png">
-      <Link>TerminalSession\Resources\Single16x16.png</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\TerminalSession\Resources\TerminalSmall.png">
-      <Link>TerminalSession\Resources\TerminalSmall.png</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\TerminalSession\Resources\X11Small.png">
-      <Link>TerminalSession\Resources\X11Small.png</Link>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
 </Project>

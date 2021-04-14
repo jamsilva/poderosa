@@ -1090,7 +1090,11 @@ namespace Poderosa.Preferences {
         }
         private static void PositiveIntegerValidatorBody(int value, IPreferenceValidationResult result) {
             if (value < 0)
+#if LIBRARY
+                result.ErrorMessage = "Message.ValueMustBePositive";
+#else
                 result.ErrorMessage = CoreUtil.Strings.GetString("Message.ValueMustBePositive");
+#endif
         }
 
         private class IntRange {
@@ -1104,7 +1108,11 @@ namespace Poderosa.Preferences {
 
             public void Check(int value, IPreferenceValidationResult result) {
                 if (value < _min || value > _max)
+#if LIBRARY
+                    result.ErrorMessage = "Message.ValueMustBeContainedRange(" + _min + ", " + _max + ")";
+#else
                     result.ErrorMessage = String.Format(CoreUtil.Strings.GetString("Message.ValueMustBeContainedRange"), _min, _max);
+#endif
             }
         }
 

@@ -24,20 +24,23 @@ using Poderosa.ConnectionParam;
 using Poderosa.Protocols;
 using Poderosa.Terminal;
 using Poderosa.View;
+#if !LIBRARY
 using Poderosa.MacroEngine;
+#endif
 
 namespace Poderosa.SerialPort {
 #if LIBRARY
-    public
+    public class SerialTerminalParam : ITerminalParameter {
 #else
-    internal
+    internal class SerialTerminalParam : ITerminalParameter, IAutoExecMacroParameter {
 #endif
-    class SerialTerminalParam : ITerminalParameter, IAutoExecMacroParameter {
         private string _portName;
         private string _terminalType;
+#if !LIBRARY
         private string _autoExecMacro;
 
         [MacroConnectionParameter]
+#endif
         public string PortName {
             get {
                 return _portName;
@@ -93,6 +96,7 @@ namespace Poderosa.SerialPort {
             return tp;
         }
 
+#if !LIBRARY
         #region IAutoExecMacroParameter
 
         public string AutoExecMacroPath {
@@ -105,6 +109,7 @@ namespace Poderosa.SerialPort {
         }
 
         #endregion
+#endif
     }
 
     internal class SerialTerminalSettings : TerminalSettings {
@@ -154,10 +159,12 @@ namespace Poderosa.SerialPort {
 
         public void BaseImport(ITerminalSettings ts) {
             base.Import(ts);
+#if !LIBRARY
             //アイコンは保持する
             this.BeginUpdate();
             this.Icon = SerialPortPlugin.Instance.LoadIcon();
             this.EndUpdate();
+#endif
         }
 
         public override void Import(ITerminalSettings src) {
@@ -182,7 +189,9 @@ namespace Poderosa.SerialPort {
         /// <ja>ボーレートです。</ja>
         /// <en>Gets or sets the baud rate.</en>
         /// </summary>
+#if !LIBRARY
         [MacroConnectionParameter]
+#endif
         public int BaudRate {
             get {
                 return _baudRate;
@@ -199,7 +208,9 @@ namespace Poderosa.SerialPort {
         /// <ja>７か８でないといけません。</ja>
         /// <en>The value must be 7 or 8.</en>
         /// </remarks>
+#if !LIBRARY
         [MacroConnectionParameter]
+#endif
         public byte ByteSize {
             get {
                 return _byteSize;
@@ -212,7 +223,9 @@ namespace Poderosa.SerialPort {
         /// <ja>パリティです。</ja>
         /// <en>Gets or sets the parity.</en>
         /// </summary>
+#if !LIBRARY
         [MacroConnectionParameter]
+#endif
         public Parity Parity {
             get {
                 return _parity;
@@ -225,7 +238,9 @@ namespace Poderosa.SerialPort {
         /// <ja>ストップビットです。</ja>
         /// <en>Gets or sets the stop bit.</en>
         /// </summary>
+#if !LIBRARY
         [MacroConnectionParameter]
+#endif
         public StopBits StopBits {
             get {
                 return _stopBits;
@@ -238,7 +253,9 @@ namespace Poderosa.SerialPort {
         /// <ja>フローコントロールです。</ja>
         /// <en>Gets or sets the flow control.</en>
         /// </summary>
+#if !LIBRARY
         [MacroConnectionParameter]
+#endif
         public FlowControl FlowControl {
             get {
                 return _flowControl;
@@ -292,8 +309,10 @@ namespace Poderosa.SerialPort {
             node.Set("PortName", tp.PortName);
             if (tp.TerminalType != "vt100")
                 node.Set("TerminalType", tp.TerminalType);
+#if !LIBRARY
             if (tp.AutoExecMacroPath != null)
                 node.Set("autoexec-macro", tp.AutoExecMacroPath);
+#endif
             return node;
         }
 
@@ -306,7 +325,9 @@ namespace Poderosa.SerialPort {
             }
             tp.PortName = node.Get("PortName", tp.PortName);
             tp.SetTerminalName(node.Get("TerminalType", "vt100"));
+#if !LIBRARY
             tp.AutoExecMacroPath = node.Get("autoexec-macro", null);
+#endif
             return tp;
         }
     }

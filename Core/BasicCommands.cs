@@ -26,6 +26,7 @@ using Poderosa.UI;
 using Poderosa.View;
 
 namespace Poderosa.Commands {
+#if !LIBRARY
     internal class CommandCategory : ICommandCategory, IPositionDesignation {
         private string _nameID;
         private bool _keybindCustomizable;
@@ -88,7 +89,6 @@ namespace Poderosa.Commands {
 
     }
 
-#if !LIBRARY
     internal static class BasicCommandImplementation {
         private static BasicCommand _closeAll;
         private static DocActivationCommand _docActivationCommand;
@@ -500,7 +500,7 @@ namespace Poderosa.Commands {
     /// </code>
     /// </example>
     public class CommandTargetUtil {
-
+#if !LIBRARY
         /// <summary>
         /// 
         /// </summary>
@@ -512,7 +512,7 @@ namespace Poderosa.Commands {
             else
                 return (ICommandTarget)obj.GetAdapter(typeof(ICommandTarget));
         }
-
+#endif
 
         /// <summary>
         /// <ja>
@@ -698,7 +698,7 @@ namespace Poderosa.Commands {
             }
         }
 
-
+#if !LIBRARY
         /// <exclude/>
         public static IContentReplaceableView AsContentReplaceableViewOrLastActivatedView(ICommandTarget target) {
             if (target == null)
@@ -748,6 +748,7 @@ namespace Poderosa.Commands {
 
             return (IGeneralViewCommands)view.GetAdapter(typeof(IGeneralViewCommands));
         }
+#endif
     }
 
     //CharacterDocumentViewerに対して起動するテキストコピーコマンド

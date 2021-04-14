@@ -23,11 +23,6 @@ using Poderosa.Forms;
 using Poderosa.Protocols;
 using Poderosa.Commands;
 using Poderosa.Terminal;
-#if LIBRARY
-using Poderosa.Properties;
-#else
-using Poderosa.TerminalSession.Properties;
-#endif
 
 namespace Poderosa.Sessions {
 
@@ -122,10 +117,12 @@ namespace Poderosa.Sessions {
             sm.StartNewSession(session, view);
             sm.ActivateDocument(session.Terminal.IDocument, ActivateReason.InternalAction);
 
+#if !LIBRARY
             IAutoExecMacroParameter autoExecParam = connection.Destination.GetAdapter(typeof(IAutoExecMacroParameter)) as IAutoExecMacroParameter;
             if (autoExecParam != null && autoExecParam.AutoExecMacroPath != null && TelnetSSHPlugin.Instance.MacroEngine != null) {
                 TelnetSSHPlugin.Instance.MacroEngine.RunMacro(autoExecParam.AutoExecMacroPath, session);
             }
+#endif
 
             return session;
         }
@@ -236,16 +233,18 @@ namespace Poderosa.Sessions {
             terminal_settings.BeginUpdate();
             if (terminal_settings.Caption == null || terminal_settings.Caption.Length == 0)
                 terminal_settings.Caption = caption; //長さ０はいかん
+#if !LIBRARY
             if (terminal_settings.Icon == null) {
                 switch (icon) {
                     case StartCommandIcon.NewConnection:
-                        terminal_settings.Icon = Properties.Resources.NewConnection16x16;
+                        terminal_settings.Icon = Poderosa.TerminalSession.Properties.Resources.NewConnection16x16;
                         break;
                     case StartCommandIcon.Cygwin:
-                        terminal_settings.Icon = Properties.Resources.Cygwin16x16;
+                        terminal_settings.Icon = Poderosa.TerminalSession.Properties.Resources.Cygwin16x16;
                         break;
                 }
             }
+#endif
             terminal_settings.EndUpdate();
 
         }

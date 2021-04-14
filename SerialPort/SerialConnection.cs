@@ -505,7 +505,7 @@ namespace Poderosa.SerialPort {
         }
 
 
-
+#if !LIBRARY
         public void ApplySerialParam(SerialTerminalSettings settings) {
             //paramの内容でDCBを更新してセットしなおす
             Win32Serial.DCB dcb = new Win32Serial.DCB();
@@ -515,6 +515,7 @@ namespace Poderosa.SerialPort {
             if (!Win32Serial.SetCommState(_fileHandle, ref dcb))
                 throw new ArgumentException(SerialPortPlugin.Instance.Strings.GetString("Message.SerialTerminalConnection.ConfigError"));
         }
+#endif
 
         public ITerminalParameter Destination {
             get {
@@ -646,7 +647,9 @@ namespace Poderosa.SerialPort {
         public static SerialTerminalSettings CreateDefaultSerialTerminalSettings(string portName) {
             SerialTerminalSettings ts = new SerialTerminalSettings();
             ts.BeginUpdate();
+#if !LIBRARY
             ts.Icon = SerialPortPlugin.Instance.LoadIcon();
+#endif
             ts.Caption = portName;
             ts.EndUpdate();
             return ts;

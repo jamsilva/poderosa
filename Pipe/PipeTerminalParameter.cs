@@ -15,7 +15,9 @@
 using System;
 
 using Poderosa.Protocols;
+#if !LIBRARY
 using Poderosa.MacroEngine;
+#endif
 
 namespace Poderosa.Pipe {
 
@@ -23,12 +25,10 @@ namespace Poderosa.Pipe {
     /// Terminal Parameters
     /// </summary>
 #if LIBRARY
-    public
+    public class PipeTerminalParameter : ITerminalParameter {
 #else
-    internal
+    internal class PipeTerminalParameter : ITerminalParameter, IAutoExecMacroParameter {
 #endif
-    class PipeTerminalParameter : ITerminalParameter, IAutoExecMacroParameter {
-
         /// <summary>
         /// Environment variable entry
         /// </summary>
@@ -43,7 +43,9 @@ namespace Poderosa.Pipe {
         }
 
         private string _terminalType;
+#if !LIBRARY
         private string _autoExecMacro;
+#endif
 
         private string _exeFilePath;
         private string _commandLineOptions;
@@ -64,7 +66,9 @@ namespace Poderosa.Pipe {
         /// <remarks>
         /// ExeFilePath and InputPipePath must be set exclusively from each other.
         /// </remarks>
+#if !LIBRARY
         [MacroConnectionParameter]
+#endif
         public string ExeFilePath {
             get {
                 return _exeFilePath;
@@ -80,7 +84,9 @@ namespace Poderosa.Pipe {
         /// <remarks>
         /// This property is meaningful only if ExeFilePath was not null.
         /// </remarks>
+#if !LIBRARY
         [MacroConnectionParameter]
+#endif
         public string CommandLineOptions {
             get {
                 return _commandLineOptions;
@@ -96,7 +102,9 @@ namespace Poderosa.Pipe {
         /// <remarks>
         /// This property is meaningful only if ExeFilePath was not null.
         /// </remarks>
+#if !LIBRARY
         [MacroConnectionParameter]
+#endif
         public EnvironmentVariable[] EnvironmentVariables {
             get {
                 return _environmentVariables;
@@ -112,7 +120,9 @@ namespace Poderosa.Pipe {
         /// <remarks>
         /// InputPipePath and ExeFilePath must be set exclusively from each other.
         /// </remarks>
+#if !LIBRARY
         [MacroConnectionParameter]
+#endif
         public string InputPipePath {
             get {
                 return _inputPipePath;
@@ -129,7 +139,9 @@ namespace Poderosa.Pipe {
         /// This property is meaningful only if InputPipePath was not null.
         /// If this property was null, a file handle of the InputPipePath is used for output.
         /// </remarks>
+#if !LIBRARY
         [MacroConnectionParameter]
+#endif
         public string OutputPipePath {
             get {
                 return _outputPipePath;
@@ -202,6 +214,7 @@ namespace Poderosa.Pipe {
 
         #endregion
 
+#if !LIBRARY
         #region IAutoExecMacroParameter
 
         public string AutoExecMacroPath {
@@ -214,5 +227,6 @@ namespace Poderosa.Pipe {
         }
 
         #endregion
+#endif
     }
 }

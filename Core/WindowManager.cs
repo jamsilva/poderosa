@@ -65,10 +65,12 @@ namespace Poderosa.Forms {
 #endif
         private SelectionService _selectionService;
 
+#if !LIBRARY
         private bool _executingAllWindowClose;
 
         private Task _chainedTask = Task.Delay(0);   // chained by ContinueWith()
         private readonly object _chainedTaskSync = new object();
+#endif
 
         private static WindowManagerPlugin _instance;
 
@@ -151,10 +153,8 @@ namespace Poderosa.Forms {
         }
 
 #if LIBRARY
-        public MainWindow CreateLibraryMainWindow()
-        {
-            MainWindowArgument arg = MainWindowArgument.Parse(_preferences)[0];
-            MainWindow w = new MainWindow(arg);
+        public MainWindow CreateLibraryMainWindow() {
+            MainWindow w = new MainWindow();
             w.Text = "Poderosa";
             w.FormClosed += new FormClosedEventHandler(WindowClosedHandler);
             w.Activated += delegate(object sender, EventArgs args) {
@@ -182,7 +182,6 @@ namespace Poderosa.Forms {
         public void CreateNewWindow(MainWindowArgument arg) {
             _windows.Add(CreateMainWindow(arg));
         }
-#endif
 
         //アプリ終了時
         public CommandResult CloseAllWindows() {
@@ -204,13 +203,16 @@ namespace Poderosa.Forms {
                 _executingAllWindowClose = false;
             }
         }
+#endif
 
         private void WindowClosedHandler(object sender, FormClosedEventArgs arg) {
             MainWindow w = (MainWindow)sender;
+#if !LIBRARY
             if (!_executingAllWindowClose) { //最後のウィンドウが普通に閉じられた場合
                 _preferences.WindowArray.Clear();
                 _preferences.FormatWindowPreference(w);
             }
+#endif
             _windows.Remove(w);
             NotifyMainWindowUnloaded(w);
 #if !LIBRARY
@@ -258,11 +260,10 @@ namespace Poderosa.Forms {
                 return _selectionService;
             }
         }
-        public void ReloadMenu() {
 #if !LIBRARY
+        public void ReloadMenu() {
             foreach (MainWindow w in _windows)
                 w.ReloadMenu(_menu, true);
-#endif
         }
         /*
         public void ReloadMenu(string extension_point_name) {
@@ -271,6 +272,7 @@ namespace Poderosa.Forms {
             foreach(MainWindow w in _windows) w.ReloadMenu(_menu, item);
         }
          */
+#endif
         public void ReloadPreference(ICoreServicePreference pref) {
 #if !LIBRARY
             foreach (MainWindow w in _windows)
@@ -314,9 +316,11 @@ namespace Poderosa.Forms {
 
         #region ICultureChangeListener
         public void OnCultureChanged(CultureInfo newculture) {
+#if !LIBRARY
             //メニューのリロード含め全部やる
             CoreUtil.Strings.OnCultureChanged(newculture); //先にリソース更新
             ReloadMenu();
+#endif
         }
         #endregion
 
@@ -390,7 +394,6 @@ namespace Poderosa.Forms {
         public void SetDraggingTabBar(TabKey value) {
             _draggingObject = value;
         }
-#endif
 
         private StartMode GetStartMode() {
 #if UNITTEST
@@ -401,7 +404,6 @@ namespace Poderosa.Forms {
 #endif
         }
 
-#if !LIBRARY
         private void CloseAllPopupWindows() {
             PopupViewContainer[] ws = _popupWindows.ToArray();
             foreach (PopupViewContainer w in ws)
@@ -519,40 +521,31 @@ namespace Poderosa.Forms {
         }
     }
 
+#if !LIBRARY
     internal class MainWindowArgument {
         private Rectangle _location;
         private FormWindowState _windowState;
-#if !LIBRARY
         private string _splitInfo;
-#endif
         private string _toolBarInfo;
-#if !LIBRARY
         private int _tabRowCount;
-#endif
 
         public MainWindowArgument(Rectangle location, FormWindowState state, string split, string toolbar, int tabrowcount) {
             _location = location;
             _windowState = state;
-#if !LIBRARY
             _splitInfo = split;
-#endif
             _toolBarInfo = toolbar;
-#if !LIBRARY
             _tabRowCount = tabrowcount;
-#endif
         }
         public string ToolBarInfo {
             get {
                 return _toolBarInfo;
             }
         }
-#if !LIBRARY
         public int TabRowCount {
             get {
                 return _tabRowCount;
             }
         }
-#endif
 
         //フォームへの適用は、OnLoadの前と後で分ける
         public void ApplyToUnloadedWindow(MainWindow f) {
@@ -594,14 +587,12 @@ namespace Poderosa.Forms {
             f.DesktopBounds = _location;
             f.WindowState = _windowState;
 
-#if !LIBRARY
             //頑張ればOnLoad以前にSplitInfoを適用できるかも
             if (_splitInfo.Length > 0) {
                 ISplittableViewManager vm = (ISplittableViewManager)f.ViewManager.GetAdapter(typeof(ISplittableViewManager));
                 if (vm != null)
                     vm.ApplySplitInfo(_splitInfo);
             }
-#endif
 
             //ToolBarのコンポーネント位置調整
             f.ToolBarInternal.RestoreLayout();
@@ -672,8 +663,10 @@ namespace Poderosa.Forms {
         StandAlone,
         Slave
     }
+#endif
 }
 
+#if !LIBRARY
 namespace Poderosa {
     //このアセンブリのStringResourceへのアクセサ WindowManagerに代表させるのはいかんカンジ
     internal static class CoreUtil {
@@ -687,3 +680,4 @@ namespace Poderosa {
         }
     }
 }
+#endif

@@ -22,7 +22,9 @@ using Poderosa.ConnectionParam;
 using Poderosa.View;
 using Poderosa.Util;
 using Poderosa.Plugins;
+#if !LIBRARY
 using Poderosa.MacroEngine;
+#endif
 
 namespace Poderosa.Terminal {
     //IShellSchemeDynamicChangeListenerに関しては、ShellSchemeを確定するときにListenする
@@ -119,8 +121,9 @@ namespace Poderosa.Terminal {
             }
         }
 
-
+#if !LIBRARY
         [MacroConnectionParameter]
+#endif
         public EncodingType Encoding {
             get {
                 return _encoding;
@@ -133,7 +136,9 @@ namespace Poderosa.Terminal {
             }
         }
 
+#if !LIBRARY
         [MacroConnectionParameter]
+#endif
         public TerminalType TerminalType {
             get {
                 return _terminalType;
@@ -150,7 +155,9 @@ namespace Poderosa.Terminal {
             }
         }
 
+#if !LIBRARY
         [MacroConnectionParameter]
+#endif
         public NewLine TransmitNL {
             get {
                 return _transmitnl;
@@ -161,7 +168,9 @@ namespace Poderosa.Terminal {
             }
         }
 
+#if !LIBRARY
         [MacroConnectionParameter]
+#endif
         public bool LocalEcho {
             get {
                 return _localecho;
@@ -172,7 +181,9 @@ namespace Poderosa.Terminal {
             }
         }
 
+#if !LIBRARY
         [MacroConnectionParameter]
+#endif
         public LineFeedRule LineFeedRule {
             get {
                 return _lineFeedRule;
@@ -183,7 +194,9 @@ namespace Poderosa.Terminal {
             }
         }
 
+#if !LIBRARY
         [MacroConnectionParameter]
+#endif
         public string Caption {
             get {
                 return _caption;

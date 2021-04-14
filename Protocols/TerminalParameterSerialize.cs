@@ -35,12 +35,16 @@ namespace Poderosa.Protocols {
         public void Serialize(TerminalParameter tp, StructuredText node) {
             if (tp.TerminalType != TerminalParameter.DEFAULT_TERMINAL_TYPE)
                 node.Set("terminal-type", tp.TerminalType);
+#if !LIBRARY
             if (tp.AutoExecMacroPath != null)
                 node.Set("autoexec-macro", tp.AutoExecMacroPath);
+#endif
         }
         public void Deserialize(TerminalParameter tp, StructuredText node) {
             tp.SetTerminalName(node.Get("terminal-type", TerminalParameter.DEFAULT_TERMINAL_TYPE));
+#if !LIBRARY
             tp.AutoExecMacroPath = node.Get("autoexec-macro", null);
+#endif
         }
 
         public Type ConcreteType {

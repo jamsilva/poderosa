@@ -334,7 +334,6 @@ namespace Poderosa.Forms {
         /// </remarks>
         /// <exclude/>
         IPoderosaPopupWindow CreatePopupView(PopupViewCreationParam viewcreation);
-#endif
 
         //Reload
         /// <summary>
@@ -346,6 +345,7 @@ namespace Poderosa.Forms {
         /// </en>
         /// </summary>
         void ReloadMenu();
+#endif
 
         //Preference系のリロード
         /// <summary>

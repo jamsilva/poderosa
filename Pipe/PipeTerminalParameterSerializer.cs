@@ -62,8 +62,10 @@ namespace Poderosa.Pipe {
             if (tp.TerminalType != null)
                 node.Set("terminal-type", tp.TerminalType);
 
+#if !LIBRARY
             if (tp.AutoExecMacroPath != null)
                 node.Set("autoexec-macro", tp.AutoExecMacroPath);
+#endif
 
             return node;
         }
@@ -85,7 +87,9 @@ namespace Poderosa.Pipe {
             tp.InputPipePath = node.Get("inputPipePath", null);
             tp.OutputPipePath = node.Get("outputPipePath", null);
             tp.SetTerminalName(node.Get("terminal-type", "vt100"));
+#if !LIBRARY
             tp.AutoExecMacroPath = node.Get("autoexec-macro", null);
+#endif
             return tp;
         }
     }
