@@ -160,8 +160,10 @@ namespace Poderosa.Terminal {
             Invalidate(true);
         }
         public void Detach() {
+#if !LIBRARY
             if (DebugOpt.DrawingPerformance)
                 DrawingPerformance.Output();
+#endif
 
             if (_inIMEComposition)
                 ClearIMEComposition();
@@ -266,9 +268,11 @@ namespace Poderosa.Terminal {
                 document.InvalidatedRegion.InvalidatedAll = true; //面倒だし
                 this.ITextSelection.Clear();
             }
+#if !LIBRARY
             //Debug.WriteLine(String.Format("v={0} l={1} m={2}", _VScrollBar.Value, _VScrollBar.LargeChange, _VScrollBar.Maximum));
             if (DebugOpt.DrawingPerformance)
                 DrawingPerformance.MarkReceiveData(GetDocument().InvalidatedRegion);
+#endif
             SmartInvalidate();
 
             //部分変換中であったときのための調整
@@ -321,6 +325,7 @@ namespace Poderosa.Terminal {
             }
         }
 
+#if !LIBRARY
         private delegate void InvalidateDelegate1();
         private delegate void InvalidateDelegate2(Rectangle rc);
         private void DelInvalidate(Rectangle rc) {
@@ -329,7 +334,7 @@ namespace Poderosa.Terminal {
         private void DelInvalidate() {
             Invalidate();
         }
-
+#endif
 
         protected override void VScrollBarValueChanged() {
             if (_ignoreValueChangeEvent)
@@ -548,6 +553,7 @@ namespace Poderosa.Terminal {
 
         }
 
+#if !LIBRARY
         private void ProcessScrollKey(Keys key) {
             TerminalDocument doc = GetDocument();
             int current = doc.TopLineNumber - doc.FirstLineNumber;
@@ -580,6 +586,7 @@ namespace Poderosa.Terminal {
 
             _VScrollBar.Value = newvalue; //これでイベントも発生するのでマウスで動かした場合と同じ挙動になる
         }
+#endif
 
         private void ProcessSequenceKey(Keys modifier, Keys body) {
             byte[] data;
@@ -683,7 +690,7 @@ namespace Poderosa.Terminal {
         }
 
 
-
+#if !LIBRARY
         private void ShowSizeTip(int width, int height) {
             const int MARGIN = 8;
             //Form form = GEnv.Frame.AsForm();
@@ -708,6 +715,7 @@ namespace Poderosa.Terminal {
             height = (int)Math.Floor((float)(height - sm.ControlBorderHeight * 2) / charSize.Height);
             ShowSizeTip(width, height);
         }
+#endif
 
         private void ResizeTerminal(int width, int height) {
             //Debug.WriteLine(String.Format("Resize {0} {1}", width, height));
@@ -859,7 +867,6 @@ namespace Poderosa.Terminal {
                 RuntimeUtil.ReportException(ex);
             }
         }
-#endif
 
         private void ProcessVScrollMessage(int cmd) {
             int newval = _VScrollBar.Value;
@@ -884,7 +891,7 @@ namespace Poderosa.Terminal {
                 newval = _VScrollBar.Maximum - _VScrollBar.LargeChange + 1;
             _VScrollBar.Value = newval;
         }
-
+#endif
 
         /*
          * この周辺で使いそうなデバッグ用のコード断片
@@ -1301,6 +1308,7 @@ namespace Poderosa.Terminal {
 #endif
     }
 
+#if !LIBRARY
     //描画パフォーマンス調査用クラス
     internal static class DrawingPerformance {
         private static int _receiveDataCount;
@@ -1337,6 +1345,6 @@ namespace Poderosa.Terminal {
         }
 
     }
-
+#endif
 
 }

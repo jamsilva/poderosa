@@ -30,7 +30,9 @@ namespace Poderosa.Terminal {
         private int _scrollingTop;
         private int _scrollingBottom;
         //ウィンドウの表示用テキスト
+#if !LIBRARY
         private string _windowTitle; //ホストOSCシーケンスで指定されたタイトル
+#endif
         private GLine _topLine;
         private GLine _currentLine;
 
@@ -45,6 +47,7 @@ namespace Poderosa.Terminal {
             _scrollingBottom = -1;
         }
 
+#if !LIBRARY
         public string WindowTitle {
             get {
                 return _windowTitle;
@@ -53,6 +56,7 @@ namespace Poderosa.Terminal {
                 _windowTitle = value;
             }
         }
+#endif
         public int TerminalHeight {
             get {
                 return _height;
@@ -64,11 +68,13 @@ namespace Poderosa.Terminal {
             }
         }
 
+#if !LIBRARY
         public override IPoderosaMenuGroup[] ContextMenu {
             get {
                 return TerminalEmulatorPlugin.Instance.DocumentContextMenu;
             }
         }
+#endif
 
         public void SetScrollingRegion(int top_offset, int bottom_offset) {
             _scrollingTop = TopLineNumber + top_offset;
@@ -404,6 +410,7 @@ namespace Poderosa.Terminal {
             _invalidatedRegion.InvalidatedAll = true;
         }
 
+#if !LIBRARY
         public void ClearAfter(int from, TextDecoration dec) {
             GLine l = FindLineOrNullClipTop(from);
             if (l == null)
@@ -416,6 +423,7 @@ namespace Poderosa.Terminal {
 
             _invalidatedRegion.InvalidatedAll = true;
         }
+#endif
 
         public void ClearRange(int from, int to, TextDecoration dec) {
             GLine l = FindLineOrNullClipTop(from);
@@ -429,6 +437,7 @@ namespace Poderosa.Terminal {
             }
         }
 
+#if !LIBRARY
         //再接続用に現在ドキュメントの前に挿入
         public void InsertBefore(TerminalDocument olddoc, int paneheight) {
             lock (this) {
@@ -460,6 +469,7 @@ namespace Poderosa.Terminal {
                 //Dump("insert doc");
             }
         }
+#endif
 
         public GLine UpdateCurrentLine(GLineManipulator manipulator) {
             GLine line = _currentLine;

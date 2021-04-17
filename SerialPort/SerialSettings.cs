@@ -157,15 +157,15 @@ namespace Poderosa.SerialPort {
             return p;
         }
 
+#if !LIBRARY
         public void BaseImport(ITerminalSettings ts) {
             base.Import(ts);
-#if !LIBRARY
             //アイコンは保持する
             this.BeginUpdate();
             this.Icon = SerialPortPlugin.Instance.LoadIcon();
             this.EndUpdate();
-#endif
         }
+#endif
 
         public override void Import(ITerminalSettings src) {
             base.Import(src);

@@ -99,6 +99,7 @@ namespace Poderosa.Protocols {
             return list.ToArray();
         }
 
+#if !LIBRARY
         public static string SimpleEncrypt(string plain) {
             byte[] t = Encoding.ASCII.GetBytes(plain);
             if ((t.Length % 16) != 0) {
@@ -129,8 +130,10 @@ namespace Poderosa.Protocols {
 
             return Encoding.ASCII.GetString(d); //パディングがあってもNULL文字になるので除去されるはず
         }
+#endif
     }
 
+#if !LIBRARY
     //鍵のチェック関係
     /// <summary>
     /// <ja>
@@ -154,4 +157,5 @@ namespace Poderosa.Protocols {
         /// </summary>
         NotExists
     }
+#endif
 }

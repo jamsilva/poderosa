@@ -64,6 +64,7 @@ namespace Poderosa.Terminal {
                     throw new ArgumentException("Unknown NewLine " + nl);
             }
         }
+#if !LIBRARY
         public static NewLine NextNewLineOption(NewLine nl) {
             switch (nl) {
                 case NewLine.CR:
@@ -101,7 +102,7 @@ namespace Poderosa.Terminal {
                 return null;
             }
         }
-
+#endif
     }
 
 

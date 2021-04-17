@@ -27,6 +27,7 @@ using Poderosa.Forms;
 using Poderosa.Util;
 
 namespace Poderosa.Sessions {
+#if !LIBRARY
     //NOTE Invalidateに必要なパラメータ これも意図がいまいちだなあ
     internal class InvalidateParam {
         private Delegate _delegate;
@@ -45,6 +46,7 @@ namespace Poderosa.Sessions {
                 c.Invoke(_delegate, _param);
         }
     }
+#endif
 
     //接続に対して関連付けるデータ
     internal class TerminalSession : ITerminalSession, IAbstractTerminalHost, ITerminalControlHost {

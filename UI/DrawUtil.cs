@@ -24,6 +24,7 @@ namespace Poderosa.Util.Drawing {
     /// </summary>
     /// <exclude/>
     public class DrawUtil {
+#if !LIBRARY
         //丸みのあるBorderを描画する
         internal enum RoundBorderElement {
             Outer,
@@ -106,6 +107,7 @@ namespace Poderosa.Util.Drawing {
                 y += dy;
             }
         }
+#endif
 
         //輝度を半分にした色を返す
         public static Color DarkColor(Color src) {
@@ -121,6 +123,7 @@ namespace Poderosa.Util.Drawing {
             //COLORREFは0x00BBGGRR、ToArgbは0x00RRGGBB
             return ((t & 0x000000FF) << 16) | (t & 0x0000FF00) | ((t & 0x00FF0000) >> 16);
         }
+#if !LIBRARY
         public static uint MergeColor(uint col1, uint col2) {
             uint r = (((col1 & 0x0000FF) + (col2 & 0x0000FF)) >> 1) & 0x0000FF;
             uint g = (((col1 & 0x00FF00) + (col2 & 0x00FF00)) >> 1) & 0x00FF00;
@@ -169,5 +172,6 @@ namespace Poderosa.Util.Drawing {
             }
             g.ReleaseHdc(hdc);
         }
+#endif
     }
 }

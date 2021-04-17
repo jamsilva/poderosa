@@ -407,9 +407,6 @@
     <Compile Include="..\Plugin\Win32.cs">
       <Link>Plugin\Win32.cs</Link>
     </Compile>
-    <Compile Include="..\Protocols\CommunicationUtil.cs">
-      <Link>Protocols\CommunicationUtil.cs</Link>
-    </Compile>
     <Compile Include="..\Protocols\Connector.cs">
       <Link>Protocols\Connector.cs</Link>
     </Compile>
@@ -425,9 +422,6 @@
     <Compile Include="..\Protocols\NetUtil.cs">
       <Link>Protocols\NetUtil.cs</Link>
     </Compile>
-    <Compile Include="..\Protocols\ProtocolComponent.cs">
-      <Link>Protocols\ProtocolComponent.cs</Link>
-    </Compile>
     <Compile Include="..\Protocols\ProtocolComponentEx.cs">
       <Link>Protocols\ProtocolComponentEx.cs</Link>
     </Compile>
@@ -439,9 +433,6 @@
     </Compile>
     <Compile Include="..\Protocols\ProtocolsPlugin.cs">
       <Link>Protocols\ProtocolsPlugin.cs</Link>
-    </Compile>
-    <Compile Include="..\Protocols\SimpleStringEncrypt.cs">
-      <Link>Protocols\SimpleStringEncrypt.cs</Link>
     </Compile>
     <Compile Include="..\Protocols\socks.cs">
       <Link>Protocols\socks.cs</Link>
@@ -481,9 +472,6 @@
     </Compile>
     <Compile Include="..\TerminalEmulator\CharDecoder.cs">
       <Link>TerminalEmulator\CharDecoder.cs</Link>
-    </Compile>
-    <Compile Include="..\TerminalEmulator\CommandResultEx.cs">
-      <Link>TerminalEmulator\CommandResultEx.cs</Link>
     </Compile>
     <Compile Include="..\TerminalEmulator\Encoding.cs">
       <Link>TerminalEmulator\Encoding.cs</Link>
@@ -570,9 +558,6 @@
     <Compile Include="..\TerminalSession\CopyPaste.cs">
       <Link>TerminalSession\CopyPaste.cs</Link>
     </Compile>
-    <Compile Include="..\TerminalSession\CygwinPlugin.cs">
-      <Link>TerminalSession\CygwinPlugin.cs</Link>
-    </Compile>
     <Compile Include="..\TerminalSession\PaneBridge.cs">
       <Link>TerminalSession\PaneBridge.cs</Link>
     </Compile>
@@ -581,9 +566,6 @@
     </Compile>
     <Compile Include="..\TerminalSession\StartCommands.cs">
       <Link>TerminalSession\StartCommands.cs</Link>
-    </Compile>
-    <Compile Include="..\TerminalSession\TelnetSSHPlugin.cs">
-      <Link>TerminalSession\TelnetSSHPlugin.cs</Link>
     </Compile>
     <Compile Include="..\TerminalSession\TerminalSession.cs">
       <Link>TerminalSession\TerminalSession.cs</Link>

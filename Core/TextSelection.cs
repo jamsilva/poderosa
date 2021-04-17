@@ -164,6 +164,7 @@ namespace Poderosa.View {
         }
         #endregion
 
+#if !LIBRARY
         //ドキュメントがDiscardされたときに呼ばれる。first_lineより前に選択領域が重なっていたらクリアする
         public void ClearIfOverlapped(int first_line) {
             if (_forwardPivot.Line != -1 && _forwardPivot.Line < first_line) {
@@ -180,6 +181,7 @@ namespace Poderosa.View {
                 _backwardDestination.Column = 0;
             }
         }
+#endif
 
         public bool IsEmpty {
             get {

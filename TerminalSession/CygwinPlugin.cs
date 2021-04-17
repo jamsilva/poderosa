@@ -24,9 +24,7 @@ using Poderosa.Terminal;
 using Poderosa.ConnectionParam;
 using Poderosa.Protocols;
 using Poderosa.Forms;
-#if !LIBRARY
 using Poderosa.MacroEngine;
-#endif
 
 [assembly: PluginDeclaration(typeof(Poderosa.Sessions.CygwinPlugin))]
 
@@ -37,25 +35,20 @@ namespace Poderosa.Sessions {
     /// </summary>
     /// <exclude/>
     public interface ICygwinPlugin : IAdaptable {
-#if !LIBRARY
         IPoderosaMenuGroup CygwinMenuGroupTemp {
             get;
         }
-#endif
         IToolBarComponent CygwinToolBarComponentTemp {
             get;
         }
 
-#if !LIBRARY
         ITerminalSettings CreateDefaultCygwinTerminalSettings();
-#endif
     }
 
     [PluginInfo(ID = "org.poderosa.cygwin", Version = VersionInfo.PODEROSA_VERSION, Author = VersionInfo.PROJECT_NAME, Dependencies = "org.poderosa.core.window")]
     internal class CygwinPlugin : PluginBase, ICygwinPlugin {
 
         private static CygwinPlugin _instance;
-#if !LIBRARY
         public static CygwinPlugin Instance {
             get {
                 return _instance;
@@ -64,17 +57,13 @@ namespace Poderosa.Sessions {
         private ICommandManager _commandManager;
         private CygwinLoginDialogCommand _loginDialogCommand;
         private IPoderosaMenuGroup _cygwinMenuGroup;
-#endif
         private IToolBarComponent _cygwinToolBarComponent;
-#if !LIBRARY
         private IMacroEngine _macroEngine;
-#endif
 
         public override void InitializePlugin(IPoderosaWorld poderosa) {
             base.InitializePlugin(poderosa);
             _instance = this;
 
-#if !LIBRARY
             IPluginManager pm = poderosa.PluginManager;
             _commandManager = (ICommandManager)pm.FindPlugin("org.poderosa.core.commands", typeof(ICommandManager));
             _loginDialogCommand = new CygwinLoginDialogCommand();
@@ -83,13 +72,11 @@ namespace Poderosa.Sessions {
             IExtensionPoint ep = poderosa.PluginManager.FindExtensionPoint("org.poderosa.menu.file");
             _cygwinMenuGroup = new CygwinMenuGroup();
             ep.RegisterExtension(_cygwinMenuGroup);
-#endif
 
             _cygwinToolBarComponent = new CygwinToolBarComponent();
             poderosa.PluginManager.FindExtensionPoint("org.poderosa.core.window.toolbar").RegisterExtension(_cygwinToolBarComponent);
         }
 
-#if !LIBRARY
         private class CygwinMenuGroup : IPoderosaMenuGroup, IPositionDesignation {
             public IPoderosaMenu[] ChildMenus {
                 get {
@@ -150,16 +137,14 @@ namespace Poderosa.Sessions {
                 return _instance.PoderosaWorld.AdapterManager.GetAdapter(this, adapter);
             }
         }
-#endif
 
         private class CygwinToolBarComponent : IToolBarComponent, IPositionDesignation {
-#if !LIBRARY
+
             public IAdaptable DesignationTarget {
                 get {
                     return TelnetSSHPlugin.Instance.TelnetSSHToolBar;
                 }
             }
-#endif
 
             public PositionType DesignationPosition {
                 get {
@@ -167,21 +152,15 @@ namespace Poderosa.Sessions {
                 }
             }
 
-#if !LIBRARY
             public bool ShowSeparator {
                 get {
                     return true;
                 }
             }
-#endif
 
             public IToolBarElement[] ToolBarElements {
                 get {
-#if LIBRARY
-                    return new IToolBarElement[] {};
-#else
                     return new IToolBarElement[] { new ToolBarCommandButtonImpl(_instance._loginDialogCommand, Poderosa.TerminalSession.Properties.Resources.Cygwin16x16) };
-#endif
                 }
             }
 
@@ -191,7 +170,6 @@ namespace Poderosa.Sessions {
 
         }
 
-#if !LIBRARY
         private class CygwinLoginDialogCommand : IGeneralCommand {
             public CommandResult InternalExecute(ICommandTarget target, params IAdaptable[] args) {
                 IPoderosaMainWindow window = (IPoderosaMainWindow)target.GetAdapter(typeof(IPoderosaMainWindow));
@@ -260,7 +238,6 @@ namespace Poderosa.Sessions {
                 return _cygwinMenuGroup;
             }
         }
-#endif
 
         public IToolBarComponent CygwinToolBarComponentTemp {
             get {
@@ -268,7 +245,6 @@ namespace Poderosa.Sessions {
             }
         }
 
-#if !LIBRARY
         public ITerminalSettings CreateDefaultCygwinTerminalSettings() {
             ITerminalSettings settings = TerminalSessionsPlugin.Instance.TerminalEmulatorService.CreateDefaultTerminalSettings("", Poderosa.TerminalSession.Properties.Resources.Cygwin16x16);
             settings.BeginUpdate();
@@ -285,6 +261,5 @@ namespace Poderosa.Sessions {
                 return _macroEngine;
             }
         }
-#endif
     }
 }

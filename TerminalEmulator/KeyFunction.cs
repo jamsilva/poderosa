@@ -54,6 +54,7 @@ namespace Poderosa.Terminal {
                 _data = data;
             }
 
+#if !LIBRARY
             //0x形式も含めて扱えるように
             public string FormatData() {
                 StringBuilder bld = new StringBuilder();
@@ -67,6 +68,7 @@ namespace Poderosa.Terminal {
                 }
                 return bld.ToString();
             }
+#endif
 
             public static string ParseData(string s) {
                 StringBuilder bld = new StringBuilder();

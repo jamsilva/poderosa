@@ -126,14 +126,18 @@ namespace Poderosa.Protocols {
           IPoderosaSocket, ITerminalOutput, IKeyboardInteractiveAuthenticationHandler {
 
         private SSHChannelHandler _channelHandler;
+#if !LIBRARY
         private ByteDataFragment _data;
         private MemoryStream _buffer = new MemoryStream();
+#endif
 
         private KeyboardInteractiveAuthHanlder _keyboardInteractiveAuthHanlder;
 
         public SSHSocket(SSHTerminalConnection parent)
             : base(parent) {
+#if !LIBRARY
             _data = new ByteDataFragment();
+#endif
         }
 
         public void RepeatAsyncRead(IByteAsyncInputStream cb) {

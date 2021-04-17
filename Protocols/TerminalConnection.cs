@@ -185,7 +185,7 @@ namespace Poderosa.Protocols {
         }
     }
 
-
+#if !LIBRARY
     internal class ConnectionStats {
         private int _sentDataAmount;
         private int _receivedDataAmount;
@@ -209,10 +209,13 @@ namespace Poderosa.Protocols {
             _receivedDataAmount += bytecount;
         }
     }
+#endif
 
     internal abstract class TerminalConnection : ITerminalConnection {
         protected ITerminalParameter _destination;
+#if !LIBRARY
         protected ConnectionStats _stats;
+#endif
         protected ITerminalOutput _terminalOutput; //派生クラスではこれをセットする
         protected IPoderosaSocket _socket;
 
@@ -221,7 +224,9 @@ namespace Poderosa.Protocols {
 
         protected TerminalConnection(ITerminalParameter p) {
             _destination = p;
+#if !LIBRARY
             _stats = new ConnectionStats();
+#endif
         }
 
         public ITerminalParameter Destination {

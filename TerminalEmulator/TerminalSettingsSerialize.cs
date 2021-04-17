@@ -56,10 +56,8 @@ namespace Poderosa.Terminal {
                 storage.Set("linefeedrule", ts.LineFeedRule.ToString());
             if (ts.TransmitNL != NewLine.CR)
                 storage.Set("transmit-nl", ts.TransmitNL.ToString());
-#if !LIBRARY
             if (ts.EnabledCharTriggerIntelliSense)
                 storage.Set("char-trigger-intellisense", "true");
-#endif
             if (!ts.ShellScheme.IsGeneric)
                 storage.Set("shellscheme", ts.ShellScheme.Name);
             storage.Set("caption", ts.Caption);
@@ -81,9 +79,7 @@ namespace Poderosa.Terminal {
             ts.LocalEcho = ParseUtil.ParseBool(node.Get("localecho"), false);
             ts.LineFeedRule = ParseUtil.ParseEnum<LineFeedRule>(node.Get("linefeedrule"), LineFeedRule.Normal);
             ts.TransmitNL = ParseUtil.ParseEnum<NewLine>(node.Get("transmit-nl"), NewLine.CR);
-#if !LIBRARY
             ts.EnabledCharTriggerIntelliSense = ParseUtil.ParseBool(node.Get("char-trigger-intellisense"), false);
-#endif
             string shellscheme = node.Get("shellscheme", ShellSchemeCollection.DEFAULT_SCHEME_NAME);
             if (shellscheme.Length > 0)
                 ts.SetShellSchemeName(shellscheme);

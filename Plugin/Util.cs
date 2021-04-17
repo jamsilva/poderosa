@@ -162,6 +162,7 @@ namespace Poderosa {
             }
         }
 
+#if !LIBRARY
         public static string ConcatStrArray(string[] values, char delimiter) {
             StringBuilder bld = new StringBuilder();
             for (int i = 0; i < values.Length; i++) {
@@ -171,6 +172,7 @@ namespace Poderosa {
             }
             return bld.ToString();
         }
+#endif
 
         //min未満はmin, max以上はmax、それ以外はvalueを返す
         public static int AdjustIntRange(int value, int min, int max) {

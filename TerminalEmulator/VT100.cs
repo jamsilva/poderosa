@@ -19,10 +19,12 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
-using Poderosa.Util.Drawing;
 using Poderosa.Document;
 using Poderosa.ConnectionParam;
 using Poderosa.View;
+#if !LIBRARY
+using Poderosa.Util.Drawing;
+#endif
 
 namespace Poderosa.Terminal {
     internal class VT100Terminal : EscapeSequenceTerminal {

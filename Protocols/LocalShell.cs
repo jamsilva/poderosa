@@ -35,6 +35,7 @@ namespace Poderosa.Protocols {
         //同期
         protected static object _lockObject = new object();
 
+#if !LIBRARY
         //接続先のSocketを準備して返す。失敗すればparentを親にしてエラーを表示し、nullを返す。
         internal static ITerminalConnection PrepareSocket(IPoderosaForm parent, ICygwinParameter param) {
             try {
@@ -47,6 +48,7 @@ namespace Poderosa.Protocols {
                 return null;
             }
         }
+#endif
         public static Connector AsyncPrepareSocket(IInterruptableConnectorClient client, ICygwinParameter param) {
             Connector c = new Connector(param, client);
             new Thread(new ThreadStart(c.AsyncConnect)).Start();
@@ -234,12 +236,14 @@ namespace Poderosa.Protocols {
                 _listener.Close();
         }
 
+#if !LIBRARY
         private static bool IsCygwin(LocalShellParameter tp) {
             return true;
         }
-
+#endif
     }
 
+#if !LIBRARY
     /// <summary>
     /// 
     /// </summary>
@@ -273,6 +277,7 @@ namespace Poderosa.Protocols {
         }
 
     }
+#endif
 
     /// <summary>
     /// <ja>

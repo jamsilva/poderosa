@@ -157,6 +157,7 @@ namespace Poderosa.Terminal {
             _lastCachedLineID = -1;
         }
 
+#if !LIBRARY
         public void AddListener(IPromptProcessor l) {
             _listeners.Add(l);
         }
@@ -168,6 +169,7 @@ namespace Poderosa.Terminal {
         public void SetContentUpdateMark() {
             _contentUpdateMark = true;
         }
+#endif
         public void CheckIfUpdated() {
             if (_contentUpdateMark)
                 Recognize();

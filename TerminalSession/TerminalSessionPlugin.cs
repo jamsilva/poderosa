@@ -132,6 +132,7 @@ namespace Poderosa.Sessions {
                 return _coreServices.WindowManager;
             }
         }
+#if !LIBRARY
         public PaneBridgeAdapter PaneBridgeAdapter {
             get {
                 return _paneBridgeAdapter;
@@ -143,6 +144,7 @@ namespace Poderosa.Sessions {
                 return _terminalViewFactory;
             }
         }
+#endif
 
         public ITerminalSessionOptions TerminalSessionOptions {
             get {
@@ -150,6 +152,7 @@ namespace Poderosa.Sessions {
             }
         }
 
+#if !LIBRARY
         public ICommandManager CommandManager {
             get {
                 return _coreServices.CommandManager;
@@ -160,6 +163,7 @@ namespace Poderosa.Sessions {
                 return _coreServices.SessionManager;
             }
         }
+#endif
 
         public ICommandCategory ConnectCommandCategory {
             get {
@@ -175,6 +179,7 @@ namespace Poderosa.Sessions {
         }
         #endregion
 
+#if !LIBRARY
         public ReproduceCommand ReproduceCommand {
             get {
                 return _reproduceCommand;
@@ -186,6 +191,7 @@ namespace Poderosa.Sessions {
                 return (ICoreServicePreference)folder.QueryAdapter(typeof(ICoreServicePreference));
             }
         }
+#endif
 
         /// <summary>
         /// Get a Paste command object
@@ -224,6 +230,7 @@ namespace Poderosa.Sessions {
         }
     }
 
+#if !LIBRARY
     internal class LoginDialogInitializeInfo : ITelnetSSHLoginDialogInitializeInfo {
 
         private List<string> _hosts;
@@ -264,7 +271,7 @@ namespace Poderosa.Sessions {
             }
         }
 
-#region ITelnetSSHLoginDialogInitializeInfo
+        #region ITelnetSSHLoginDialogInitializeInfo
         public void AddHost(string value) {
             if (!_hosts.Contains(value) && value.Length > 0)
                 _hosts.Add(value);
@@ -288,6 +295,7 @@ namespace Poderosa.Sessions {
         public IAdaptable GetAdapter(Type adapter) {
             return TerminalSessionsPlugin.Instance.PoderosaWorld.AdapterManager.GetAdapter(this, adapter);
         }
-#endregion
+        #endregion
     }
+#endif
 }

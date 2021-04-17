@@ -136,6 +136,7 @@ namespace Poderosa.View {
         //WinFormsのイベントハンドラとの関連付け OnXXXをいちいちoverrideしたくないのでイベントハンドラで行う
         public abstract void AttachControl(Control c);
 
+#if !LIBRARY
         //ダンプ
         public string DumpHandlerList() {
             StringBuilder bld = new StringBuilder();
@@ -146,6 +147,7 @@ namespace Poderosa.View {
             }
             return bld.ToString();
         }
+#endif
 
         //動作の本体
         protected UIHandleResult Process(HandlerDelegate action, ARG args) {

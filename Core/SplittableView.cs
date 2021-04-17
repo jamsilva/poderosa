@@ -62,11 +62,13 @@ namespace Poderosa.Forms {
         public ViewFactoryManager() {
             _viewformatChangeHandler = WindowManagerPlugin.Instance.PoderosaWorld.PluginManager.FindExtensionPoint(WindowManagerConstants.VIEWFORMATEVENTHANDLER_ID);
         }
+#if !LIBRARY
         public IExtensionPoint ViewFormatChangeHandler {
             get {
                 return _viewformatChangeHandler;
             }
         }
+#endif
 
         public IViewFactory GetViewFactoryByView(Type viewclass) {
             LateCheck();
@@ -112,7 +114,7 @@ namespace Poderosa.Forms {
 
 #if LIBRARY
             _singlePane = new SplittableViewPane(this, _defaultViewFactory.CreateNew(_parent));
-            _singlePane.AsDotNet().Dock = DockStyle.Fill;
+            _singlePane.AsControl().Dock = DockStyle.Fill;
 #else
             Debug.Assert(_paneDivision == null);
             _singlePane = CreateNewPane(_defaultViewFactory, DockStyle.Fill); //先頭のFactoryで作ってしまうというのはどうかな
@@ -267,15 +269,18 @@ namespace Poderosa.Forms {
 
         public Control RootControl {
             get {
-#if !LIBRARY
+#if LIBRARY
+                return _singlePane.AsControl();
+#else
                 if (_singlePane == null) { //分割済み
                     Debug.Assert(_paneDivision != null);
                     return _paneDivision.RootControl;
                 }
-                //分割していない
-                Debug.Assert(_paneDivision.IsEmpty);
+                else { //分割していない
+                    Debug.Assert(_paneDivision.IsEmpty);
+                    return _singlePane.AsDotNet();
+                }
 #endif
-                return _singlePane.AsDotNet();
             }
         }
         #endregion
@@ -377,13 +382,16 @@ namespace Poderosa.Forms {
                 site.CurrentContentReplaceableView = this;
         }
 
+#if !LIBRARY
         public Control AsDotNet() {
             return _content.AsControl();
         }
+#endif
         public Control AsControl() {
             return _content.AsControl();
         }
 
+#if !LIBRARY
         public string Label {
             get {
                 return "terminal";
@@ -410,6 +418,7 @@ namespace Poderosa.Forms {
                 _content.AsControl().Dock = value;
             }
         }
+#endif
 
         #region IControlReplaceableView
         //Document, CurrentSelectionについては委譲する

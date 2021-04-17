@@ -174,7 +174,7 @@ namespace Poderosa.Protocols {
             get;
         }
 
-
+#if !LIBRARY
         public bool Succeeded {
             get {
                 return _succeeded;
@@ -208,6 +208,7 @@ namespace Poderosa.Protocols {
                 return _socket;
             }
         }
+#endif
 
         private static bool SocksApplicapable(string nss, IPAddressList address) {
             foreach (string netaddress in nss.Split(';')) {

@@ -1370,6 +1370,7 @@ namespace Poderosa.Commands {
         }
     }
 
+#if !LIBRARY
     //コンテキストメニューを供給する能力のあるクラスが実装
     /// <summary>
     /// <ja>
@@ -1393,7 +1394,7 @@ namespace Poderosa.Commands {
             get;
         }
     }
-
+#endif
 
 
     //IPoderosaCommand標準実装

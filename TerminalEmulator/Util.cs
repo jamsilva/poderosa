@@ -81,7 +81,7 @@ namespace Poderosa {
         */
 
 
-
+#if !LIBRARY
         public static string FileToDir(string filename) {
             int n = filename.LastIndexOf('\\');
             if (n == -1)
@@ -95,9 +95,11 @@ namespace Poderosa {
         public static void Warning(IWin32Window owner, string msg, MessageBoxIcon icon) {
             MessageBox.Show(owner, msg, GEnv.Strings.GetString("Common.MessageBoxTitle"), MessageBoxButtons.OK, icon);
         }
+#endif
         public static void Warning(IWin32Window owner, string msg) {
             MessageBox.Show(owner, msg, GEnv.Strings.GetString("Common.MessageBoxTitle"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
+#if !LIBRARY
         public static DialogResult AskUserYesNo(IWin32Window owner, string msg) {
             return MessageBox.Show(owner, msg, GEnv.Strings.GetString("Common.MessageBoxTitle"), MessageBoxButtons.YesNo, MessageBoxIcon.Question);
         }
@@ -210,12 +212,13 @@ namespace Poderosa {
                 t[i] = src[i].WebName;
             return t;
         }
+#endif
 
         public static bool IsCursorKey(Keys key) {
             return key == Keys.Left || key == Keys.Right || key == Keys.Up || key == Keys.Down;
         }
 
-
+#if !LIBRARY
         //KeyStringの逆変換　KeyConverterの実装は死ぬほど遅い
         public static Keys ParseKey(string s) {
             if (s.Length == 0)
@@ -268,7 +271,7 @@ namespace Poderosa {
             //t.ApartmentState = ApartmentState.STA;
             return t;
         }
-
+#endif
     }
 
 }

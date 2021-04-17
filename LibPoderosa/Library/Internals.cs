@@ -117,8 +117,7 @@ namespace Poderosa.Library
 
         public void Disconnect()
         {
-            if (!TerminalSession.TerminalConnection.IsClosed)
-                TerminalSession.TerminalConnection.Close();
+            TerminalSession.InternalTerminate();
         }
     }
 }

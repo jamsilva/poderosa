@@ -73,15 +73,15 @@ namespace Poderosa.Pipe {
 
         private static PipePlugin _instance;
 
-        private StringResource _stringResource;
 #if !LIBRARY
+        private StringResource _stringResource;
         private OpenPipeCommand _openPipeCommand;
-#endif
         private ITerminalSessionsService _terminalSessionsService;
         private ITerminalEmulatorService _terminalEmulatorService;
+#endif
         private IAdapterManager _adapterManager;
-        private ICoreServices _coreServices;
 #if !LIBRARY
+        private ICoreServices _coreServices;
         private IMacroEngine _macroEngine;
         private ISerializeService _serializeService;
 #endif
@@ -95,6 +95,7 @@ namespace Poderosa.Pipe {
             }
         }
 
+#if !LIBRARY
         /// <summary>
         /// Get plugin's string resources
         /// </summary>
@@ -104,7 +105,6 @@ namespace Poderosa.Pipe {
             }
         }
 
-#if !LIBRARY
         /// <summary>
         /// Get implementation of ITerminalSessionsService
         /// </summary>
@@ -176,6 +176,7 @@ namespace Poderosa.Pipe {
             _poderosaWorld = poderosa;
 
             _adapterManager = poderosa.AdapterManager;
+#if !LIBRARY
             _coreServices = (ICoreServices)poderosa.GetAdapter(typeof(ICoreServices));
 
             _stringResource = new StringResource("Poderosa.Pipe.strings", typeof(PipePlugin).Assembly);
@@ -183,7 +184,6 @@ namespace Poderosa.Pipe {
 
             _terminalSessionsService = poderosa.PluginManager.FindPlugin("org.poderosa.terminalsessions", typeof(ITerminalSessionsService)) as ITerminalSessionsService;
             _terminalEmulatorService = poderosa.PluginManager.FindPlugin("org.poderosa.terminalemulator", typeof(ITerminalEmulatorService)) as ITerminalEmulatorService;
-#if !LIBRARY
             _serializeService = poderosa.PluginManager.FindPlugin("org.poderosa.core.serializing", typeof(ISerializeService)) as ISerializeService;
 
             IExtensionPoint extSer = _coreServices.SerializerExtensionPoint;

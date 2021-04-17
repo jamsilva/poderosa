@@ -494,11 +494,13 @@ namespace Poderosa.Terminal {
             }
         }
 
+#if !LIBRARY
         public static StringResource StringResource {
             get {
                 return GEnv.Strings;
             }
         }
+#endif
     }
 
     /////////////////////////////////////////////

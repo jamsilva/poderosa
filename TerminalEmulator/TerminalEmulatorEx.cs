@@ -138,6 +138,7 @@ namespace Poderosa.Terminal {
         /// <returns></returns>
         /// <exclude/>
         ISimpleLogSettings CreateDefaultSimpleLogSettings();
+#if !LIBRARY
         /// <summary>
         /// 
         /// </summary>
@@ -145,6 +146,7 @@ namespace Poderosa.Terminal {
         IPoderosaMenuGroup[] ContextMenu {
             get;
         }
+#endif
         /// <summary>
         /// 
         /// </summary>

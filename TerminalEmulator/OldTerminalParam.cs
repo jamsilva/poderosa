@@ -65,6 +65,7 @@ namespace Poderosa.ConnectionParam {
         KeyboardInteractive
     }
 
+#if !LIBRARY
     /// <summary>
     /// Utility methods for conversion between <see cref="AuthType"/> and <see cref="AuthenticationType"/>.
     /// </summary>
@@ -131,6 +132,7 @@ namespace Poderosa.ConnectionParam {
         /// </summary>
         SSH2
     }
+#endif
 
     /// <summary>
     /// <ja>エンコーディングを示します。</ja>
@@ -310,6 +312,7 @@ namespace Poderosa.ConnectionParam {
         KTerm
     }
 
+#if !LIBRARY
     /// <summary>
     /// Utility methods for conversion of <see cref="TerminalType"/>.
     /// </summary>
@@ -334,6 +337,7 @@ namespace Poderosa.ConnectionParam {
         }
 
     }
+#endif
 
     /// <summary>
     /// <ja>受信した文字に対する改行方法を示します。</ja>
@@ -361,7 +365,7 @@ namespace Poderosa.ConnectionParam {
         CROnly
     }
 
-#if !MACRODOC
+#if !MACRODOC || !LIBRARY
     /// <summary>
     /// <ja>フローコントロールの設定</ja>
     /// <en>Specifies the flow control.</en>

@@ -24,9 +24,7 @@ using Poderosa.Terminal;
 using Poderosa.ConnectionParam;
 using Poderosa.Protocols;
 using Poderosa.Forms;
-#if !LIBRARY
 using Poderosa.MacroEngine;
-#endif
 
 [assembly: PluginDeclaration(typeof(Poderosa.Sessions.TelnetSSHPlugin))]
 
@@ -36,15 +34,11 @@ namespace Poderosa.Sessions {
 
         private static TelnetSSHPlugin _instance;
 
-#if !LIBRARY
         private ICommandManager _commandManager;
         private LoginDialogCommand _loginDialogCommand;
         private LoginMenuGroup _loginMenuGroup;
-#endif
         private LoginToolBarComponent _loginToolBarComponent;
-#if !LIBRARY
         private IMacroEngine _macroEngine;
-#endif
 
         public static TelnetSSHPlugin Instance {
             get {
@@ -57,7 +51,6 @@ namespace Poderosa.Sessions {
             _instance = this;
 
             IPluginManager pm = poderosa.PluginManager;
-#if !LIBRARY
             _commandManager = (ICommandManager)pm.FindPlugin("org.poderosa.core.commands", typeof(ICommandManager));
             _loginDialogCommand = new LoginDialogCommand();
             _commandManager.Register(_loginDialogCommand);
@@ -65,14 +58,12 @@ namespace Poderosa.Sessions {
             IExtensionPoint ep = pm.FindExtensionPoint("org.poderosa.menu.file");
             _loginMenuGroup = new LoginMenuGroup();
             ep.RegisterExtension(_loginMenuGroup);
-#endif
 
             IExtensionPoint toolbar = pm.FindExtensionPoint("org.poderosa.core.window.toolbar");
             _loginToolBarComponent = new LoginToolBarComponent();
             toolbar.RegisterExtension(_loginToolBarComponent);
         }
 
-#if !LIBRARY
         public IPoderosaMenuGroup TelnetSSHMenuGroup {
             get {
                 return _loginMenuGroup;
@@ -152,16 +143,14 @@ namespace Poderosa.Sessions {
                 return _instance.PoderosaWorld.AdapterManager.GetAdapter(this, adapter);
             }
         }
-#endif
 
         private class LoginToolBarComponent : IToolBarComponent, IPositionDesignation {
-#if !LIBRARY
+
             public IAdaptable DesignationTarget {
                 get {
                     return null;
                 }
             }
-#endif
 
             public PositionType DesignationPosition {
                 get {
@@ -169,20 +158,14 @@ namespace Poderosa.Sessions {
                 }
             }
 
-#if !LIBRARY
             public bool ShowSeparator {
                 get {
                     return true;
                 }
             }
-#endif
             public IToolBarElement[] ToolBarElements {
                 get {
-#if LIBRARY
-                    return new IToolBarElement[] {};
-#else
                     return new IToolBarElement[] { new ToolBarCommandButtonImpl(_instance._loginDialogCommand, Poderosa.TerminalSession.Properties.Resources.NewConnection16x16) };
-#endif
                 }
             }
 
@@ -192,7 +175,7 @@ namespace Poderosa.Sessions {
 
         }
 
-#if !LIBRARY
+
         private class LoginDialogCommand : IGeneralCommand {
             public CommandResult InternalExecute(ICommandTarget target, params IAdaptable[] args) {
                 IPoderosaMainWindow window = (IPoderosaMainWindow)target.GetAdapter(typeof(IPoderosaMainWindow));
@@ -248,6 +231,5 @@ namespace Poderosa.Sessions {
                 return _instance.PoderosaWorld.AdapterManager.GetAdapter(this, adapter);
             }
         }
-#endif
     }
 }

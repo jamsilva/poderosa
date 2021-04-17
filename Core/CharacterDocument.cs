@@ -40,7 +40,11 @@ namespace Poderosa.Document {
     /// This class has not explained yet. 
     /// </en>
     /// </remarks>
+#if LIBRARY
+    public class CharacterDocument : IPoderosaDocument {
+#else
     public class CharacterDocument : IPoderosaDocument, IPoderosaContextMenuPoint {
+#endif
         protected string _caption;
         protected Image _icon;
         protected ISession _owner;
@@ -151,7 +155,9 @@ namespace Poderosa.Document {
                 for (int i = h; i < index; i++) {
                     l = l.NextLine;
                     if (l == null) {
+#if !LIBRARY
                         FindLineByHintFailed(index, hintLine);
+#endif
                         l = hintLine;
                         break;
                     }
@@ -161,7 +167,9 @@ namespace Poderosa.Document {
                 for (int i = h; i > index; i--) {
                     l = l.PrevLine;
                     if (l == null) {
+#if !LIBRARY
                         FindLineByHintFailed(index, hintLine);
+#endif
                         l = hintLine;
                         break;
                     }
@@ -170,6 +178,7 @@ namespace Poderosa.Document {
             return l;
         }
 
+#if !LIBRARY
         //FindLineByHintはしばしば失敗するのでデバッグ用に現在状態をダンプ
         protected void FindLineByHintFailed(int index, GLine hintLine) {
 #if DEBUG
@@ -183,6 +192,7 @@ namespace Poderosa.Document {
                 return null;
             }
         }
+#endif
 
         public void SetOwner(ISession owner) {
             _owner = owner;
@@ -274,6 +284,7 @@ namespace Poderosa.Document {
         }
 #endif
 
+#if !LIBRARY
         //テキストファイルから読み出す。装飾はムリだけど
         public void LoadForTest(string filename) {
             StreamReader r = null;
@@ -297,6 +308,7 @@ namespace Poderosa.Document {
             doc.AddLine(GLine.CreateSimpleGLine(content, TextDecoration.Default));
             return doc;
         }
+#endif
 
         #region IAdaptable
         public virtual IAdaptable GetAdapter(Type adapter) {

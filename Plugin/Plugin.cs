@@ -175,6 +175,7 @@ namespace Poderosa.Plugins {
             }
         }
 
+#if !LIBRARY
         public bool HasError {
             get {
                 return !_tracer.Document.IsEmpty;
@@ -187,6 +188,7 @@ namespace Poderosa.Plugins {
                 r[i] = ((Plugin)_orderedPlugins[i]).Instance;
             return r;
         }
+#endif
 
         //起動時によぶ
         public void InitializePlugins(PoderosaStartupContext sc) {

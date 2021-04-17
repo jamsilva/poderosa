@@ -38,7 +38,11 @@ using Poderosa.Serializing;
 [assembly: PluginDeclaration(typeof(Poderosa.SerialPort.SerialPortPlugin))]
 
 namespace Poderosa.SerialPort {
+#if LIBRARY
+    [PluginInfo(ID = SerialPortPlugin.PLUGIN_ID, Version = VersionInfo.PODEROSA_VERSION, Author = VersionInfo.PROJECT_NAME, Dependencies = "org.poderosa.terminalsessions")]
+#else
     [PluginInfo(ID = SerialPortPlugin.PLUGIN_ID, Version = VersionInfo.PODEROSA_VERSION, Author = VersionInfo.PROJECT_NAME, Dependencies = "org.poderosa.terminalsessions;org.poderosa.cygwin")]
+#endif
     internal class SerialPortPlugin : PluginBase {
         public const string PLUGIN_ID = "org.poderosa.serialport";
         private static SerialPortPlugin _instance;
@@ -125,6 +129,7 @@ namespace Poderosa.SerialPort {
             }
         }
 
+#if !LIBRARY
         //TODO そのうち廃止予定なので
         public ICygwinPlugin CygwinPlugin {
             get {
@@ -132,7 +137,6 @@ namespace Poderosa.SerialPort {
             }
         }
 
-#if !LIBRARY
         public ICommandManager CommandManager {
             get {
                 return _coreServices.CommandManager;

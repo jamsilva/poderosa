@@ -138,6 +138,7 @@ namespace Poderosa {
 #endif
     }
 
+#if !LIBRARY
     internal class GConst {
 
         //WMG_MAINTHREADTASKのWParam
@@ -147,6 +148,6 @@ namespace Poderosa {
 
         public const string NSURI = "http://www.poderosa.org/";
     }
-
+#endif
 
 }

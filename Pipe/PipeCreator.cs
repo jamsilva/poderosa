@@ -192,7 +192,11 @@ namespace Poderosa.Pipe {
                     return OpenExeFile(param);
                 }
                 catch (Exception e) {
+#if LIBRARY
+                    string message = "PipeCreator.LaunchingApplicationFailed";
+#else
                     string message = PipePlugin.Instance.Strings.GetString("PipeCreator.LaunchingApplicationFailed");
+#endif
                     throw new PipeCreatorException(message, e);
                 }
             }
@@ -201,7 +205,11 @@ namespace Poderosa.Pipe {
                     return OpenNamedPipe(param);
                 }
                 catch (Exception e) {
+#if LIBRARY
+                    string message = "PipeCreator.OpeningPipeFailed";
+#else
                     string message = PipePlugin.Instance.Strings.GetString("PipeCreator.OpeningPipeFailed");
+#endif
                     throw new PipeCreatorException(message, e);
                 }
             }

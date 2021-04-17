@@ -32,13 +32,13 @@ namespace Poderosa.Sessions {
     internal interface ISessionManagerForPoderosaWindow {
         PrepareCloseResult CloseMultipleDocuments(ClosingContext context, IPoderosaDocument[] documents);
     }
-#endif
 
     internal interface ISessionManagerForViewSplitter {
         void ChangeLastAttachedViewForAllDocuments(IPoderosaView closing_view, IPoderosaView alternative);
         void ChangeLastAttachedViewForWindow(IPoderosaMainWindow window, IPoderosaView alternative);
         void SetLastAttachedViewForAllDocuments(IPoderosaView view);
     }
+#endif
 
     [PluginInfo(ID = SessionManagerPlugin.PLUGIN_ID, Version = VersionInfo.PODEROSA_VERSION, Author = VersionInfo.PROJECT_NAME, Dependencies = "org.poderosa.core.window")]
     internal class SessionManagerPlugin :

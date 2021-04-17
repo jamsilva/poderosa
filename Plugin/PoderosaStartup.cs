@@ -167,6 +167,7 @@ namespace Poderosa.Boot {
             _preferenceFileName = Path.Combine(_profileHomeDirectory, "options.conf");
             _preferences = BuildPreference(_preferenceFileName);
         }
+#if !LIBRARY
         public PoderosaStartupContext(PluginManifest pluginManifest, string home_directory, StructuredText preference, string[] args, string open_file) {
             _instance = this;
             _homeDirectory = AdjustDirectory(home_directory);
@@ -179,6 +180,7 @@ namespace Poderosa.Boot {
             _preferenceFileName = null;
             _preferences = preference;
         }
+#endif
         private static string AdjustDirectory(string value) {
             return value.EndsWith("\\") ? value : value + "\\";
         }
@@ -276,9 +278,11 @@ namespace Poderosa.Boot {
                 this._pluginTypes = new List<string>();
             }
 
+#if !LIBRARY
             public void AddPluginType(string name) {
                 _pluginTypes.Add(name);
             }
+#endif
         }
 
         private readonly List<AssemblyEntry> _entries = new List<AssemblyEntry>();
@@ -293,6 +297,7 @@ namespace Poderosa.Boot {
             }
         }
 
+#if !LIBRARY
         public void AddAssembly(string home, string[] filenames) {
             foreach (string f in filenames) {
                 AddAssembly(Path.Combine(home, f));
@@ -313,6 +318,7 @@ namespace Poderosa.Boot {
                 }
             }
         }
+#endif
 
         private AssemblyEntry AddAssembly(string name) {
             AssemblyEntry entry = new AssemblyEntry(name);

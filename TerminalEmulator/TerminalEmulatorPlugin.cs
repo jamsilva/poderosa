@@ -52,9 +52,9 @@ namespace Poderosa.Terminal {
 
         private ICoreServices _coreServices;
         private ICommandManager _commandManager;
+#if !LIBRARY
         private IExtensionPoint _contextMenu;
         private IExtensionPoint _documentContextMenu;
-#if !LIBRARY
         private IExtensionPoint _intelliSenseExtension;
 #endif
         private IExtensionPoint _autoLogFileFormatter;
@@ -63,7 +63,9 @@ namespace Poderosa.Terminal {
         private KeepAlive _keepAlive;
         private CustomKeySettings _customKeySettings;
         private ShellSchemeCollection _shellSchemeCollection;
+#if !LIBRARY
         private PromptCheckerWithTimer _promptCheckerWithTimer;
+#endif
 
         private bool _laterInitialized; //遅延初期化用フラグ
 
@@ -99,10 +101,10 @@ namespace Poderosa.Terminal {
             TerminalCommand.Register(_commandManager);
             TerminalSettingMenuGroup.Initialize();
 
+#if !LIBRARY
             //PromptChecker
             _promptCheckerWithTimer = new PromptCheckerWithTimer();
 
-#if !LIBRARY
             //Edit Menuに追加
             IExtensionPoint editmenu = pm.FindExtensionPoint("org.poderosa.menu.edit");
             editmenu.RegisterExtension(new AdvancedCopyPasteMenuGroup());
@@ -113,20 +115,18 @@ namespace Poderosa.Terminal {
             IExtensionPoint consolemenu = pm.FindExtensionPoint("org.poderosa.menu.console");
             consolemenu.RegisterExtension(new TerminalSettingMenuGroup());
             consolemenu.RegisterExtension(new IntelliSenseMenuGroup());
-#endif
 
             //Context Menu
             _contextMenu = pm.CreateExtensionPoint(TerminalEmulatorConstants.TERMINAL_CONTEXT_MENU_EXTENSIONPOINT, typeof(IPoderosaMenuGroup), this);
             _contextMenu.RegisterExtension(new BasicCopyPasteMenuGroup());
             _contextMenu.RegisterExtension(new TerminalSettingMenuGroup());
-#if !LIBRARY
             _contextMenu.RegisterExtension(new IntelliSenseMenuGroup());
-#endif
 
             //タブのコンテキストメニュー
             _documentContextMenu = pm.CreateExtensionPoint(TerminalEmulatorConstants.DOCUMENT_CONTEXT_MENU_EXTENSIONPOINT, typeof(IPoderosaMenuGroup), this);
             _documentContextMenu.RegisterExtension(new PoderosaMenuGroupImpl(new PoderosaMenuItemImpl(
                 cs.CommandManager.Find("org.poderosa.core.session.closedocument"), GEnv.Strings, "Menu.DocumentClose")));
+#endif
 
             //ToolBar
             IExtensionPoint toolbar = pm.FindExtensionPoint("org.poderosa.core.window.toolbar");
@@ -186,6 +186,7 @@ namespace Poderosa.Terminal {
         public ISimpleLogSettings CreateDefaultSimpleLogSettings() {
             return new SimpleLogSettings();
         }
+#if !LIBRARY
         public IPoderosaMenuGroup[] ContextMenu {
             get {
                 return (IPoderosaMenuGroup[])_contextMenu.GetExtensions();
@@ -196,7 +197,6 @@ namespace Poderosa.Terminal {
                 return (IPoderosaMenuGroup[])_documentContextMenu.GetExtensions();
             }
         }
-#if !LIBRARY
         public IIntelliSenseCandidateExtension[] IntelliSenseExtensions {
             get {
                 return (IIntelliSenseCandidateExtension[])_intelliSenseExtension.GetExtensions();
@@ -234,18 +234,22 @@ namespace Poderosa.Terminal {
         public ISessionManager GetSessionManager() {
             return _coreServices.SessionManager;
         }
+#if !LIBRARY
         public IWinFormsService GetWinFormsService() {
             return (IWinFormsService)_coreServices.WindowManager.GetAdapter(typeof(IWinFormsService));
         }
         public IWindowManager GetWindowManager() {
             return _coreServices.WindowManager;
         }
+#endif
         public ICommandManager GetCommandManager() {
             return _commandManager;
         }
+#if !LIBRARY
         public IPoderosaApplication GetPoderosaApplication() {
             return (IPoderosaApplication)_poderosaWorld.GetAdapter(typeof(IPoderosaApplication));
         }
+#endif
         public TerminalOptionsSupplier OptionSupplier {
             get {
                 return _optionSupplier;
@@ -265,7 +269,9 @@ namespace Poderosa.Terminal {
         public override void TerminatePlugin() {
             base.TerminatePlugin();
             _shellSchemeCollection.PreClose();
+#if !LIBRARY
             _promptCheckerWithTimer.Close();
+#endif
         }
     }
 
@@ -319,6 +325,7 @@ namespace Poderosa.Terminal {
         }
     }
 
+#if !LIBRARY
     //タイマーでプロンプト認識
     internal class PromptCheckerWithTimer {
         //private ITimerSite _timerSite;
@@ -342,5 +349,5 @@ namespace Poderosa.Terminal {
             }
         }
     }
-
+#endif
 }
