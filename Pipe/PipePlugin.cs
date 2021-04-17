@@ -23,9 +23,9 @@ using Poderosa.Plugins;
 using Poderosa.Protocols;
 using Poderosa.Terminal;
 using Poderosa.Sessions;
-using Poderosa.Serializing;
 #if !LIBRARY
 using Poderosa.MacroEngine;
+using Poderosa.Serializing;
 #endif
 
 [assembly: PluginDeclaration(typeof(Poderosa.Pipe.PipePlugin))]
@@ -57,11 +57,17 @@ namespace Poderosa.Pipe {
     /// </para>
     /// </summary>
 
+#if LIBRARY
+    [PluginInfo(ID = PipePlugin.PLUGIN_ID,
+        Version = VersionInfo.PODEROSA_VERSION,
+        Author = VersionInfo.PROJECT_NAME,
+        Dependencies = "org.poderosa.terminalsessions;org.poderosa.terminalemulator")]
+#else
     [PluginInfo(ID = PipePlugin.PLUGIN_ID,
         Version = VersionInfo.PODEROSA_VERSION,
         Author = VersionInfo.PROJECT_NAME,
         Dependencies = "org.poderosa.terminalsessions;org.poderosa.terminalemulator;org.poderosa.core.serializing")]
-
+#endif
     internal class PipePlugin : PluginBase {
         public const string PLUGIN_ID = "org.poderosa.pipe";
 
@@ -77,8 +83,8 @@ namespace Poderosa.Pipe {
         private ICoreServices _coreServices;
 #if !LIBRARY
         private IMacroEngine _macroEngine;
-#endif
         private ISerializeService _serializeService;
+#endif
 
         /// <summary>
         /// Get plugin's instance
@@ -148,7 +154,6 @@ namespace Poderosa.Pipe {
                 return _macroEngine;
             }
         }
-#endif
 
         /// <summary>
         /// Get implementation of ISerializeService
@@ -158,6 +163,7 @@ namespace Poderosa.Pipe {
                 return _serializeService;
             }
         }
+#endif
 
         /// <summary>
         /// Constructor
@@ -177,13 +183,13 @@ namespace Poderosa.Pipe {
 
             _terminalSessionsService = poderosa.PluginManager.FindPlugin("org.poderosa.terminalsessions", typeof(ITerminalSessionsService)) as ITerminalSessionsService;
             _terminalEmulatorService = poderosa.PluginManager.FindPlugin("org.poderosa.terminalemulator", typeof(ITerminalEmulatorService)) as ITerminalEmulatorService;
+#if !LIBRARY
             _serializeService = poderosa.PluginManager.FindPlugin("org.poderosa.core.serializing", typeof(ISerializeService)) as ISerializeService;
 
             IExtensionPoint extSer = _coreServices.SerializerExtensionPoint;
             extSer.RegisterExtension(new PipeTerminalParameterSerializer());
             extSer.RegisterExtension(new PipeTerminalSettingsSerializer());
 
-#if !LIBRARY
             _openPipeCommand = new OpenPipeCommand();
 #endif
 

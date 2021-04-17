@@ -94,20 +94,11 @@
     <Compile Include="..\Core\RenderProfile.cs">
       <Link>Core\RenderProfile.cs</Link>
     </Compile>
-    <Compile Include="..\Core\RenderProfileSerialize.cs">
-      <Link>Core\RenderProfileSerialize.cs</Link>
-    </Compile>
     <Compile Include="..\Core\Selection.cs">
       <Link>Core\Selection.cs</Link>
     </Compile>
     <Compile Include="..\Core\SelectionEx.cs">
       <Link>Core\SelectionEx.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\Serialize.cs">
-      <Link>Core\Serialize.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\SerializeEx.cs">
-      <Link>Core\SerializeEx.cs</Link>
     </Compile>
     <Compile Include="..\Core\Session.cs">
       <Link>Core\Session.cs</Link>
@@ -356,14 +347,8 @@
     <Compile Include="..\Pipe\PipeTerminalParameter.cs">
       <Link>Pipe\PipeTerminalParameter.cs</Link>
     </Compile>
-    <Compile Include="..\Pipe\PipeTerminalParameterSerializer.cs">
-      <Link>Pipe\PipeTerminalParameterSerializer.cs</Link>
-    </Compile>
     <Compile Include="..\Pipe\PipeTerminalSettings.cs">
       <Link>Pipe\PipeTerminalSettings.cs</Link>
-    </Compile>
-    <Compile Include="..\Pipe\PipeTerminalSettingsSerializer.cs">
-      <Link>Pipe\PipeTerminalSettingsSerializer.cs</Link>
     </Compile>
     <Compile Include="..\Pipe\Win32Exception.cs">
       <Link>Pipe\Win32Exception.cs</Link>
@@ -482,9 +467,6 @@
     <Compile Include="..\Protocols\TerminalParameterEx.cs">
       <Link>Protocols\TerminalParameterEx.cs</Link>
     </Compile>
-    <Compile Include="..\Protocols\TerminalParameterSerialize.cs">
-      <Link>Protocols\TerminalParameterSerialize.cs</Link>
-    </Compile>
     <Compile Include="..\SerialPort\SerialConnection.cs">
       <Link>SerialPort\SerialConnection.cs</Link>
     </Compile>
@@ -566,9 +548,6 @@
     </Compile>
     <Compile Include="..\TerminalEmulator\TerminalSettingsEx.cs">
       <Link>TerminalEmulator\TerminalSettingsEx.cs</Link>
-    </Compile>
-    <Compile Include="..\TerminalEmulator\TerminalSettingsSerialize.cs">
-      <Link>TerminalEmulator\TerminalSettingsSerialize.cs</Link>
     </Compile>
     <Compile Include="..\TerminalEmulator\TerminalToolBar.cs">
       <Link>TerminalEmulator\TerminalToolBar.cs</Link>

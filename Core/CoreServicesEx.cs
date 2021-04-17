@@ -19,9 +19,11 @@ using System.Text;
 using Poderosa.Forms;
 using Poderosa.Preferences;
 using Poderosa.Commands;
-using Poderosa.Serializing;
 using Poderosa.Sessions;
 using Poderosa.Boot;
+#if !LIBRARY
+using Poderosa.Serializing;
+#endif
 
 namespace Poderosa.Plugins {
     //頻出機能へのアクセサ。PoderosaWorldからGetAdapterできるようにしてしまうよ！
@@ -141,6 +143,7 @@ namespace Poderosa.Plugins {
         ISessionManager SessionManager {
             get;
         }
+#if !LIBRARY
         /// <summary>
         /// <ja>
         /// ISerializeServiceインターフェイスを返します。
@@ -161,6 +164,7 @@ namespace Poderosa.Plugins {
         ISerializeService SerializeService {
             get;
         }
+#endif
 
         //以下は頻出ExtensionPoint
         /// <summary>
@@ -183,6 +187,7 @@ namespace Poderosa.Plugins {
         IExtensionPoint PreferenceExtensionPoint {
             get;
         }
+#if !LIBRARY
         /// <summary>
         /// <ja>
         /// SerializeServicePluginプラグインが提供する拡張ポイントを返します。
@@ -203,6 +208,7 @@ namespace Poderosa.Plugins {
         IExtensionPoint SerializerExtensionPoint {
             get;
         }
+#endif
     }
 
     //その実装と登録
@@ -214,9 +220,13 @@ namespace Poderosa.Plugins {
         private IPreferences _preferences;
         private ICommandManager _commandManager;
         private ISessionManager _sessionManager;
+#if !LIBRARY
         private ISerializeService _serializeService;
+#endif
         private IExtensionPoint _preferenceExtensionPoint;
+#if !LIBRARY
         private IExtensionPoint _serializerExtensionPoint;
+#endif
 
         public CoreServices(IPoderosaWorld world) {
             _world = world;
@@ -248,6 +258,7 @@ namespace Poderosa.Plugins {
             }
         }
 
+#if !LIBRARY
         public ISerializeService SerializeService {
             get {
                 if (_serializeService == null)
@@ -255,6 +266,7 @@ namespace Poderosa.Plugins {
                 return _serializeService;
             }
         }
+#endif
 
         public ISessionManager SessionManager {
             get {
@@ -273,6 +285,7 @@ namespace Poderosa.Plugins {
             }
         }
 
+#if !LIBRARY
         public IExtensionPoint SerializerExtensionPoint {
             get {
                 if (_serializerExtensionPoint == null)
@@ -280,6 +293,7 @@ namespace Poderosa.Plugins {
                 return _serializerExtensionPoint;
             }
         }
+#endif
 
         public IAdaptable GetAdapter(Type adapter) {
             return _world.AdapterManager.GetAdapter(this, adapter);

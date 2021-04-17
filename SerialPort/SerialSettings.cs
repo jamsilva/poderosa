@@ -19,13 +19,13 @@ using System.Drawing;
 using System.Diagnostics;
 
 using Poderosa.Util;
-using Poderosa.Serializing;
 using Poderosa.ConnectionParam;
 using Poderosa.Protocols;
 using Poderosa.Terminal;
 using Poderosa.View;
 #if !LIBRARY
 using Poderosa.MacroEngine;
+using Poderosa.Serializing;
 #endif
 
 namespace Poderosa.SerialPort {
@@ -292,6 +292,7 @@ namespace Poderosa.SerialPort {
 
     }
 
+#if !LIBRARY
     //Serializers
     internal class SerialTerminalParamSerializer : ISerializeServiceElement {
         public Type ConcreteType {
@@ -309,10 +310,8 @@ namespace Poderosa.SerialPort {
             node.Set("PortName", tp.PortName);
             if (tp.TerminalType != "vt100")
                 node.Set("TerminalType", tp.TerminalType);
-#if !LIBRARY
             if (tp.AutoExecMacroPath != null)
                 node.Set("autoexec-macro", tp.AutoExecMacroPath);
-#endif
             return node;
         }
 
@@ -325,9 +324,7 @@ namespace Poderosa.SerialPort {
             }
             tp.PortName = node.Get("PortName", tp.PortName);
             tp.SetTerminalName(node.Get("TerminalType", "vt100"));
-#if !LIBRARY
             tp.AutoExecMacroPath = node.Get("autoexec-macro", null);
-#endif
             return tp;
         }
     }
@@ -382,4 +379,5 @@ namespace Poderosa.SerialPort {
             return ts;
         }
     }
+#endif
 }

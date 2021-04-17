@@ -25,7 +25,11 @@ using Poderosa.Util.Collections;
 [assembly: PluginDeclaration(typeof(Poderosa.Protocols.ProtocolsPlugin))]
 
 namespace Poderosa.Protocols {
+#if LIBRARY
+    [PluginInfo(ID = ProtocolsPlugin.PLUGIN_ID, Version = VersionInfo.PODEROSA_VERSION, Author = VersionInfo.PROJECT_NAME, Dependencies = "org.poderosa.core.preferences")]
+#else
     [PluginInfo(ID = ProtocolsPlugin.PLUGIN_ID, Version = VersionInfo.PODEROSA_VERSION, Author = VersionInfo.PROJECT_NAME, Dependencies = "org.poderosa.core.preferences;org.poderosa.core.serializing")]
+#endif
     internal class ProtocolsPlugin : PluginBase, IProtocolService, IProtocolTestService {
         public const string PLUGIN_ID = "org.poderosa.protocols";
 
@@ -50,7 +54,9 @@ namespace Poderosa.Protocols {
             _netCategory = new PoderosaLogCategoryImpl("Network");
 
             IPluginManager pm = poderosa.PluginManager;
+#if !LIBRARY
             RegisterTerminalParameterSerializers(pm.FindExtensionPoint("org.poderosa.core.serializeElement"));
+#endif
 
             _connectionResultEventHandler = pm.CreateExtensionPoint(ProtocolsPluginConstants.RESULTEVENTHANDLER_EXTENSION, typeof(IConnectionResultEventHandler), this);
             pm.CreateExtensionPoint(ProtocolsPluginConstants.HOSTKEYCHECKER_EXTENSION, typeof(ISSHHostKeyVerifier2), ProtocolsPlugin.Instance);
@@ -110,11 +116,13 @@ namespace Poderosa.Protocols {
             _poderosaLog.AddItem(_netCategory, text);
         }
 
+#if !LIBRARY
         private void RegisterTerminalParameterSerializers(IExtensionPoint extp) {
             extp.RegisterExtension(new TelnetParameterSerializer());
             extp.RegisterExtension(new SSHParameterSerializer());
             extp.RegisterExtension(new LocalShellParameterSerializer());
         }
+#endif
 
         //IProtocolTestService
         public ITerminalConnection CreateLoopbackConnection() {

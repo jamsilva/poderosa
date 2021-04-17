@@ -90,8 +90,10 @@ namespace Poderosa.Terminal {
             cs.PreferenceExtensionPoint.RegisterExtension(_shellSchemeCollection);
             _coreServices = cs;
 
+#if !LIBRARY
             //Serialize Service
             cs.SerializerExtensionPoint.RegisterExtension(new TerminalSettingsSerializer(pm));
+#endif
 
             _commandManager = cs.CommandManager;
             TerminalCommand.Register(_commandManager);

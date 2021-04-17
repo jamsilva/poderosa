@@ -30,9 +30,9 @@ using Poderosa.Protocols;
 using Poderosa.Commands;
 using Poderosa.Preferences;
 using Poderosa.Sessions;
-using Poderosa.Serializing;
 #if !LIBRARY
 using Poderosa.MacroEngine;
+using Poderosa.Serializing;
 #endif
 
 [assembly: PluginDeclaration(typeof(Poderosa.SerialPort.SerialPortPlugin))]
@@ -65,9 +65,11 @@ namespace Poderosa.SerialPort {
             IPluginManager pm = poderosa.PluginManager;
             _coreServices = (ICoreServices)poderosa.GetAdapter(typeof(ICoreServices));
 
+#if !LIBRARY
             IExtensionPoint pt = _coreServices.SerializerExtensionPoint;
             pt.RegisterExtension(new SerialTerminalParamSerializer());
             pt.RegisterExtension(new SerialTerminalSettingsSerializer());
+#endif
 
             _openSerialPortCommand = new OpenSerialPortCommand();
             _coreServices.CommandManager.Register(_openSerialPortCommand);
@@ -110,12 +112,12 @@ namespace Poderosa.SerialPort {
                 return _terminalEmulatorService;
             }
         }
-#endif
         public ISerializeService SerializeService {
             get {
                 return _coreServices.SerializeService;
             }
         }
+#endif
 
         public StringResource Strings {
             get {
