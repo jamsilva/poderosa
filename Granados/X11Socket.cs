@@ -17,6 +17,10 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 
+#if LIBRARY
+using Poderosa.Library;
+#endif
+
 namespace Granados.X11 {
 
     /// <summary>

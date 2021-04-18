@@ -160,9 +160,7 @@ namespace Poderosa.Terminal {
                 IPreferenceFolder content = _preferenceFolderArray.CreateNewFolder();
                 _preferenceFolderArray.ConvertItem(content, _namePreference).AsString().Value = ss.Name;
                 _preferenceFolderArray.ConvertItem(content, _promptPreference).AsString().Value = ss.PromptExpression;
-#if !LIBRARY
                 _preferenceFolderArray.ConvertItem(content, _commandListPreference).AsString().Value = ss.FormatCommandList();
-#endif
                 if (ss.BackSpaceChar != (char)0x08)
                     _preferenceFolderArray.ConvertItem(content, _backspacePreference).AsString().Value = ((int)ss.BackSpaceChar).ToString("X2");
             }
@@ -181,9 +179,7 @@ namespace Poderosa.Terminal {
         private string _promptExpression;
         private string _commandList; //遅延評価用
         private char _backSpaceChar;
-#if !LIBRARY
         private IntelliSenseItemCollection _intelliSenseItemCollection;
-#endif
 
         public GenericShellScheme(string name, string prompt) {
             _name = name;
@@ -191,9 +187,7 @@ namespace Poderosa.Terminal {
             _backSpaceChar = (char)0x08;
             _buffer = new StringBuilder();
             _commandList = "";
-#if !LIBRARY
             _intelliSenseItemCollection = new IntelliSenseItemCollection();
-#endif
         }
         public string PromptExpression {
             get {
@@ -229,7 +223,6 @@ namespace Poderosa.Terminal {
                 return _name == ShellSchemeCollection.DEFAULT_SCHEME_NAME;
             }
         }
-#if !LIBRARY
         public IIntelliSenseItemCollection CommandHistory {
             get {
                 if (_commandList != null) {
@@ -239,14 +232,11 @@ namespace Poderosa.Terminal {
                 return _intelliSenseItemCollection;
             }
         }
-#endif
         public IShellScheme Clone() {
             GenericShellScheme ns = new GenericShellScheme(_name, _promptExpression);
             ns._backSpaceChar = _backSpaceChar;
             ns._commandList = _commandList;
-#if !LIBRARY
             ns._intelliSenseItemCollection = _intelliSenseItemCollection.Clone();
-#endif
             return ns;
         }
 
@@ -313,7 +303,6 @@ namespace Poderosa.Terminal {
             return _buffer.ToString();
         }
 
-#if !LIBRARY
         //保存用
         public string FormatCommandList() {
             StringBuilder bld = new StringBuilder();
@@ -344,11 +333,9 @@ namespace Poderosa.Terminal {
             bld.Append(value);
             bld.Append(end);
         }
-#endif
         public void SetCommandList(string value) {
             _commandList = value; //遅延パース
         }
-#if !LIBRARY
         private void ParseCommandList(string value) {
             Debug.WriteLineIf(DebugOpt.IntelliSense, "ParseCommand");
             _intelliSenseItemCollection.Clear();
@@ -383,7 +370,6 @@ namespace Poderosa.Terminal {
 
             return ';';
         }
-#endif
 
         public IAdaptable GetAdapter(Type adapter) {
             return TerminalEmulatorPlugin.Instance.PoderosaWorld.AdapterManager.GetAdapter(this, adapter);

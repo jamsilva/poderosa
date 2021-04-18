@@ -22,7 +22,9 @@ using System.Diagnostics;
 
 using Poderosa.Util.Collections;
 using Poderosa.Document;
+#if !LIBRARY
 using Poderosa.Preferences;
+#endif
 
 namespace Poderosa.Terminal {
     //外部に通知するインタフェース
@@ -37,15 +39,20 @@ namespace Poderosa.Terminal {
 
 
 
-
+#if LIBRARY
+    internal class PromptRecognizer {
+#else
     internal class PromptRecognizer : ITerminalSettingsChangeListener {
+#endif
         private AbstractTerminal _terminal;
         private Regex _promptExpression;
         private List<IPromptProcessor> _listeners;
 
         private StringBuilder _commandBuffer;
 
+#if !LIBRARY
         private bool _contentUpdateMark;
+#endif
 
         private struct PromptInfo {
             public readonly string Prompt;
@@ -149,9 +156,13 @@ namespace Poderosa.Terminal {
         public PromptRecognizer(AbstractTerminal term) {
             _terminal = term;
             _commandBuffer = new StringBuilder();
+#if LIBRARY
+            _promptExpression = new Regex("^[^>()$#%]*[>()$#%]", RegexOptions.Compiled); //これはシェルにより可変
+#else
             ITerminalSettings ts = term.TerminalHost.TerminalSettings;
             ts.AddListener(this);
             _promptExpression = new Regex(ts.ShellScheme.PromptExpression, RegexOptions.Compiled); //これはシェルにより可変
+#endif
             _listeners = new List<IPromptProcessor>();
             _lineCache = new LineCache(PromptRecognizerPreferences.Instance.PromptSearchMaxLines);
             _lastCachedLineID = -1;
@@ -169,12 +180,12 @@ namespace Poderosa.Terminal {
         public void SetContentUpdateMark() {
             _contentUpdateMark = true;
         }
-#endif
         public void CheckIfUpdated() {
             if (_contentUpdateMark)
                 Recognize();
             _contentUpdateMark = false;
         }
+#endif
 
 
         public void Recognize() {
@@ -304,6 +315,7 @@ namespace Poderosa.Terminal {
                 l.OnNotPromptLine();
         }
 
+#if !LIBRARY
         //ITerminalSettingChangeListener
         public void OnBeginUpdate(ITerminalSettings current) {
         }
@@ -312,14 +324,18 @@ namespace Poderosa.Terminal {
             _promptExpression = new Regex(current.ShellScheme.PromptExpression, RegexOptions.Compiled);
             Debug.WriteLineIf(DebugOpt.IntelliSenseMenu, "UpdatePrompt");
         }
+#endif
     }
 
 
     /// <summary>
     /// Preferences for PromptRecognizer
     /// </summary>
+#if LIBRARY
+    internal class PromptRecognizerPreferences {
+#else
     internal class PromptRecognizerPreferences : IPreferenceSupplier {
-
+#endif
         private static PromptRecognizerPreferences _instance = new PromptRecognizerPreferences();
 
         public static PromptRecognizerPreferences Instance {
@@ -330,20 +346,25 @@ namespace Poderosa.Terminal {
 
         private const int DEFAULT_PROMPT_SEARCH_MAX_LINES = 5;
 
+#if !LIBRARY
         private IIntPreferenceItem _promptSearchMaxLines;
+#endif
 
         /// <summary>
         /// Get max lines for searching prompt
         /// </summary>
         public int PromptSearchMaxLines {
             get {
+#if !LIBRARY
                 if (_promptSearchMaxLines != null)
                     return _promptSearchMaxLines.Value;
                 else
+#endif
                     return DEFAULT_PROMPT_SEARCH_MAX_LINES;
             }
         }
 
+#if !LIBRARY
         #region IPreferenceSupplier
 
         public string PreferenceID {
@@ -364,6 +385,7 @@ namespace Poderosa.Terminal {
         }
 
         #endregion
+#endif
     }
 
 

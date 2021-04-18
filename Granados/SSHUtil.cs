@@ -490,6 +490,7 @@ namespace Granados.Util {
         }
     }
 
+#if !LIBRARY
     /// <summary>
     /// 
     /// </summary>
@@ -527,6 +528,7 @@ namespace Granados.Util {
             return t.GetHashCode().ToString();
         }
     }
+#endif
 
     /// <summary>
     /// Utility class for pass an object to the single recipient.

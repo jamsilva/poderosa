@@ -195,6 +195,7 @@ namespace Poderosa.Sessions {
             return PrepareCloseResult.TerminateSession;
         }
         public PrepareCloseResult PrepareCloseSession() {
+#if !LIBRARY
             if (TerminalSessionsPlugin.Instance.TerminalSessionOptions.AskCloseOnExit && !_output.Connection.IsClosed) {
                 if (this.OwnerWindow.AskUserYesNo(String.Format(TEnv.Strings.GetString("Message.AskCloseTerminalSession"), this.Caption)) == DialogResult.Yes)
                     return PrepareCloseResult.TerminateSession;
@@ -202,6 +203,7 @@ namespace Poderosa.Sessions {
                     return PrepareCloseResult.Cancel;
             }
             else
+#endif
                 return PrepareCloseResult.TerminateSession;
         }
 

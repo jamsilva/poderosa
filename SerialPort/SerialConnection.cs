@@ -26,6 +26,9 @@ using Poderosa.Terminal;
 using Poderosa.Forms;
 using Poderosa.Util;
 using Poderosa.Protocols;
+#if LIBRARY
+using Poderosa.Library;
+#endif
 
 namespace Poderosa.SerialPort {
 

@@ -19,15 +19,24 @@ using System.Collections.Generic;
 using System.Text;
 
 using Poderosa.Plugins;
+#if LIBRARY
+using Poderosa.Library;
+#endif
 
 namespace Poderosa.Boot {
+#if LIBRARY
+    internal class InternalPoderosaWorld : IPoderosaWorld, IPoderosaApplication, IAdaptable {
+#else
     internal class InternalPoderosaWorld : IPoderosaWorld, IPoderosaApplication, IStartupContextSupplier {
+#endif
 
         private static InternalPoderosaWorld _instance;
 
         private AdapterManager _adapterManager;
         private StringResource _stringResource;
+#if !LIBRARY
         private PoderosaCulture _poderosaCulture;
+#endif
         private PoderosaLog _poderosaLog;
         private PluginManager _pluginManager;
         private IExtensionPoint _rootExtension;
@@ -36,11 +45,17 @@ namespace Poderosa.Boot {
         public InternalPoderosaWorld(PoderosaStartupContext context) {
             _instance = this;
             _startupContext = context;
+#if !LIBRARY
             _poderosaCulture = new PoderosaCulture();
+#endif
             _poderosaLog = new PoderosaLog(this);
             _adapterManager = new AdapterManager();
+#if LIBRARY
+            _stringResource = StringResource.Instance;
+#else
             _stringResource = new StringResource("Poderosa.Plugin.strings", typeof(InternalPoderosaWorld).Assembly);
             _poderosaCulture.AddChangeListener(_stringResource);
+#endif
             _pluginManager = new PluginManager(this);
             //ルート
             _rootExtension = _pluginManager.CreateExtensionPoint(ExtensionPoint.ROOT, typeof(IRootExtension), null);
@@ -57,13 +72,16 @@ namespace Poderosa.Boot {
                 return _pluginManager;
             }
         }
+#if !LIBRARY
         public IPoderosaCulture Culture {
             get {
                 return _poderosaCulture;
             }
         }
+#endif
         #endregion
 
+#if !LIBRARY
         #region IStartupContextSupplier
         public StructuredText Preferences {
             get {
@@ -76,6 +94,7 @@ namespace Poderosa.Boot {
             }
         }
         #endregion
+#endif
 
         #region IAdaptable
         public IAdaptable GetAdapter(Type type) {
@@ -181,6 +200,7 @@ namespace Poderosa.Boot {
         }
     }
 
+#if !LIBRARY
     internal class PoderosaCulture : IPoderosaCulture {
         private CultureInfo _initialCulture;
         private CultureInfo _currentCulture;
@@ -247,4 +267,5 @@ namespace Poderosa.Boot {
             _listeners.Remove(listener);
         }
     }
+#endif
 }

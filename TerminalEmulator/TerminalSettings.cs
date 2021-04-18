@@ -32,7 +32,11 @@ namespace Poderosa.Terminal {
     /// 
     /// </summary>
     /// <exclude/>
+#if LIBRARY
+    public class TerminalSettings : ITerminalSettings {
+#else
     public class TerminalSettings : ITerminalSettings, IShellSchemeDynamicChangeListener {
+#endif
         private EncodingType _encoding;
         private TerminalType _terminalType;
         private bool _localecho;
@@ -42,9 +46,9 @@ namespace Poderosa.Terminal {
         private IMultiLogSettings _multiLogSettings;
         private string _caption;
         private Image _icon;
+#if !LIBRARY
         private IShellScheme _shellScheme;
         private string _shellSchemeName;
-#if !LIBRARY
         private bool _enabledCharTriggerIntelliSense;
 #endif
 
@@ -56,19 +60,23 @@ namespace Poderosa.Terminal {
         public event ChangeHandler<EncodingType> ChangeEncoding;
 
         public TerminalSettings() {
+#if !LIBRARY
             IPoderosaCulture culture = TerminalEmulatorPlugin.Instance.PoderosaWorld.Culture;
             if (culture.IsJapaneseOS || culture.IsSimplifiedChineseOS || culture.IsTraditionalChineseOS || culture.IsKoreanOS)
+#endif
                 _encoding = EncodingType.UTF8;
+#if !LIBRARY
             else
                 _encoding = EncodingType.ISO8859_1;
+#endif
 
             _terminalType = TerminalType.XTerm;
             _localecho = false;
             _lineFeedRule = LineFeedRule.Normal;
             _transmitnl = NewLine.CR;
             _renderProfile = null;
-            _shellSchemeName = ShellSchemeCollection.DEFAULT_SCHEME_NAME;
 #if !LIBRARY
+            _shellSchemeName = ShellSchemeCollection.DEFAULT_SCHEME_NAME;
             _enabledCharTriggerIntelliSense = false;
 #endif
             _multiLogSettings = new MultiLogSettings();
@@ -92,12 +100,12 @@ namespace Poderosa.Terminal {
             _caption = src.Caption;
             _icon = src.Icon;
             TerminalSettings src_r = (TerminalSettings)src;
+#if !LIBRARY
             _shellSchemeName = src_r._shellSchemeName; //ちょっとインチキ
             if (src_r._shellScheme != null) {
                 _shellScheme = src_r._shellScheme;
                 TerminalEmulatorPlugin.Instance.ShellSchemeCollection.AddDynamicChangeListener(this);
             }
-#if !LIBRARY
             _enabledCharTriggerIntelliSense = src.EnabledCharTriggerIntelliSense;
 #endif
             _renderProfile = src.RenderProfile == null ? null : (RenderProfile)src.RenderProfile.Clone();
@@ -218,6 +226,7 @@ namespace Poderosa.Terminal {
                 _icon = value;
             }
         }
+#if !LIBRARY
         public IShellScheme ShellScheme {
             get {
                 //ShellSchemeNameはレイトバインド専用
@@ -233,7 +242,6 @@ namespace Poderosa.Terminal {
                 _shellScheme = value;
             }
         }
-#if !LIBRARY
         public bool EnabledCharTriggerIntelliSense {
             get {
                 return _enabledCharTriggerIntelliSense;
@@ -276,16 +284,19 @@ namespace Poderosa.Terminal {
             _listeners.Remove(l);
         }
 
+#if !LIBRARY
         public void SetShellSchemeName(string value) {
             _shellSchemeName = value;
             _shellScheme = null;
         }
+#endif
 
         private void EnsureUpdating() {
             if (!_updating)
                 throw new InvalidOperationException("NOT UPDATE STATE");
         }
 
+#if !LIBRARY
         //IShellSchemeDynamicChangeListener
         public void OnShellSchemeCollectionChanged(IShellScheme[] values, Poderosa.Util.Collections.TypedHashtable<IShellScheme, IShellScheme> table) {
             if (_shellScheme == null)
@@ -298,6 +309,7 @@ namespace Poderosa.Terminal {
             _shellSchemeName = ns.Name;
             EndUpdate(); //これで通知が出る。例えばShellScheme選択コンボボックス。
         }
+#endif
     }
 
     internal class SimpleLogSettings : ISimpleLogSettings {

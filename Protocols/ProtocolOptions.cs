@@ -20,7 +20,9 @@ using System.Diagnostics;
 using System.Text;
 
 using Poderosa.Util;
+#if !LIBRARY
 using Poderosa.Preferences;
+#endif
 
 namespace Poderosa.Protocols {
     /// <summary>
@@ -36,13 +38,17 @@ namespace Poderosa.Protocols {
         /// <ja>IPv4とIPv6の両方を使います。</ja>
         /// <en>Both IPv4 and IPv6 are used.</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.IPVersionPriority.Both")]
+#endif
         Both,
         /// <summary>
         /// <ja>IPv4しか使いません。</ja>
         /// <en>Only IPv4 is used.</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.IPVersionPriority.V4Only")]
+#endif
         V4Only,
         /// <summary>
         /// <ja>
@@ -50,7 +56,9 @@ namespace Poderosa.Protocols {
         /// </ja>
         /// <en>Only IPv6 is used.</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.IPVersionPriority.V6Only")]
+#endif
         V6Only
     }
 
@@ -143,8 +151,50 @@ namespace Poderosa.Protocols {
         }
     }
 
-    internal class ProtocolOptions : SnapshotAwarePreferenceBase, IProtocolOptions {
+#if LIBRARY
+    internal class ProtocolOptions : IProtocolOptions {
+        private string _cipherAlgorithmOrder = "";
+        private string _hostKeyAlgorithmOrder = "";
 
+        public string[] CipherAlgorithmOrder {
+            get {
+                return _cipherAlgorithmOrder.Split(';');
+            }
+            set {
+                _cipherAlgorithmOrder = String.Join(";", FixCipherAlgorithms(value));
+            }
+        }
+
+        public string[] HostKeyAlgorithmOrder {
+            get {
+                return _hostKeyAlgorithmOrder.Split(';');
+            }
+            set {
+                _hostKeyAlgorithmOrder = String.Join(";", FixHostKeyAlgorithms(value));
+            }
+        }
+
+        public int SSHWindowSize { get; set; } = 2097152;
+        public bool SSHCheckMAC { get; set; } = true;
+        public int SSHResponseTimeout { get; set; } = new Granados.SSHTimeouts().ResponseTimeout;
+        public int SocketConnectTimeout { get; set; } = 3000;
+        public bool UseSocks { get; set; } = false;
+        public string SocksServer { get; set; } = "";
+        public int SocksPort { get; set; } = 1080;
+        public string SocksAccount { get; set; } = "";
+        public string SocksPassword { get; set; } = "";
+        public string SocksNANetworks { get; set; } = "";
+        public string HostKeyCheckerVerifierTypeName { get; set; } = "Poderosa.Usability.SSHKnownHosts";
+        public IPVersionPriority IPVersionPriority { get; set; } = IPVersionPriority.Both;
+        public bool LogSSHEvents { get; set; } = false;
+        public int SocketBufferSize { get; } = 0x1000;
+        public bool ReadSerializedPassword { get; } = false;
+        public bool SavePassword { get; } = false;
+        public bool SavePlainTextPassword { get; } = false;
+
+        public ProtocolOptions() {}
+#else
+    internal class ProtocolOptions : SnapshotAwarePreferenceBase, IProtocolOptions {
         //SSH
         private IStringPreferenceItem _cipherAlgorithmOrder;
         private IStringPreferenceItem _hostKeyAlgorithmOrder;
@@ -396,6 +446,7 @@ namespace Poderosa.Protocols {
             }
             return String.Join(";", FixCipherAlgorithms(algorithms.Split(';')));
         }
+#endif
 
         private string[] FixCipherAlgorithms(string[] algorithms) {
             if (algorithms == null) {
@@ -409,6 +460,7 @@ namespace Poderosa.Protocols {
             return algorithmVals.Select(a => a.ToString()).ToArray();
         }
 
+#if !LIBRARY
         private void FixHostKeyAlgorithms(IStringPreferenceItem item) {
             item.Value = FixHostKeyAlgorithms(item.Value);
         }
@@ -419,6 +471,7 @@ namespace Poderosa.Protocols {
             }
             return String.Join(";", FixHostKeyAlgorithms(algorithms.Split(';')));
         }
+#endif
 
         private string[] FixHostKeyAlgorithms(string[] algorithms) {
             if (algorithms == null) {
@@ -433,9 +486,13 @@ namespace Poderosa.Protocols {
         }
     }
 
-
+#if LIBRARY
+    internal class ProtocolOptionsSupplier : IAdaptable {
+#else
     internal class ProtocolOptionsSupplier : IPreferenceSupplier, IAdaptable {
-        private ProtocolOptions _originalOptions;
+#endif
+        private ProtocolOptions _originalOptions = new ProtocolOptions();
+#if !LIBRARY
         private IPreferenceFolder _originalFolder;
 
         /*
@@ -496,6 +553,7 @@ namespace Poderosa.Protocols {
         public void ValidateFolder(IPreferenceFolder folder, IPreferenceValidationResult output) {
             //TODO
         }
+#endif
 
         //IAdaptable
         public IAdaptable GetAdapter(Type adapter) {

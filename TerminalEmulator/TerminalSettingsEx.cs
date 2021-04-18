@@ -335,6 +335,7 @@ namespace Poderosa.Terminal {
             get;
             set;
         }
+#if !LIBRARY
         /// <summary>
         /// <ja>
         /// プロンプトの認識やコマンドの履歴を記憶する機能をもつオブジェクトを示します。
@@ -366,7 +367,6 @@ namespace Poderosa.Terminal {
             get;
             set;
         }
-#if !LIBRARY
         /// <summary>
         /// <ja>
         /// 通常の文字入力に伴うインテリセンスを有効にするか否かの設定です。

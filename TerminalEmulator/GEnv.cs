@@ -30,13 +30,18 @@ using Poderosa.Util;
 
 using Poderosa.Document;
 using Poderosa.View;
+#if LIBRARY
+using Poderosa.Library;
+#endif
 
 namespace Poderosa {
     internal class GEnv {
         //内部で管理
         private static Win32.SystemMetrics _systemMetrics;
         private static RenderProfile _defaultRenderProfile;
+#if !LIBRARY
         private static StringResource _stringResource;
+#endif
 
 #if false
         //BACK-BURNER 
@@ -50,22 +55,30 @@ namespace Poderosa {
             CygwinUtil.Terminate();
         }
 #endif
+#if !LIBRARY
         public static void Init() {
             ReloadStringResource();
         }
+#endif
 
         public static StringResource Strings {
             get {
+#if LIBRARY
+                return StringResource.Instance;
+#else
                 if (_stringResource == null) {
                     ReloadStringResource();
                 }
                 return _stringResource;
+#endif
             }
         }
+#if !LIBRARY
         private static void ReloadStringResource() {
             _stringResource = new StringResource("Poderosa.TerminalEmulator.strings", typeof(GEnv).Assembly, true);
             TerminalEmulatorPlugin.Instance.PoderosaWorld.Culture.AddChangeListener(_stringResource);
         }
+#endif
         internal static Win32.SystemMetrics SystemMetrics {
             get {
                 if (_systemMetrics == null)
@@ -75,7 +88,11 @@ namespace Poderosa {
         }
         public static ITerminalEmulatorOptions Options {
             get {
+#if LIBRARY
+                return TerminalEmulatorPlugin.Instance.OriginalOptions;
+#else
                 return TerminalEmulatorPlugin.Instance.OptionSupplier.OriginalOptions;
+#endif
             }
         }
 

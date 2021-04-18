@@ -23,6 +23,10 @@ using Granados.SSH2;
 using Granados.Util;
 using Granados.Mono.Math;
 
+#if LIBRARY
+using Poderosa.Library;
+#endif
+
 namespace Granados.Poderosa.KeyFormat {
 
     /// <summary>

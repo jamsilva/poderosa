@@ -36,11 +36,13 @@ namespace Poderosa.Terminal {
             _toolbarInstances = new TypedHashtable<IPoderosaMainWindow, TerminalToolBarInstance>();
         }
 
+#if !LIBRARY
         public IAdaptable DesignationTarget {
             get {
                 return null;
             }
         }
+#endif
 
         public PositionType DesignationPosition {
             get {
@@ -48,22 +50,26 @@ namespace Poderosa.Terminal {
             }
         }
 
+#if !LIBRARY
         public bool ShowSeparator {
             get {
                 return true;
             }
         }
+#endif
 
         public IToolBarElement[] ToolBarElements {
             get {
                 return new IToolBarElement[] {
+#if !LIBRARY
                     new ToolBarLabelImpl(GEnv.Strings, "Form.ToolBar._newLineLabel", 60),
                     new NewLineChangeHandler(),
                     new ToolBarLabelImpl(GEnv.Strings, "Form.ToolBar._encodingLabel", 88), //TODO サイズ指定はいやらしいな
                     new EncodingChangeHandler(),
                     new LocalEchoHandler(),
                     new IntelliSenseHandler(),
-                    new ShellSchemeChangeHandler()
+                    new ShellSchemeChangeHandler(),
+#endif
                 };
             }
         }
@@ -74,6 +80,7 @@ namespace Poderosa.Terminal {
         }
         #endregion
 
+#if !LIBRARY
         //それぞれの要素
         private class NewLineChangeHandler : ToolBarComboBoxImpl {
             public override object[] Items {
@@ -165,13 +172,11 @@ namespace Poderosa.Terminal {
             }
         }
         private class LocalEchoHandler : ToolBarToggleButtonImpl {
-#if !LIBRARY
             public override Image Icon {
                 get {
                     return Poderosa.TerminalEmulator.Properties.Resources.LocalEcho16x16;
                 }
             }
-#endif
             public override string ToolTipText {
                 get {
                     return GEnv.Strings.GetString("Command.ToggleLocalEcho");
@@ -195,13 +200,11 @@ namespace Poderosa.Terminal {
             }
         }
         private class IntelliSenseHandler : ToolBarToggleButtonImpl {
-#if !LIBRARY
             public override Image Icon {
                 get {
                     return Poderosa.TerminalEmulator.Properties.Resources.Intellisense16x16;
                 }
             }
-#endif
             public override string ToolTipText {
                 get {
                     return GEnv.Strings.GetString("Command.ToggleCharTriggerIntelliSense");
@@ -211,20 +214,16 @@ namespace Poderosa.Terminal {
                 return TerminalCommandTarget.AsOpenTerminal(target) != null;
             }
 
-#if !LIBRARY
             public override bool IsChecked(ICommandTarget target) {
                 ITerminalControlHost session = TerminalCommandTarget.AsOpenTerminal(target);
                 return session.TerminalSettings.EnabledCharTriggerIntelliSense;
             }
-#endif
 
             public override void OnChange(ICommandTarget target, bool is_checked) {
                 ITerminalControlHost session = TerminalCommandTarget.AsOpenTerminal(target);
                 ITerminalSettings ts = session.TerminalSettings;
                 ts.BeginUpdate();
-#if !LIBRARY
                 ts.EnabledCharTriggerIntelliSense = is_checked;
-#endif
                 ts.EndUpdate();
             }
         }
@@ -273,6 +272,7 @@ namespace Poderosa.Terminal {
                 }
             }
         }
+#endif
 
         #region IActiveDocumentChangeListener
         public void OnDocumentActivated(IPoderosaMainWindow window, IPoderosaDocument document) {

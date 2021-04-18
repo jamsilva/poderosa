@@ -41,7 +41,7 @@ namespace Poderosa.View {
     /// </summary>
     /// <exclude/>
 #if LIBRARY
-    public class CharacterDocumentViewer : Control, IPoderosaControl, ISelectionListener {
+    public class CharacterDocumentViewer : Control, IPoderosaControl {
 #else
     public class CharacterDocumentViewer : Control, IPoderosaControl, ISelectionListener, SplitMarkSupport.ISite {
 #endif
@@ -91,7 +91,9 @@ namespace Poderosa.View {
 #endif
 
             _textSelection = new TextSelection(this);
+#if !LIBRARY
             _textSelection.AddSelectionListener(this);
+#endif
 
             _mouseHandlerManager = new MouseHandlerManager();
             _mouseHandlerManager.AddLastHandler(new TextSelectionUIHandler(this));
@@ -238,8 +240,12 @@ namespace Poderosa.View {
             }
         }
         protected virtual void OnWindowManagerTimer() {
+#if LIBRARY
+            int q = 6;
+#else
             //タイマーはTIMER_INTERVALごとにカウントされるので。
             int q = Math.Max(1, WindowManagerPlugin.Instance.WindowPreference.OriginalPreference.CaretInterval / TIMER_INTERVAL);
+#endif
             _tickCount = (_tickCount + 1) % q;
             if (_tickCount == 0) {
                 CaretTick();
@@ -780,7 +786,6 @@ namespace Poderosa.View {
             IContentReplaceableViewSite site = (IContentReplaceableViewSite)this.GetAdapter(typeof(IContentReplaceableViewSite));
             return site == null ? null : site.CurrentContentReplaceableView;
         }
-#endif
 
         #region ISelectionListener
         public void OnSelectionStarted() {
@@ -805,7 +810,7 @@ namespace Poderosa.View {
 
         }
         #endregion
-
+#endif
     }
 
     /*

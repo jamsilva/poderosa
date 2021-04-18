@@ -544,6 +544,7 @@ namespace Poderosa.Commands {
             IPoderosaMainWindow window = (IPoderosaMainWindow)target.GetAdapter(typeof(IPoderosaMainWindow));
             return window;
         }
+#if !LIBRARY
         /// <summary>
         /// <ja>
         /// ポップアップウィンドウへと変換します。
@@ -566,6 +567,7 @@ namespace Poderosa.Commands {
             IPoderosaPopupWindow window = (IPoderosaPopupWindow)target.GetAdapter(typeof(IPoderosaPopupWindow));
             return window;
         }
+#endif
         /// <summary>
         /// <ja>
         /// 最後にアクティブになったビューへと変換します。
@@ -608,6 +610,9 @@ namespace Poderosa.Commands {
             IPoderosaMainWindow window = AsWindow(target);
             if (window != null)
                 return window.LastActivatedView;
+#if LIBRARY
+            return null;
+#else
             else {
                 IPoderosaPopupWindow popup = AsPopupWindow(target);
                 if (popup != null)
@@ -615,6 +620,7 @@ namespace Poderosa.Commands {
                 else
                     return null;
             }
+#endif
         }
 
         //ちょっと恣意的だが、ビュー直接またはLastActivatedViewで

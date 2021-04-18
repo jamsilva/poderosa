@@ -15,6 +15,10 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 
+#if LIBRARY
+using Poderosa.Library;
+#endif
+
 // USE_UNTRUSTED_ACCESS enables "Untrusted" access that is provided by the SECURITY extension of the X server.
 // Unfortunately this option is useless to the X server like Xming because it claims trusted access to use resources.
 //#define USE_UNTRUSTED_ACCESS

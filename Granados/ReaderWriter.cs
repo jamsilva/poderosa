@@ -9,6 +9,10 @@ using System;
 using System.IO;
 using System.Text;
 
+#if LIBRARY
+using Poderosa.Library;
+#endif
+
 namespace Granados.IO {
 
     /// <summary>

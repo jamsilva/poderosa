@@ -60,7 +60,9 @@ namespace Poderosa.Forms {
 
             //ショートカットキーは共通
             _commandKeyHandler = new KeyboardHandlerManager();
+#if !LIBRARY
             _commandKeyHandler.AddLastHandler(new CommandShortcutKeyHandler(this));
+#endif
         }
 
         protected override void Dispose(bool disposing) {

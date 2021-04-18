@@ -18,6 +18,10 @@ using Granados.Crypto;
 using Granados.Poderosa.KeyFormat;
 #endif
 
+#if LIBRARY
+using Poderosa.Library;
+#endif
+
 namespace Granados.SSH2 {
     /// <summary>
     /// 

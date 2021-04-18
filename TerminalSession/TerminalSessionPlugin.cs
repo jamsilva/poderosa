@@ -24,8 +24,10 @@ using Poderosa.Terminal;
 using Poderosa.UI;
 using Poderosa.Protocols;
 using Poderosa.Commands;
+#if LIBRARY
+using Poderosa.Library;
+#else
 using Poderosa.Preferences;
-#if !LIBRARY
 using Poderosa.Serializing;
 #endif
 
@@ -41,7 +43,11 @@ namespace Poderosa.Sessions {
         private static TerminalSessionsPlugin _instance;
 
         private ICoreServices _coreServices;
+#if LIBRARY
+        private TerminalSessionOptions _terminalSessionOptions;
+#else
         private TerminalSessionOptionsSupplier _terminalSessionsOptionSupplier;
+#endif
         private IProtocolService _protocolService;
         private ITerminalEmulatorService _terminalEmulatorService;
 
@@ -59,24 +65,31 @@ namespace Poderosa.Sessions {
 
             IPluginManager pm = poderosa.PluginManager;
             _coreServices = (ICoreServices)poderosa.GetAdapter(typeof(ICoreServices));
+#if !LIBRARY
             TEnv.ReloadStringResource();
+#endif
             _terminalViewFactory = new TerminalViewFactory();
             pm.FindExtensionPoint(WindowManagerConstants.VIEW_FACTORY_ID).RegisterExtension(_terminalViewFactory);
             //このViewFactoryはデフォ
             foreach (IViewManagerFactory mf in pm.FindExtensionPoint(WindowManagerConstants.MAINWINDOWCONTENT_ID).GetExtensions())
                 mf.DefaultViewFactory = _terminalViewFactory;
 
+#if !LIBRARY
             //ログインダイアログのサポート用
             pm.CreateExtensionPoint("org.poderosa.terminalsessions.telnetSSHLoginDialogInitializer", typeof(ITelnetSSHLoginDialogInitializer), this);
             pm.CreateExtensionPoint("org.poderosa.terminalsessions.loginDialogUISupport", typeof(ILoginDialogUISupport), this);
             pm.CreateExtensionPoint("org.poderosa.terminalsessions.terminalParameterStore", typeof(ITerminalSessionParameterStore), this);
+#endif
             IExtensionPoint factory_point = pm.CreateExtensionPoint(TERMINAL_CONNECTION_FACTORY_ID, typeof(ITerminalConnectionFactory), this);
 
             _pasteCommandExt = pm.CreateExtensionPoint("org.poderosa.terminalsessions.pasteCommand", typeof(IPoderosaCommand), this);
 
+#if LIBRARY
+            _terminalSessionOptions = new TerminalSessionOptions();
+#else
             _terminalSessionsOptionSupplier = new TerminalSessionOptionsSupplier();
             _coreServices.PreferenceExtensionPoint.RegisterExtension(_terminalSessionsOptionSupplier);
-
+#endif
 
             //Add conversion for TerminalPane
             _paneBridgeAdapter = new PaneBridgeAdapter();
@@ -148,7 +161,11 @@ namespace Poderosa.Sessions {
 
         public ITerminalSessionOptions TerminalSessionOptions {
             get {
+#if LIBRARY
+                return _terminalSessionOptions;
+#else
                 return _terminalSessionsOptionSupplier.OriginalOptions;
+#endif
             }
         }
 
@@ -216,16 +233,22 @@ namespace Poderosa.Sessions {
     }
 
     internal class TEnv {
+#if !LIBRARY
         private static StringResource _stringResource;
 
         public static void ReloadStringResource() {
             _stringResource = new StringResource("Poderosa.TerminalSession.strings", typeof(TEnv).Assembly);
             TerminalSessionsPlugin.Instance.PoderosaWorld.Culture.AddChangeListener(_stringResource);
         }
+#endif
 
         public static StringResource Strings {
             get {
+#if LIBRARY
+                return StringResource.Instance;
+#else
                 return _stringResource;
+#endif
             }
         }
     }

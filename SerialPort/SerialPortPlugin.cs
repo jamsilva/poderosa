@@ -28,10 +28,12 @@ using Poderosa.Terminal;
 using Poderosa.UI;
 using Poderosa.Protocols;
 using Poderosa.Commands;
-using Poderosa.Preferences;
 using Poderosa.Sessions;
-#if !LIBRARY
+#if LIBRARY
+using Poderosa.Library;
+#else
 using Poderosa.MacroEngine;
+using Poderosa.Preferences;
 using Poderosa.Serializing;
 #endif
 
@@ -64,8 +66,12 @@ namespace Poderosa.SerialPort {
             base.InitializePlugin(poderosa);
             _instance = this;
 
+#if LIBRARY
+            _stringResource = StringResource.Instance;
+#else
             _stringResource = new StringResource("Poderosa.SerialPort.strings", typeof(SerialPortPlugin).Assembly);
             poderosa.Culture.AddChangeListener(_stringResource);
+#endif
             IPluginManager pm = poderosa.PluginManager;
             _coreServices = (ICoreServices)poderosa.GetAdapter(typeof(ICoreServices));
 
@@ -213,7 +219,11 @@ namespace Poderosa.SerialPort {
 
         private class OpenSerialPortCommand : GeneralCommandImpl {
             public OpenSerialPortCommand()
+#if LIBRARY
+                : base("org.poderosa.session.openserialport", "Command.SerialPort", _instance.TerminalSessionsService.ConnectCommandCategory) {
+#else
                 : base("org.poderosa.session.openserialport", _instance.Strings, "Command.SerialPort", _instance.TerminalSessionsService.ConnectCommandCategory) {
+#endif
             }
 
             public override CommandResult InternalExecute(ICommandTarget target, params IAdaptable[] args) {

@@ -494,6 +494,7 @@ namespace Poderosa.Sessions {
 
         //ビューにフォーカスをセットした状態にする。ポップアップウィンドウの場合、まだウィンドウがロードされていないケースもあるのでそこに注意！
         private void SetFocusToView(IPoderosaView view) {
+#if !LIBRARY
             IPoderosaForm form = view.ParentForm;
             IPoderosaPopupWindow popup = (IPoderosaPopupWindow)form.GetAdapter(typeof(IPoderosaPopupWindow));
             if (popup != null) {
@@ -502,6 +503,7 @@ namespace Poderosa.Sessions {
                     popup.AsForm().Show();
                 }
             }
+#endif
 
             if (!view.AsControl().Focused)
                 view.AsControl().Focus(); //既にウィンドウは見えている

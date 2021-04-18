@@ -29,18 +29,24 @@ namespace Poderosa.SerialPort {
         /// <ja>なし</ja>
         /// <en>None</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.FlowControl.None")]
+#endif
         None,
         /// <summary>
         /// X ON / X OFf
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.FlowControl.Xon_Xoff")]
+#endif
         Xon_Xoff,
         /// <summary>
         /// <ja>ハードウェア</ja>
         /// <en>Hardware</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.FlowControl.Hardware")]
+#endif
         Hardware
     }
 
@@ -54,19 +60,25 @@ namespace Poderosa.SerialPort {
         /// <ja>なし</ja>
         /// <en>None</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.Parity.NOPARITY")]
+#endif
         NOPARITY = 0,
         /// <summary>
         /// <ja>奇数</ja>
         /// <en>Odd</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.Parity.ODDPARITY")]
+#endif
         ODDPARITY = 1,
         /// <summary>
         /// <ja>偶数</ja>
         /// <en>Even</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.Parity.EVENPARITY")]
+#endif
         EVENPARITY = 2
         //MARKPARITY  =        3,
         //SPACEPARITY =        4
@@ -82,19 +94,25 @@ namespace Poderosa.SerialPort {
         /// <ja>1ビット</ja>
         /// <en>1 bit</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.StopBits.ONESTOPBIT")]
+#endif
         ONESTOPBIT = 0,
         /// <summary>
         /// <ja>1.5ビット</ja>
         /// <en>1.5 bits</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.StopBits.ONE5STOPBITS")]
+#endif
         ONE5STOPBITS = 1,
         /// <summary>
         /// <ja>2ビット</ja>
         /// <en>2 bits</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.StopBits.TWOSTOPBITS")]
+#endif
         TWOSTOPBITS = 2
     }
 }

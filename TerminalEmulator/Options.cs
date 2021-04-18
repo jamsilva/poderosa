@@ -26,8 +26,10 @@ using Poderosa.Document;
 using Poderosa.View;
 using Poderosa.ConnectionParam;
 using Poderosa.Terminal;
-using Poderosa.Preferences;
 using Poderosa.Sessions;
+#if !LIBRARY
+using Poderosa.Preferences;
+#endif
 
 //起動の高速化のため、ここではGranadosを呼ばないように注意する
 
@@ -248,12 +250,14 @@ namespace Poderosa.Terminal {
 
 
         //PreferenceEditorのみで編集可能
+#if !LIBRARY
         Keys IntelliSenseKey {
             get;
         }
         Keys CommandPopupKey {
             get;
         }
+#endif
         int ShellHistoryLimitCount {
             get;
         }
@@ -262,6 +266,71 @@ namespace Poderosa.Terminal {
         RenderProfile CreateRenderProfile(); //NOTE これは意味的にちょっとまずいかも。Preferenceに特化すべきか
     }
 
+#if LIBRARY
+    internal class TerminalOptions : ITerminalEmulatorOptions {
+        private string _fontName = "Courier New";
+        private string _cjkFontName = "ＭＳ ゴシック";
+        private int _fontSize = 10;
+
+        public Font Font {
+            get {
+                return RuntimeUtil.CreateFont(_fontName, GetFontSizeAsFloat());
+            }
+            set {
+                _fontName = GetFontName(value);
+                _fontSize = (int) value.Size;
+            }
+        }
+
+        public Font CJKFont {
+            get {
+                return RuntimeUtil.CreateFont(_cjkFontName, GetFontSizeAsFloat());
+            }
+            set {
+                _cjkFontName = GetFontName(value);
+            }
+        }
+
+        public bool CloseOnDisconnect { get; set; } = true;
+        public bool BeepOnBellChar { get; set; } = false;
+        public bool Send0x7FByDel { get; set; } = false;
+        public bool Send0x7FByBack { get; set; } = false;
+        public KeyboardStyle Zone0x1F { get; set; } = KeyboardStyle.None;
+        public string CustomKeySettings { get; set; } = "";
+        public bool AllowsScrollInAppMode { get; set; } = false;
+        public string AdditionalWordElement { get; set; } = "";
+        public int WheelAmount { get; set; } = 3;
+        public int TerminalBufferSize { get; set; } = 1000;
+        public bool UseClearType { get; set; } = true;
+        public bool EnableBoldStyle { get; set; } = true;
+        public bool ForceBoldStyle { get; set; } = false;
+        public int LineSpacing { get; set; } = 0;
+        public int KeepAliveInterval { get; set; } = 60000;
+        public string BackgroundImageFileName { get; set; } = "";
+        public Color BGColor { get; set; } = Color.FromKnownColor(KnownColor.Window);
+        public Color TextColor { get; set; } = Color.FromKnownColor(KnownColor.WindowText);
+        public AltKeyAction LeftAltKey { get; set; } = AltKeyAction.Menu;
+        public AltKeyAction RightAltKey { get; set; } = AltKeyAction.Menu;
+        public MouseButtonAction RightButtonAction { get; set; } = MouseButtonAction.ContextMenu;
+        public MouseButtonAction MiddleButtonAction { get; set; } = MouseButtonAction.None;
+        public LogType DefaultLogType { get; set; } = LogType.None;
+        public string DefaultLogDirectory { get; set; } = "";
+        public ImageStyle ImageStyle { get; set; } = ImageStyle.Center;
+        public CaretType CaretType { get; set; } = CaretType.Box;
+        public Color CaretColor { get; set; } = Color.Empty;
+        public bool CaretBlink { get; set; } = true;
+        public WarningOption CharDecodeErrorBehavior { get; set; } = WarningOption.MessageBox;
+        public WarningOption DisconnectNotification { get; set; } = WarningOption.StatusBar;
+        public EscapesequenceColorSet EscapeSequenceColorSet { get; set; } = new EscapesequenceColorSet();
+        public bool DarkenEsColorForBackground { get; set; } = true;
+        public bool EnableComplementForNewConnections { get; set; } = false;
+        public bool CommandPopupAlwaysOnTop { get; set; } = false;
+        public bool CommandPopupInTaskBar { get; set; } = false;
+        public bool AlertOnPasteNewLineChar { get; set; } = true;
+        public int ShellHistoryLimitCount { get; } = 100;
+
+        public TerminalOptions() {}
+#else
     internal class TerminalOptions : SnapshotAwarePreferenceBase, ITerminalEmulatorOptions {
         //表示
         private IStringPreferenceItem _fontName;
@@ -330,7 +399,6 @@ namespace Poderosa.Terminal {
         //この２つは上記要素から作成
         private Font _font;
         private Font _cjkFont;
-
 
         public TerminalOptions(IPreferenceFolder folder)
             : base(folder) {
@@ -484,6 +552,7 @@ namespace Poderosa.Terminal {
                 _cjkFontName.Value = GetFontName(value);
             }
         }
+#endif
 
         private String GetFontName(Font font) {
             // If Font.OriginalFontName property was available,
@@ -497,6 +566,7 @@ namespace Poderosa.Terminal {
             return font.FontFamily.Name;
         }
 
+#if !LIBRARY
         public bool CloseOnDisconnect {
             get {
                 return _closeOnDisconnect.Value;
@@ -801,7 +871,6 @@ namespace Poderosa.Terminal {
             }
         }
 
-
         public Keys IntelliSenseKey {
             get {
                 if (_parseKeyRequired)
@@ -831,32 +900,43 @@ namespace Poderosa.Terminal {
                 return _shellHistoryLimitCount.Value;
             }
         }
+#endif
 
         public RenderProfile CreateRenderProfile() {
             //起動の高速化のため、フォントの作成は遅延評価
             RenderProfile p = new RenderProfile();
+#if LIBRARY
+            p.FontName = _fontName;
+            p.CJKFontName = _cjkFontName;
+#else
             p.FontName = _fontName.Value;
             p.CJKFontName = _cjkFontName.Value;
+#endif
             p.FontSize = GetFontSizeAsFloat();
-            p.UseClearType = _useClearType.Value;
-            p.EnableBoldStyle = _enableBoldStyle.Value;
-            p.ForceBoldStyle = _forceBoldStyle.Value;
-            p.LineSpacing = _lineSpacing.Value;
+            p.UseClearType = UseClearType;
+            p.EnableBoldStyle = EnableBoldStyle;
+            p.ForceBoldStyle = ForceBoldStyle;
+            p.LineSpacing = LineSpacing;
             p.ESColorSet = (EscapesequenceColorSet)this.EscapeSequenceColorSet.Clone();
             p.DarkenEsColorForBackground = this.DarkenEsColorForBackground;
 
-            p.ForeColor = _textColor.Value;
-            p.BackColor = _bgColor.Value;
-            p.BackgroundImageFileName = _backgroundImageFileName.Value;
-            p.ImageStyle = _imageStyle.Value;
+            p.ForeColor = TextColor;
+            p.BackColor = BGColor;
+            p.BackgroundImageFileName = BackgroundImageFileName;
+            p.ImageStyle = ImageStyle;
 
             return p;
         }
         private float GetFontSizeAsFloat() {
+#if LIBRARY
+            return (float)_fontSize;
+#else
             return (float)_fontSize.Value;
+#endif
         }
     }
 
+#if !LIBRARY
     internal class TerminalOptionsSupplier : IPreferenceSupplier, IAdaptable, IPreferenceChangeListener {
 
         private IPreferenceFolder _originalFolder;
@@ -1065,6 +1145,7 @@ namespace Poderosa.Terminal {
         /// </summary>
         Second
     }
+#endif
 
     //おかしな文字が来たときどうするか
     /// <summary>
@@ -1072,11 +1153,17 @@ namespace Poderosa.Terminal {
     /// </summary>
     /// <exclude/>
     public enum WarningOption {
+#if !LIBRARY
         [EnumValue(Description = "Enum.WarningOption.Ignore")]
+#endif
         Ignore,
+#if !LIBRARY
         [EnumValue(Description = "Enum.WarningOption.StatusBar")]
+#endif
         StatusBar,
+#if !LIBRARY
         [EnumValue(Description = "Enum.WarningOption.MessageBox")]
+#endif
         MessageBox
     }
 
@@ -1085,11 +1172,17 @@ namespace Poderosa.Terminal {
     /// </summary>
     /// <exclude/>
     public enum AltKeyAction {
+#if !LIBRARY
         [EnumValue(Description = "Enum.AltKeyAction.Menu")]
+#endif
         Menu,
+#if !LIBRARY
         [EnumValue(Description = "Enum.AltKeyAction.ESC")]
+#endif
         ESC,
+#if !LIBRARY
         [EnumValue(Description = "Enum.AltKeyAction.Meta")]
+#endif
         Meta
     }
 
@@ -1098,11 +1191,17 @@ namespace Poderosa.Terminal {
     /// </summary>
     /// <exclude/>
     public enum MouseButtonAction {
+#if !LIBRARY
         [EnumValue(Description = "Enum.MouseButtonAction.None")]
+#endif
         None,
+#if !LIBRARY
         [EnumValue(Description = "Enum.MouseButtonAction.ContextMenu")]
+#endif
         ContextMenu,
+#if !LIBRARY
         [EnumValue(Description = "Enum.MouseButtonAction.Paste")]
+#endif
         Paste
     }
 
@@ -1111,14 +1210,21 @@ namespace Poderosa.Terminal {
     /// </summary>
     /// <exclude/>
     public enum KeyboardStyle {
+#if !LIBRARY
         [EnumValue(Description = "Enum.KeyboardStyle.None")]
+#endif
         None,
+#if !LIBRARY
         [EnumValue(Description = "Enum.KeyboardStyle.Default")]
+#endif
         Default,
+#if !LIBRARY
         [EnumValue(Description = "Enum.KeyboardStyle.Japanese")]
+#endif
         Japanese
     }
 
+#if !LIBRARY
     /// <summary>
     /// <ja>
     /// オプションが不正なときに発生する例外です。
@@ -1143,4 +1249,5 @@ namespace Poderosa.Terminal {
             : base(msg) {
         }
     }
+#endif
 }

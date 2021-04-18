@@ -18,6 +18,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 using Poderosa.Util.Collections;
+#if LIBRARY
+using Poderosa.Library;
+#endif
 
 namespace Poderosa.Boot {
 
@@ -115,11 +118,19 @@ namespace Poderosa.Boot {
         }
 
         public void Trace(string string_id, string param1) {
+#if LIBRARY
+            _document.Append(string_id + " (" + param1 + ")");
+#else
             _document.Append(String.Format(_strResource.GetString(string_id), param1));
+#endif
         }
 
         public void Trace(string string_id, string param1, string param2) {
+#if LIBRARY
+            _document.Append(string_id + " (" + param1 + ", " + param2 + ")");
+#else
             _document.Append(String.Format(_strResource.GetString(string_id), param1, param2));
+#endif
         }
 
         public void Trace(Exception ex) {

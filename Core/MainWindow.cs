@@ -444,7 +444,6 @@ namespace Poderosa.Forms {
             }
         }
     }
-#endif
 
     internal class CommandShortcutKeyHandler : IKeyHandler {
         private PoderosaForm _window;
@@ -475,7 +474,6 @@ namespace Poderosa.Forms {
         }
     }
 
-#if !LIBRARY
     //Alt+<n>, Ctrl+Tabなど、カスタマイズ不可の動作を扱う
     internal class FixedShortcutKeyHandler : IKeyHandler {
         private MainWindow _window;

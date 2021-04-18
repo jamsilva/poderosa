@@ -48,10 +48,12 @@ namespace Poderosa.Terminal {
             if (window != null)
                 return window.LastActivatedView;
             else {
+#if !LIBRARY
                 IPoderosaPopupWindow popup = (IPoderosaPopupWindow)target.GetAdapter(typeof(IPoderosaPopupWindow));
                 if (popup != null)
                     return popup.InternalView;
                 else
+#endif
                     return null;
             }
         }
@@ -503,6 +505,7 @@ namespace Poderosa.Terminal {
 #endif
     }
 
+#if !LIBRARY
     /////////////////////////////////////////////
     // メニュー
 
@@ -679,5 +682,5 @@ namespace Poderosa.Terminal {
             p.RegisterExtension(new TerminalSendSpecialGroup());
         }
     }
-
+#endif
 }

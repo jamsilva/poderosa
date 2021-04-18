@@ -25,6 +25,10 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 
+#if LIBRARY
+using Poderosa.Library;
+#endif
+
 namespace Granados.SSH1 {
 
     /// <summary>
@@ -1004,18 +1008,30 @@ namespace Granados.SSH1 {
                 }
             }
             if (!foundCipher) {
+#if LIBRARY
+                throw new SSHException(String.Format("ServerNotSupportedX Blowfish/TripleDES"));
+#else
                 throw new SSHException(String.Format(Strings.GetString("ServerNotSupportedX"), "Blowfish/TripleDES"));
+#endif
             }
 
             switch (_param.AuthenticationType) {
                 case AuthenticationType.Password:
                     if ((supportedAuthenticationsMask & (1 << (int)AuthenticationType.Password)) == 0) {
+#if LIBRARY
+                        throw new SSHException("ServerNotSupportedPassword");
+#else
                         throw new SSHException(String.Format(Strings.GetString("ServerNotSupportedPassword")));
+#endif
                     }
                     break;
                 case AuthenticationType.PublicKey:
                     if ((supportedAuthenticationsMask & (1 << (int)AuthenticationType.PublicKey)) == 0) {
+#if LIBRARY
+                        throw new SSHException("ServerNotSupportedRSA");
+#else
                         throw new SSHException(String.Format(Strings.GetString("ServerNotSupportedRSA")));
+#endif
                     }
                     break;
                 default:

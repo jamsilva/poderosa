@@ -345,7 +345,6 @@ namespace Poderosa.Forms {
         /// </en>
         /// </summary>
         void ReloadMenu();
-#endif
 
         //Preference系のリロード
         /// <summary>
@@ -374,6 +373,7 @@ namespace Poderosa.Forms {
         /// </en>
         /// </summary>
         void ReloadPreference();
+#endif
     }
 
     //アプリ全体に関係し、かつsystem.Windows.Formsがらみ
@@ -525,6 +525,7 @@ namespace Poderosa.Forms {
         }
     }
 
+#if !LIBRARY
     /// <summary>
     /// <ja>
     /// ポップアップウィンドウを示すインターフェイスです。
@@ -555,7 +556,6 @@ namespace Poderosa.Forms {
         /// </summary>
         void UpdateStatus();
     }
-
 
     //TabBar相当
     /// <summary>
@@ -707,7 +707,7 @@ namespace Poderosa.Forms {
         /// <param name="icon"><ja>設定するアイコン</ja><en>Icon to set.</en></param>
         void SetStatusIcon(Image icon);
     }
-
+#endif
 
     //Timer Suppoer
     /// <summary>
@@ -724,6 +724,7 @@ namespace Poderosa.Forms {
         void Close();
     }
 
+#if !LIBRARY
     /// <summary>
     /// <ja>
     /// 言語を示します。
@@ -748,7 +749,6 @@ namespace Poderosa.Forms {
         [EnumValue(Description = "Enum.Language.Japanese")]
         Japanese
     }
-
 
     /// <exclude/>
     public interface IWindowPreference {
@@ -866,6 +866,6 @@ namespace Poderosa.Forms {
             }
         }
     }
-
+#endif
 
 }

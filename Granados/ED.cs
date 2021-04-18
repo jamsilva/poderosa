@@ -12,6 +12,10 @@ using System.Collections.Concurrent;
 using System.Linq;
 using System.Security.Cryptography;
 
+#if LIBRARY
+using Poderosa.Library;
+#endif
+
 namespace Granados.PKI {
 
     /// <summary>

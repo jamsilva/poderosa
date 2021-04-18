@@ -24,7 +24,9 @@ using System.IO;
 using System.Globalization;
 using System.Threading;
 
+#if !LIBRARY
 using Poderosa.Preferences;
+#endif
 
 namespace Poderosa {
     /// <summary>

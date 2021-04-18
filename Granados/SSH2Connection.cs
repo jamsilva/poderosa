@@ -24,6 +24,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+#if LIBRARY
+using Poderosa.Library;
+#endif
+
 namespace Granados.SSH2 {
 
     /// <summary>
@@ -1595,7 +1599,11 @@ namespace Granados.SSH2 {
                 return; // found
             }
             throw new SSHException(
+#if LIBRARY
+                "AlgorithmNotSupportedByServer (" + algorithmName + ", " + title + ")");
+#else
                 String.Format(Strings.GetString("AlgorithmNotSupportedByServer"), algorithmName, title));
+#endif
         }
 
         /// <summary>

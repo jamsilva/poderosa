@@ -28,24 +28,30 @@ using System.ServiceModel;
 using Poderosa.Util;
 using Poderosa.Plugins;
 using Poderosa.Sessions;
-using Poderosa.Preferences;
 using Poderosa.View;
 using Poderosa.Commands;
 #if !LIBRARY
 using Poderosa.Plugin.Remoting;
+using Poderosa.Preferences;
 #endif
 
 [assembly: PluginDeclaration(typeof(Poderosa.Forms.WindowManagerPlugin))]
 
 namespace Poderosa.Forms {
+#if LIBRARY
+    [PluginInfo(ID = WindowManagerPlugin.PLUGIN_ID, Version = VersionInfo.PODEROSA_VERSION, Author = VersionInfo.PROJECT_NAME, Dependencies = "org.poderosa.core.commands")]
+#else
     [PluginInfo(ID = WindowManagerPlugin.PLUGIN_ID, Version = VersionInfo.PODEROSA_VERSION, Author = VersionInfo.PROJECT_NAME, Dependencies = "org.poderosa.core.preferences;org.poderosa.core.commands")]
+#endif
     internal class WindowManagerPlugin :
             PluginBase,
             IGUIMessageLoop,
             IWindowManager,
-            IWinFormsService,
+#if !LIBRARY
             ICultureChangeListener,
-            IKeyBindChangeListener {
+            IKeyBindChangeListener,
+#endif
+            IWinFormsService {
         public const string PLUGIN_ID = "org.poderosa.core.window";
 
         private List<MainWindow> _windows;
@@ -56,8 +62,8 @@ namespace Poderosa.Forms {
 #if !LIBRARY
         private PoderosaAppContext _appContext;
         private MainWindowMenu _menu;
-#endif
         private WindowPreference _preferences;
+#endif
         private ViewFactoryManager _viewFactoryManager;
 
 #if !LIBRARY
@@ -104,11 +110,11 @@ namespace Poderosa.Forms {
 #if !LIBRARY
             pm.CreateExtensionPoint(WindowManagerConstants.FILEDROPHANDLER_ID, typeof(IFileDropHandler), this);
             AboutBoxUtil.DefineExtensionPoint(pm);
-#endif
 
             _preferences = new WindowPreference();
             pm.FindExtensionPoint(PreferencePlugin.EXTENSIONPOINT_NAME)
                 .RegisterExtension(_preferences);
+#endif
             pm.FindExtensionPoint(WindowManagerConstants.MAINWINDOWCONTENT_ID)
                 .RegisterExtension(new DefaultViewManagerFactory());
 
@@ -122,20 +128,20 @@ namespace Poderosa.Forms {
             _selectionService = new SelectionService(this);
             _viewFactoryManager = new ViewFactoryManager();
 
+#if !LIBRARY
             CommandManagerPlugin.Instance.AddKeyBindChangeListener(this);
             poderosa.Culture.AddChangeListener(this);
 
-#if !LIBRARY
             PoderosaRemotingServiceHost.Start(new PoderosaRemotingService(this));
 #endif
         }
 
         public void RunExtension() {
             try {
-                _poderosaWorld.Culture.SetCulture(CoreServicePreferenceAdapter.LangToCulture(_preferences.OriginalPreference.Language));
 #if LIBRARY
                 IPoderosaApplication app = (IPoderosaApplication)_poderosaWorld.GetAdapter(typeof(IPoderosaApplication));
 #else
+                _poderosaWorld.Culture.SetCulture(CoreServicePreferenceAdapter.LangToCulture(_preferences.OriginalPreference.Language));
                 MainWindowArgument[] args = MainWindowArgument.Parse(_preferences);
                 foreach (MainWindowArgument arg in args)
                     _windows.Add(CreateMainWindow(arg));
@@ -272,19 +278,15 @@ namespace Poderosa.Forms {
             foreach(MainWindow w in _windows) w.ReloadMenu(_menu, item);
         }
          */
-#endif
         public void ReloadPreference(ICoreServicePreference pref) {
-#if !LIBRARY
             foreach (MainWindow w in _windows)
                 w.ReloadPreference(pref);
-#endif
         }
         public void ReloadPreference() {
             //デフォルトを使う
             ReloadPreference(_preferences.OriginalPreference);
         }
 
-#if !LIBRARY
         //Popup作成
         public IPoderosaPopupWindow CreatePopupView(PopupViewCreationParam viewcreation) {
             PopupViewContainer vc = new PopupViewContainer(viewcreation);
@@ -300,29 +302,25 @@ namespace Poderosa.Forms {
         }
 #endif
 
-
         #endregion
 
-
+#if !LIBRARY
         #region IKeyBindChangeListener
         public void OnKeyBindChanged(IKeyBinds newvalues) {
-#if !LIBRARY
             foreach (MainWindow w in _windows)
                 w.ReloadMenu(_menu, false);
-#endif
         }
         #endregion
 
 
         #region ICultureChangeListener
         public void OnCultureChanged(CultureInfo newculture) {
-#if !LIBRARY
             //メニューのリロード含め全部やる
             CoreUtil.Strings.OnCultureChanged(newculture); //先にリソース更新
             ReloadMenu();
-#endif
         }
         #endregion
+#endif
 
         public ITimerSite CreateTimer(int interval, TimerDelegate callback) {
             return new TimerSite(interval, callback);
@@ -333,12 +331,12 @@ namespace Poderosa.Forms {
                 return _menu;
             }
         }
-#endif
         public WindowPreference WindowPreference {
             get {
                 return _preferences;
             }
         }
+#endif
         public ViewFactoryManager ViewFactoryManager {
             get {
                 return _viewFactoryManager;

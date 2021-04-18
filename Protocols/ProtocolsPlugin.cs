@@ -18,15 +18,19 @@ using System.Text;
 using System.Diagnostics;
 
 using Poderosa.Plugins;
-using Poderosa.Preferences;
 using Poderosa.Forms;
 using Poderosa.Util.Collections;
+#if LIBRARY
+using Poderosa.Library;
+#else
+using Poderosa.Preferences;
+#endif
 
 [assembly: PluginDeclaration(typeof(Poderosa.Protocols.ProtocolsPlugin))]
 
 namespace Poderosa.Protocols {
 #if LIBRARY
-    [PluginInfo(ID = ProtocolsPlugin.PLUGIN_ID, Version = VersionInfo.PODEROSA_VERSION, Author = VersionInfo.PROJECT_NAME, Dependencies = "org.poderosa.core.preferences")]
+    [PluginInfo(ID = ProtocolsPlugin.PLUGIN_ID, Version = VersionInfo.PODEROSA_VERSION, Author = VersionInfo.PROJECT_NAME, Dependencies = "org.poderosa.core.window")]
 #else
     [PluginInfo(ID = ProtocolsPlugin.PLUGIN_ID, Version = VersionInfo.PODEROSA_VERSION, Author = VersionInfo.PROJECT_NAME, Dependencies = "org.poderosa.core.preferences;org.poderosa.core.serializing")]
 #endif
@@ -136,9 +140,13 @@ namespace Poderosa.Protocols {
         private static IWindowManager _windowManager;
 
         public static void Init(ICoreServices cs) {
+#if LIBRARY
+            _strings = StringResource.Instance;
+#else
             cs.PreferenceExtensionPoint.RegisterExtension(ProtocolsPlugin.Instance.ProtocolOptionsSupplier);
             _strings = new StringResource("Poderosa.Protocols.strings", typeof(PEnv).Assembly);
             ProtocolsPlugin.Instance.PoderosaWorld.Culture.AddChangeListener(_strings);
+#endif
             _windowManager = cs.WindowManager;
         }
 

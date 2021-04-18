@@ -18,6 +18,10 @@ using Granados.Mono.Math;
 using Granados.Poderosa.KeyFormat;
 #endif
 
+#if LIBRARY
+using Poderosa.Library;
+#endif
+
 namespace Granados.SSH1 {
     /// <summary>
     /// private key for user authentication
@@ -71,7 +75,11 @@ namespace Granados.SSH1 {
             byte[] header = new byte[32];
             s.Read(header, 0, header.Length);
             if (Encoding.ASCII.GetString(header) != "SSH PRIVATE KEY FILE FORMAT 1.1\n")
+#if LIBRARY
+                throw new SSHException("BrokenKeyFile " + path);
+#else
                 throw new SSHException(String.Format(Strings.GetString("BrokenKeyFile"), path));
+#endif
 
             SSH1DataReader reader = new SSH1DataReader(ReadAll(s));
             s.Close();

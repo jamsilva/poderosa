@@ -144,12 +144,20 @@ namespace Poderosa.Protocols {
                 _addressSet = new IPAddressList(address); //最初からIPアドレス形式のときは手で変換。そうでないとDNSの逆引きをしてタイムアウト、とかややこしいことが起こる
             }
             else { //ホスト名形式
+#if LIBRARY
+                StartOverridingErrorMessage("Message.AddressNotResolved (" + dest + ")");
+#else
                 StartOverridingErrorMessage(String.Format(PEnv.Strings.GetString("Message.AddressNotResolved"), dest));
+#endif
                 _addressSet = new IPAddressList(dest);
                 EndOverridingErrorMessage();
             }
 
+#if LIBRARY
+            StartOverridingErrorMessage("Message.FailedToConnectPort (" + dest + ", " + port + ")");
+#else
             StartOverridingErrorMessage(String.Format(PEnv.Strings.GetString("Message.FailedToConnectPort"), dest, port));
+#endif
             _socket = NetUtil.ConnectTCPSocket(_addressSet, port);
             EndOverridingErrorMessage();
             _connectedAddress = ((IPEndPoint)_socket.RemoteEndPoint).Address;

@@ -360,7 +360,7 @@ namespace Poderosa.Sessions {
         ITerminalConnection EstablishConnection(IPoderosaMainWindow window, ITerminalParameter param, ITerminalSettings settings);
     }
 
-
+#if !LIBRARY
     //ログインダイアログの使い勝手向上用のサポート
     /// <summary>
     /// 
@@ -424,6 +424,7 @@ namespace Poderosa.Sessions {
         //ホスト名で指定する
         void FillCorrespondingDestination(Type adapter, string destination, out ITerminalParameter parameter, out ITerminalSettings settings);
     }
+#endif
 
     //Terminal Session固有オプション
     /// <summary>
@@ -440,7 +441,9 @@ namespace Poderosa.Sessions {
         int TerminalEstablishTimeout {
             get;
         }
+#if !LIBRARY
         string GetDefaultLoginDialogUISupportTypeName(string logintype);
+#endif
     }
 
 }

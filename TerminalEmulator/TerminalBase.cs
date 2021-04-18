@@ -104,7 +104,9 @@ namespace Poderosa.Terminal {
         internal abstract byte[] GetPasteTrailingBytes();
 
         public AbstractTerminal(TerminalInitializeInfo info) {
+#if !LIBRARY
             TerminalEmulatorPlugin.Instance.LaterInitialize();
+#endif
 
             _session = info.Session;
 
@@ -276,10 +278,18 @@ namespace Poderosa.Terminal {
             else
                 desc = new String(code, 1);
 
+#if LIBRARY
+            CharDecodeError("Message.AbstractTerminal.UnsupportedCharSet (" + desc + ")");
+#else
             CharDecodeError(String.Format(GEnv.Strings.GetString("Message.AbstractTerminal.UnsupportedCharSet"), desc));
+#endif
         }
         public void InvalidCharDetected(byte[] buf) {
+#if LIBRARY
+            CharDecodeError("Message.AbstractTerminal.UnexpectedChar (" + _encodingProfile.Encoding.WebName + ")");
+#else
             CharDecodeError(String.Format(GEnv.Strings.GetString("Message.AbstractTerminal.UnexpectedChar"), _encodingProfile.Encoding.WebName));
+#endif
         }
         #endregion
 
@@ -463,7 +473,11 @@ namespace Poderosa.Terminal {
                 Debug.Assert(window.AsForm().IsHandleCreated);
                 ITCPParameter tcp = (ITCPParameter)GetConnection().Destination.GetAdapter(typeof(ITCPParameter));
                 if (tcp != null) {
+#if LIBRARY
+                    string msg = "Message.AbstractTerminal.TCPDisconnected (" + tcp.Destination + ")";
+#else
                     string msg = String.Format(GEnv.Strings.GetString("Message.AbstractTerminal.TCPDisconnected"), tcp.Destination);
+#endif
 
                     switch (GEnv.Options.DisconnectNotification) {
                         case WarningOption.StatusBar:
@@ -493,7 +507,9 @@ namespace Poderosa.Terminal {
         private void CleanupCommon() {
             if (!_cleanup) {
                 _cleanup = true;
+#if !LIBRARY
                 TerminalEmulatorPlugin.Instance.ShellSchemeCollection.RemoveDynamicChangeListener((IShellSchemeDynamicChangeListener)GetTerminalSettings().GetAdapter(typeof(IShellSchemeDynamicChangeListener)));
+#endif
                 _logService.Close(_document.CurrentLine);
             }
         }

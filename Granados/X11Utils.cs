@@ -11,6 +11,10 @@ using System.IO;
 using System.Net;
 using System.Text;
 
+#if LIBRARY
+using Poderosa.Library;
+#endif
+
 namespace Granados.X11 {
 
     /// <summary>

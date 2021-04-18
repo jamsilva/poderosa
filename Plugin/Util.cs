@@ -98,6 +98,7 @@ namespace Poderosa {
 
             string errorfile = ReportExceptionToFile(ex);
 
+#if !LIBRARY
             //メッセージボックスで通知。
             //だがこの中で例外が発生することがSP1ではあるらしい。しかもそうなるとアプリが強制終了だ。
             //Win32のメッセージボックスを出しても同じ。ステータスバーなら大丈夫のようだ
@@ -109,6 +110,7 @@ namespace Poderosa {
                 Debug.WriteLine("(MessageBox.Show() failed) " + ex2.Message);
                 Debug.WriteLine(ex2.StackTrace);
             }
+#endif
         }
         public static void SilentReportException(Exception ex) {
             Debug.WriteLine(ex.Message);

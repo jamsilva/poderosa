@@ -103,11 +103,13 @@ namespace Poderosa.Terminal {
     /// </en>
     /// </remarks>
     public interface ITerminalEmulatorService {
+#if !LIBRARY
         /// <summary>
         /// 
         /// </summary>
         /// <exclude/>
         void LaterInitialize();
+#endif
 
         /// <summary>
         /// <ja>
@@ -154,6 +156,7 @@ namespace Poderosa.Terminal {
         ICommandCategory TerminalCommandCategory {
             get;
         }
+#if !LIBRARY
         /// <summary>
         /// 
         /// </summary>
@@ -161,6 +164,7 @@ namespace Poderosa.Terminal {
         IShellSchemeCollection ShellSchemeCollection {
             get;
         }
+#endif
     }
 
     //ログファイル名のカスタマイズ

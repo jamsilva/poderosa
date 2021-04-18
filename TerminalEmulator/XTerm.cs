@@ -26,7 +26,9 @@ using System.Globalization;
 using Poderosa.Document;
 using Poderosa.ConnectionParam;
 using Poderosa.View;
+#if !LIBRARY
 using Poderosa.Preferences;
+#endif
 
 namespace Poderosa.Terminal {
     internal class XTerm : VT100Terminal {
@@ -1277,8 +1279,11 @@ namespace Poderosa.Terminal {
     /// <summary>
     /// Preferences for XTerm
     /// </summary>
+#if LIBRARY
+    internal class XTermPreferences {
+#else
     internal class XTermPreferences : IPreferenceSupplier {
-
+#endif
         private static XTermPreferences _instance = new XTermPreferences();
 
         public static XTermPreferences Instance {
@@ -1289,20 +1294,25 @@ namespace Poderosa.Terminal {
 
         private const int DEFAULT_MODIFY_CURSOR_KEYS = 2;
 
+#if !LIBRARY
         private IIntPreferenceItem _modifyCursorKeys;
+#endif
 
         /// <summary>
         /// Xterm's modifyCursorKeys feature
         /// </summary>
         public int modifyCursorKeys {
             get {
+#if !LIBRARY
                 if (_modifyCursorKeys != null)
                     return _modifyCursorKeys.Value;
                 else
+#endif
                     return DEFAULT_MODIFY_CURSOR_KEYS;
             }
         }
 
+#if !LIBRARY
         #region IPreferenceSupplier
 
         public string PreferenceID {
@@ -1323,5 +1333,6 @@ namespace Poderosa.Terminal {
         }
 
         #endregion
+#endif
     }
 }

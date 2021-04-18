@@ -47,21 +47,27 @@ namespace Poderosa.ConnectionParam {
         /// <ja>パスワード認証</ja>
         /// <en>Authentication using password.</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.AuthType.Password")]
+#endif
         Password,
 
         /// <summary>
         /// <ja>手元の秘密鍵とリモートホストに登録した公開鍵を使った認証</ja>
         /// <en>Authentication using the local private key and the remote public key.</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.AuthType.PublicKey")]
+#endif
         PublicKey,
 
         /// <summary>
         /// <ja>コンソール上でパスワードを入力する認証</ja>
         /// <en>Authentication by sending the password through the console.</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.AuthType.KeyboardInteractive")]
+#endif
         KeyboardInteractive
     }
 
@@ -152,7 +158,9 @@ namespace Poderosa.ConnectionParam {
         /// <ja>ISO 8859-1</ja>
         /// <en>ISO 8859-1</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.EncodingType.ISO8859_1")]
+#endif
         ISO8859_1 = 0,
         /// <summary>
         /// <ja>UTF-8 (CJKテキスト表示用)</ja>
@@ -162,7 +170,9 @@ namespace Poderosa.ConnectionParam {
         /// <ja>CJKキャラクタセットに含まれる記号、罫線、欧文文字等は、CJKフォントで全角表示されます。</ja>
         /// <en>Characters like symbols, box-drawing characters or european characters that are contained in CJK character sets are displayed in zenkaku using CJK font.</en>
         /// </remarks>
+#if !LIBRARY
         [EnumValue(Description = "Enum.EncodingType.UTF8")]
+#endif
         UTF8 = 1,
         /// <summary>
         /// <ja>UTF-8 (欧文表示用)</ja>
@@ -174,49 +184,65 @@ namespace Poderosa.ConnectionParam {
         /// <en>Characters like symbols, box-drawing characters or european characters are displayed in Hankaku using main font.
         /// East asian characters like Kanji are displayed in Zenkaku using CJK font.</en>
         /// </remarks>
+#if !LIBRARY
         [EnumValue(Description = "Enum.EncodingType.UTF8_Latin")]
+#endif
         UTF8_Latin = 8,
         /// <summary>
         /// <ja>EUC JP (主に日本語の文字で使用)</ja>
         /// <en>EUC JP (This encoding is primarily used with Japanese characters.)</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.EncodingType.EUC_JP")]
+#endif
         EUC_JP = 2,
         /// <summary>
         /// <ja>Shift JIS (主に日本語の文字で使用)</ja>
         /// <en>Shift JIS (This encoding is primarily used with Japanese characters.)</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.EncodingType.SHIFT_JIS")]
+#endif
         SHIFT_JIS = 3,
         /// <summary>
         /// <ja>GB2312 (主に簡体字で使用)</ja>
         /// <en>GB2312 (This encoding is primarily used with simplified Chinese characters.)</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.EncodingType.GB2312")]
+#endif
         GB2312 = 4,
         /// <summary>
         /// <ja>Big5 (主に繁体字で使用)</ja>
         /// <en>Big5 (This encoding is primarily used with traditional Chinese characters.)</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.EncodingType.BIG5")]
+#endif
         BIG5 = 5,
         /// <summary>
         /// <ja>EUC CN (主に簡体字で使用)</ja>
         /// <en>EUC CN (This encoding is primarily used with simplified Chinese characters.)</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.EncodingType.EUC_CN")]
+#endif
         EUC_CN = 6,
         /// <summary>
         /// <ja>EUC KR (主に韓国語文字で使用)</ja>
         /// <en>EUC KR (This encoding is primarily used with Korean characters.)</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.EncodingType.EUC_KR")]
+#endif
         EUC_KR = 7,
         /// <summary>
         /// <ja>OEM 850</ja>
         /// <en>OEM 850</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.EncodingType.OEM850")]
+#endif
         OEM850 = 9,
     }
 
@@ -230,31 +256,41 @@ namespace Poderosa.ConnectionParam {
         /// <ja>ログはとりません。</ja>
         /// <en>The log is not recorded.</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.LogType.None")]
+#endif
         None,
         /// <summary>
         /// <ja>テキストモードのログです。これが標準です。</ja>
         /// <en>The log is a plain text file. This is standard.</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.LogType.Default")]
+#endif
         Default,
         /// <summary>
         /// <ja>テキストモードのログ、タイムスタンプ付。</ja>
         /// <en>Plain text file, logged with timestamp.</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.LogType.PlainTextWithTimestamp")]
+#endif
         PlainTextWithTimestamp,
         /// <summary>
         /// <ja>バイナリモードのログです。</ja>
         /// <en>The log is a binary file.</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.LogType.Binary")]
+#endif
         Binary,
         /// <summary>
         /// <ja>XMLで保存します。また内部的なバグ追跡においてこのモードでのログ採取をお願いすることがあります。</ja>
         /// <en>The log is an XML file. We may ask you to record the log in this type for debugging.</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.LogType.Xml")]
+#endif
         Xml
     }
 
@@ -267,17 +303,23 @@ namespace Poderosa.ConnectionParam {
         /// <summary>
         /// CR
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.NewLine.CR")]
+#endif
         CR,
         /// <summary>
         /// LF
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.NewLine.LF")]
+#endif
         LF,
         /// <summary>
         /// CR+LF
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.NewLine.CRLF")]
+#endif
         CRLF
     }
 
@@ -298,17 +340,23 @@ namespace Poderosa.ConnectionParam {
         /// <summary>
         /// vt100
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.TerminalType.VT100")]
+#endif
         VT100,
         /// <summary>
         /// xterm
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.TerminalType.XTerm")]
+#endif
         XTerm,
         /// <summary>
         /// kterm
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.TerminalType.KTerm")]
+#endif
         KTerm
     }
 
@@ -349,23 +397,29 @@ namespace Poderosa.ConnectionParam {
         /// <ja>標準</ja>
         /// <en>Standard</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.LineFeedRule.Normal")]
+#endif
         Normal,
         /// <summary>
         /// <ja>LFで改行しCRを無視</ja>
         /// <en>LF:Line Break, CR:Ignore</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.LineFeedRule.LFOnly")]
+#endif
         LFOnly,
         /// <summary>
         /// <ja>CRで改行しLFを無視</ja>
         /// <en>CR:Line Break, LF:Ignore</en>
         /// </summary>
+#if !LIBRARY
         [EnumValue(Description = "Enum.LineFeedRule.CROnly")]
+#endif
         CROnly
     }
 
-#if !MACRODOC || !LIBRARY
+#if !MACRODOC && !LIBRARY
     /// <summary>
     /// <ja>フローコントロールの設定</ja>
     /// <en>Specifies the flow control.</en>

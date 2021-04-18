@@ -128,7 +128,11 @@ namespace Poderosa.Protocols {
                     ProtocolsPlugin.Instance.NetLog(ex.Message);
                 }
             }
+#if LIBRARY
+            throw new Exception("Message.FailedToConnectAddress (" + addrlist.AvailableAddresses[0] + ")");
+#else
             throw new Exception(String.Format(PEnv.Strings.GetString("Message.FailedToConnectAddress"), addrlist.AvailableAddresses[0].ToString()));
+#endif
         }
         public static Socket ConnectTCPSocket(IPAddress addr, int port, int timeout) {
 

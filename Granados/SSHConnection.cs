@@ -3,6 +3,10 @@
 // the license included in the distributed package.
 // You may not use this file except in compliance with the license.
 
+#if LIBRARY
+using Poderosa.Library;
+#endif
+
 namespace Granados {
 
     using Granados.IO;
@@ -532,12 +536,20 @@ namespace Granados.SSH {
                         }
                     }
                     throw new SSHException(
+#if LIBRARY
+                        "IncompatibleProtocolVersion (" + _serverVersion + ", " + protocol + ")");
+#else
                         String.Format(Strings.GetString("IncompatibleProtocolVersion"), _serverVersion, protocol.ToString()));
+#endif
                 }
             }
 
             throw new SSHException(
+#if LIBRARY
+                "InvalidServerVersionFormat (" + _serverVersion + ")");
+#else
                 String.Format(Strings.GetString("InvalidServerVersionFormat"), _serverVersion));
+#endif
         }
     }
 

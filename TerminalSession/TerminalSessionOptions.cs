@@ -17,9 +17,19 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.Text;
 
+#if !LIBRARY
 using Poderosa.Preferences;
+#endif
 
 namespace Poderosa.Sessions {
+#if LIBRARY
+    internal class TerminalSessionOptions : ITerminalSessionOptions {
+        public bool AskCloseOnExit { get; set; } = false;
+        public int TerminalEstablishTimeout { get; set; } = 5000;
+
+        public TerminalSessionOptions() {}
+    }
+#else
     internal class TerminalSessionOptions : SnapshotAwarePreferenceBase, ITerminalSessionOptions {
         private IBoolPreferenceItem _askCloseOnExit;
         private IIntPreferenceItem _terminalEstablishTimeout;
@@ -64,9 +74,10 @@ namespace Poderosa.Sessions {
             else
                 return "";
         }
-
     }
+#endif
 
+#if !LIBRARY
     internal class TerminalSessionOptionsSupplier : IPreferenceSupplier {
         private IPreferenceFolder _originalFolder;
         private TerminalSessionOptions _originalOptions;
@@ -101,4 +112,5 @@ namespace Poderosa.Sessions {
             }
         }
     }
+#endif
 }

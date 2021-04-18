@@ -73,6 +73,7 @@ namespace Poderosa.Plugins {
         IPluginManager PluginManager {
             get;
         }
+#if !LIBRARY
         /// <summary>
         /// <ja>
         /// <seealso cref="IPoderosaCulture">IPoderosaCulture</seealso>インターフェイスを返します。
@@ -84,6 +85,7 @@ namespace Poderosa.Plugins {
         IPoderosaCulture Culture {
             get;
         }
+#endif
     }
 
     /// <summary>
@@ -110,6 +112,7 @@ namespace Poderosa.Plugins {
         } //無指定はnull
     }
 
+#if !LIBRARY
     /// <summary>
     /// 
     /// </summary>
@@ -162,4 +165,5 @@ namespace Poderosa.Plugins {
     public interface ICultureChangeListener {
         void OnCultureChanged(CultureInfo newculture);
     }
+#endif
 }

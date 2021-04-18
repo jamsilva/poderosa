@@ -85,12 +85,6 @@
       <SubType>Form</SubType>
       <Link>Core\PoderosaForm.cs</Link>
     </Compile>
-    <Compile Include="..\Core\Preferences.cs">
-      <Link>Core\Preferences.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\PreferencesEx.cs">
-      <Link>Core\PreferencesEx.cs</Link>
-    </Compile>
     <Compile Include="..\Core\RenderProfile.cs">
       <Link>Core\RenderProfile.cs</Link>
     </Compile>
@@ -133,9 +127,6 @@
     </Compile>
     <Compile Include="..\Core\WindowManagerEx.cs">
       <Link>Core\WindowManagerEx.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\WindowPreference.cs">
-      <Link>Core\WindowPreference.cs</Link>
     </Compile>
     <Compile Include="..\Granados\AgentForwarding.cs">
       <Link>Granados\AgentForwarding.cs</Link>
@@ -308,9 +299,6 @@
     <Compile Include="..\Granados\SSHUtil.cs">
       <Link>Granados\SSHUtil.cs</Link>
     </Compile>
-    <Compile Include="..\Granados\StringResource.cs">
-      <Link>Granados\StringResource.cs</Link>
-    </Compile>
     <Compile Include="..\Granados\Tutorial.cs">
       <Link>Granados\Tutorial.cs</Link>
     </Compile>
@@ -362,9 +350,6 @@
     <Compile Include="..\Plugin\CollectionUtil.cs">
       <Link>Plugin\CollectionUtil.cs</Link>
     </Compile>
-    <Compile Include="..\Plugin\EnumDescription.cs">
-      <Link>Plugin\EnumDescription.cs</Link>
-    </Compile>
     <Compile Include="..\Plugin\ExtensionPoint.cs">
       <Link>Plugin\ExtensionPoint.cs</Link>
     </Compile>
@@ -388,9 +373,6 @@
     </Compile>
     <Compile Include="..\Plugin\PoderosaWorldEx.cs">
       <Link>Plugin\PoderosaWorldEx.cs</Link>
-    </Compile>
-    <Compile Include="..\Plugin\StringResource.cs">
-      <Link>Plugin\StringResource.cs</Link>
     </Compile>
     <Compile Include="..\Plugin\StructuredText.cs">
       <Link>Plugin\StructuredText.cs</Link>
@@ -506,9 +488,6 @@
     <Compile Include="..\TerminalEmulator\PromptRecognizer.cs">
       <Link>TerminalEmulator\PromptRecognizer.cs</Link>
     </Compile>
-    <Compile Include="..\TerminalEmulator\ShellScheme.cs">
-      <Link>TerminalEmulator\ShellScheme.cs</Link>
-    </Compile>
     <Compile Include="..\TerminalEmulator\TerminalBase.cs">
       <Link>TerminalEmulator\TerminalBase.cs</Link>
     </Compile>
@@ -596,64 +575,7 @@
     </Compile>
     <Compile Include="Library\Internals.cs" />
     <Compile Include="Library\LibPoderosa.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="..\Granados\strings.resx">
-      <SubType>Designer</SubType>
-      <Link>Granados\strings.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Granados\strings_ja.resx">
-      <SubType>Designer</SubType>
-      <Link>Granados\strings_ja.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Pipe\strings.resx">
-      <SubType>Designer</SubType>
-      <Link>Pipe\strings.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Pipe\strings_ja.resx">
-      <SubType>Designer</SubType>
-      <Link>Pipe\strings_ja.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Plugin\strings.resx">
-      <SubType>Designer</SubType>
-      <Link>Plugin\strings.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Plugin\strings_ja.resx">
-      <SubType>Designer</SubType>
-      <Link>Plugin\strings_ja.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Protocols\strings.resx">
-      <SubType>Designer</SubType>
-      <Link>Protocols\strings.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Protocols\strings_ja.resx">
-      <SubType>Designer</SubType>
-      <Link>Protocols\strings_ja.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\SerialPort\strings.resx">
-      <SubType>Designer</SubType>
-      <Link>SerialPort\strings.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\SerialPort\strings_ja.resx">
-      <SubType>Designer</SubType>
-      <Link>SerialPort\strings_ja.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\TerminalEmulator\strings.resx">
-      <SubType>Designer</SubType>
-      <Link>TerminalEmulator\strings.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\TerminalEmulator\strings_ja.resx">
-      <SubType>Designer</SubType>
-      <Link>TerminalEmulator\strings_ja.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\TerminalSession\strings.resx">
-      <SubType>Designer</SubType>
-      <Link>TerminalSession\strings.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\TerminalSession\strings_ja.resx">
-      <SubType>Designer</SubType>
-      <Link>TerminalSession\strings_ja.resx</Link>
-    </EmbeddedResource>
+    <Compile Include="Library\Shims.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -21,9 +21,11 @@ using System.Windows.Forms;
 
 using Poderosa.Plugins;
 using Poderosa.Sessions;
-using Poderosa.Preferences;
 using Poderosa.Forms;
 using Poderosa.Commands;
+#if !LIBRARY
+using Poderosa.Preferences;
+#endif
 
 [assembly: PluginDeclaration(typeof(Poderosa.Terminal.TerminalEmulatorPlugin))]
 
@@ -59,15 +61,19 @@ namespace Poderosa.Terminal {
 #endif
         private IExtensionPoint _autoLogFileFormatter;
         private IExtensionPoint _dynamicCaptionFormatter;
+#if LIBRARY
+        private TerminalOptions _originalOptions;
+#else
         private TerminalOptionsSupplier _optionSupplier;
+#endif
         private KeepAlive _keepAlive;
         private CustomKeySettings _customKeySettings;
-        private ShellSchemeCollection _shellSchemeCollection;
 #if !LIBRARY
+        private ShellSchemeCollection _shellSchemeCollection;
         private PromptCheckerWithTimer _promptCheckerWithTimer;
-#endif
 
         private bool _laterInitialized; //遅延初期化用フラグ
+#endif
 
         private static TerminalEmulatorPlugin _instance;
         public static TerminalEmulatorPlugin Instance {
@@ -79,17 +85,25 @@ namespace Poderosa.Terminal {
         public override void InitializePlugin(IPoderosaWorld poderosa) {
             base.InitializePlugin(poderosa);
             _instance = this;
+#if LIBRARY
+            _originalOptions = new TerminalOptions();
+#else
             _optionSupplier = new TerminalOptionsSupplier();
+#endif
             _keepAlive = new KeepAlive();
             _customKeySettings = new CustomKeySettings();
+#if !LIBRARY
             _shellSchemeCollection = new ShellSchemeCollection();
 
             GEnv.Init();
+#endif
             IPluginManager pm = poderosa.PluginManager;
             ICoreServices cs = (ICoreServices)poderosa.GetAdapter(typeof(ICoreServices));
             Debug.Assert(cs != null);
+#if !LIBRARY
             cs.PreferenceExtensionPoint.RegisterExtension(_optionSupplier);
             cs.PreferenceExtensionPoint.RegisterExtension(_shellSchemeCollection);
+#endif
             _coreServices = cs;
 
 #if !LIBRARY
@@ -99,9 +113,9 @@ namespace Poderosa.Terminal {
 
             _commandManager = cs.CommandManager;
             TerminalCommand.Register(_commandManager);
+#if !LIBRARY
             TerminalSettingMenuGroup.Initialize();
 
-#if !LIBRARY
             //PromptChecker
             _promptCheckerWithTimer = new PromptCheckerWithTimer();
 
@@ -145,13 +159,13 @@ namespace Poderosa.Terminal {
             //Command Popup
             CommandResultSession.Init(poderosa);
             PopupStyleCommandResultRecognizer.CreateExtensionPointAndDefaultCommands(pm);
-#endif
 
             // Preferences for PromptRecognizer
             cs.PreferenceExtensionPoint.RegisterExtension(PromptRecognizerPreferences.Instance);
 
             // Preferences for XTerm
             cs.PreferenceExtensionPoint.RegisterExtension(XTermPreferences.Instance);
+#endif
         }
 
 #if UNITTEST
@@ -219,6 +233,7 @@ namespace Poderosa.Terminal {
                 return TerminalCommand.TerminalCommandCategory;
             }
         }
+#if !LIBRARY
         public void LaterInitialize() {
             if (!_laterInitialized)
                 _shellSchemeCollection.Load();
@@ -229,6 +244,7 @@ namespace Poderosa.Terminal {
                 return _shellSchemeCollection;
             }
         }
+#endif
         #endregion
 
         public ISessionManager GetSessionManager() {
@@ -245,16 +261,22 @@ namespace Poderosa.Terminal {
         public ICommandManager GetCommandManager() {
             return _commandManager;
         }
-#if !LIBRARY
+#if LIBRARY
+        public TerminalOptions OriginalOptions {
+            get {
+                return _originalOptions;
+            }
+        }
+#else
         public IPoderosaApplication GetPoderosaApplication() {
             return (IPoderosaApplication)_poderosaWorld.GetAdapter(typeof(IPoderosaApplication));
         }
-#endif
         public TerminalOptionsSupplier OptionSupplier {
             get {
                 return _optionSupplier;
             }
         }
+#endif
         public KeepAlive KeepAlive {
             get {
                 return _keepAlive;
@@ -266,13 +288,13 @@ namespace Poderosa.Terminal {
             }
         }
 
+#if !LIBRARY
         public override void TerminatePlugin() {
             base.TerminatePlugin();
             _shellSchemeCollection.PreClose();
-#if !LIBRARY
             _promptCheckerWithTimer.Close();
-#endif
         }
+#endif
     }
 
     internal class CustomKeySettings {

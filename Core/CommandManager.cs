@@ -21,42 +21,53 @@ using System.Windows.Forms;
 
 using Poderosa.Util.Collections;
 using Poderosa.Plugins;
-using Poderosa.Preferences;
 using Poderosa.Util;
+#if !LIBRARY
+using Poderosa.Preferences;
+#endif
 
 [assembly: PluginDeclaration(typeof(Poderosa.Commands.CommandManagerPlugin))]
 
 namespace Poderosa.Commands {
+#if !LIBRARY
     //NOTE publicに昇格？
     internal interface IKeyBindChangeListener {
         void OnKeyBindChanged(IKeyBinds newvalues);
     }
+#endif
 
+#if LIBRARY
+    [PluginInfo(ID = CommandManagerPlugin.PLUGIN_ID, Version = VersionInfo.PODEROSA_VERSION, Author = VersionInfo.PROJECT_NAME)]
+    internal class CommandManagerPlugin : PluginBase, ICommandManager {
+#else
     [PluginInfo(ID = CommandManagerPlugin.PLUGIN_ID, Version = VersionInfo.PODEROSA_VERSION, Author = VersionInfo.PROJECT_NAME, Dependencies = "org.poderosa.core.preferences")]
     internal class CommandManagerPlugin : PluginBase, ICommandManager, IPreferenceSupplier, IPreferenceChangeListener {
+#endif
         public const string PLUGIN_ID = "org.poderosa.core.commands";
         private static CommandManagerPlugin _instance;
 
         private List<IGeneralCommand> _commands; //登録順に並べる
         private TypedHashtable<string, IGeneralCommand> _idToCommand;
+#if !LIBRARY
         private KeyBindConfiguration _keyBind;
         private IPreferenceLooseNode _keyBindNode;
 
         private ListenerList<IKeyBindChangeListener> _keyBindChangeListener;
+#endif
 
         public override void InitializePlugin(IPoderosaWorld poderosa) {
             base.InitializePlugin(poderosa);
             _instance = this;
             _commands = new List<IGeneralCommand>();
             _idToCommand = new TypedHashtable<string, IGeneralCommand>();
+#if !LIBRARY
             _keyBind = new KeyBindConfiguration();
             _keyBindChangeListener = new ListenerList<IKeyBindChangeListener>();
 
-#if !LIBRARY
             BasicCommandImplementation.Build();
-#endif
 
             poderosa.PluginManager.FindExtensionPoint(PreferencePlugin.EXTENSIONPOINT_NAME).RegisterExtension(this);
+#endif
         }
 
         public void Register(IGeneralCommand command) {
@@ -79,9 +90,11 @@ namespace Poderosa.Commands {
             return _idToCommand[id];
         }
 
+#if !LIBRARY
         public IGeneralCommand Find(Keys key) {
             return _keyBind.FindCommand(key);
         }
+#endif
 
         public IEnumerable<IGeneralCommand> Commands {
             get {
@@ -103,6 +116,7 @@ namespace Poderosa.Commands {
             }
         }
 
+#if !LIBRARY
         public string PreferenceID {
             get {
                 return PLUGIN_ID;
@@ -161,8 +175,10 @@ namespace Poderosa.Commands {
             Debug.Assert(kb != null);
             return kb;
         }
+#endif
     }
 
+#if !LIBRARY
     internal class KeyBindConfiguration : IPreferenceLooseNodeContent, IKeyBinds {
         private List<Tag> _data; //コマンドがCommandManagerPluginの登録順になるように
         private TypedHashtable<Keys, Tag> _keyToTag;
@@ -316,7 +332,7 @@ namespace Poderosa.Commands {
         }
         #endregion
     }
-
+#endif
 
 
 }

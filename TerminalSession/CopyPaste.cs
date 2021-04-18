@@ -58,6 +58,7 @@ namespace Poderosa.Commands {
             if (data == null)
                 return CommandResult.Ignored;
 
+#if !LIBRARY
             ITerminalEmulatorOptions options = TerminalSessionsPlugin.Instance.TerminalEmulatorService.TerminalEmulatorOptions;
             if (options.AlertOnPasteNewLineChar) {
                 // Data will be split by CR, LF, CRLF or Environment.NewLine by TextReader.ReadLine,
@@ -72,6 +73,7 @@ namespace Poderosa.Commands {
                     }
                 }
             }
+#endif
 
             StringReader reader = new StringReader(data);
             TerminalTransmission output = session.TerminalTransmission;

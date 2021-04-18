@@ -73,21 +73,37 @@ namespace Poderosa.View {
     /// </summary>
     /// <exclude/>
     public enum ImageStyle {
+#if !LIBRARY
         [EnumValue(Description = "Enum.ImageStyle.Center")]
+#endif
         Center,
+#if !LIBRARY
         [EnumValue(Description = "Enum.ImageStyle.TopLeft")]
+#endif
         TopLeft,
+#if !LIBRARY
         [EnumValue(Description = "Enum.ImageStyle.TopRight")]
+#endif
         TopRight,
+#if !LIBRARY
         [EnumValue(Description = "Enum.ImageStyle.BottomLeft")]
+#endif
         BottomLeft,
+#if !LIBRARY
         [EnumValue(Description = "Enum.ImageStyle.BottomRight")]
+#endif
         BottomRight,
+#if !LIBRARY
         [EnumValue(Description = "Enum.ImageStyle.Scaled")]
+#endif
         Scaled,
+#if !LIBRARY
         [EnumValue(Description = "Enum.ImageStyle.HorizontalFit")]
+#endif
         HorizontalFit,
+#if !LIBRARY
         [EnumValue(Description = "Enum.ImageStyle.VerticalFit")]
+#endif
         VerticalFit
     }
 #endif

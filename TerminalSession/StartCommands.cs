@@ -105,8 +105,10 @@ namespace Poderosa.Sessions {
         public ITerminalSession StartTerminalSession(ICommandTarget target, ITerminalConnection connection, ITerminalSettings settings) {
             Debug.Assert(connection != null);
             Debug.Assert(settings != null);
+#if !LIBRARY
             //ここでターミナルエミュレータの遅延初期化
             TerminalSessionsPlugin.Instance.TerminalEmulatorService.LaterInitialize();
+#endif
 
             ISessionManager sm = (ISessionManager)TerminalSessionsPlugin.Instance.PoderosaWorld.PluginManager.FindPlugin("org.poderosa.core.sessions", typeof(ISessionManager));
 
