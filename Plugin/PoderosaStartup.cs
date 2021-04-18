@@ -141,13 +141,17 @@ namespace Poderosa.Boot {
     //起動時のパラメータ　コマンドライン引数などから構築
     internal class PoderosaStartupContext {
         private static PoderosaStartupContext _instance;
+#if !LIBRARY
         private string _homeDirectory;
         private string _profileHomeDirectory;
         private string _preferenceFileName;
         private string _initialOpenFile;
+#endif
         private PluginManifest _pluginManifest;
+#if !LIBRARY
         private StructuredText _preferences;
         private string[] _args; //起動時のコマンドライン引数
+#endif
         private ITracer _tracer; //起動中のエラーの通知先
 
         public static PoderosaStartupContext Instance {
@@ -158,14 +162,18 @@ namespace Poderosa.Boot {
 
         public PoderosaStartupContext(PluginManifest pluginManifest, string home_directory, string profile_home, string[] args, string open_file) {
             _instance = this;
+#if !LIBRARY
             _homeDirectory = AdjustDirectory(home_directory);
             _profileHomeDirectory = AdjustDirectory(profile_home);
             _initialOpenFile = open_file;
             _args = args;
+#endif
             Debug.Assert(pluginManifest != null);
             _pluginManifest = pluginManifest;
+#if !LIBRARY
             _preferenceFileName = Path.Combine(_profileHomeDirectory, "options.conf");
             _preferences = BuildPreference(_preferenceFileName);
+#endif
         }
 #if !LIBRARY
         public PoderosaStartupContext(PluginManifest pluginManifest, string home_directory, StructuredText preference, string[] args, string open_file) {
@@ -180,16 +188,17 @@ namespace Poderosa.Boot {
             _preferenceFileName = null;
             _preferences = preference;
         }
-#endif
         private static string AdjustDirectory(string value) {
             return value.EndsWith("\\") ? value : value + "\\";
         }
+#endif
 
         public PluginManifest PluginManifest {
             get {
                 return _pluginManifest;
             }
         }
+#if !LIBRARY
         public StructuredText Preferences {
             get {
                 return _preferences;
@@ -222,6 +231,7 @@ namespace Poderosa.Boot {
                 return _initialOpenFile;
             }
         }
+#endif
 
 
 
@@ -234,6 +244,7 @@ namespace Poderosa.Boot {
             }
         }
 
+#if !LIBRARY
         private static StructuredText BuildPreference(string preference_file) {
             //TODO 例外時などどこか適当に通知が必要
             StructuredText pref = null;
@@ -251,7 +262,7 @@ namespace Poderosa.Boot {
 
             return pref;
         }
-
+#endif
     }
 
     internal class PluginManifest {

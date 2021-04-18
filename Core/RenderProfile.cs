@@ -832,8 +832,9 @@ namespace Poderosa.View {
     /// </summary>
     /// <exclude/>
     public class EscapesequenceColorSet : ICloneable {
-
+#if !LIBRARY
         private bool _isDefault;
+#endif
         private readonly ESColor[] _colors = new ESColor[256];
 
         public EscapesequenceColorSet() {
@@ -841,7 +842,9 @@ namespace Poderosa.View {
         }
 
         private EscapesequenceColorSet(EscapesequenceColorSet a) {
+#if !LIBRARY
             _isDefault = a._isDefault;
+#endif
             for (int i = 0; i < _colors.Length; i++) {
                 _colors[i] = a._colors[i];
             }
@@ -851,11 +854,13 @@ namespace Poderosa.View {
             return new EscapesequenceColorSet(this);
         }
 
+#if !LIBRARY
         public bool IsDefault {
             get {
                 return _isDefault;
             }
         }
+#endif
 
         public ESColor this[int index] {
             get {
@@ -863,8 +868,10 @@ namespace Poderosa.View {
             }
             set {
                 _colors[index] = value;
+#if !LIBRARY
                 if (_isDefault)
                     _isDefault = GetDefaultColor(index) == value;
+#endif
             }
         }
 
@@ -872,9 +879,12 @@ namespace Poderosa.View {
             for (int i = 0; i < _colors.Length; i++) {
                 _colors[i] = GetDefaultColor(i);
             }
+#if !LIBRARY
             _isDefault = true;
+#endif
         }
 
+#if !LIBRARY
         public string Format() {
             if (_isDefault)
                 return String.Empty;
@@ -931,6 +941,7 @@ namespace Poderosa.View {
             r.Load(s);
             return r;
         }
+#endif
 
         public static ESColor GetDefaultColor(int index) {
             return new ESColor(GetDefaultColorValue(index), false);

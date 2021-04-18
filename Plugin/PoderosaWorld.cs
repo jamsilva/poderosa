@@ -134,6 +134,7 @@ namespace Poderosa.Boot {
         public void Shutdown() {
             _pluginManager.Shutdown();
         }
+#if !LIBRARY
         public string HomeDirectory {
             get {
                 return _startupContext.HomeDirectory;
@@ -144,11 +145,13 @@ namespace Poderosa.Boot {
                 return _startupContext.ProfileHomeDirectory;
             }
         }
+#endif
         public IPoderosaLog PoderosaLog {
             get {
                 return _poderosaLog;
             }
         }
+#if !LIBRARY
         public string[] CommandLineArgs {
             get {
                 return _startupContext.CommandLineArgs;
@@ -159,6 +162,7 @@ namespace Poderosa.Boot {
                 return _startupContext.InitialOpenFile;
             }
         }
+#endif
         #endregion
 
         private void RunRootExtensions() {

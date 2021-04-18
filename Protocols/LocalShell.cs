@@ -77,12 +77,16 @@ namespace Poderosa.Protocols {
             private ICygwinParameter _param;
             private Process _process;
             private IInterruptableConnectorClient _client;
+#if !LIBRARY
             private Thread _asyncThread;
+#endif
             private bool _interrupted;
 
+#if !LIBRARY
             public Connector(ICygwinParameter param) {
                 _param = param;
             }
+#endif
             public Connector(ICygwinParameter param, IInterruptableConnectorClient client) {
                 _param = param;
                 _client = client;
@@ -90,7 +94,9 @@ namespace Poderosa.Protocols {
 
             public void AsyncConnect() {
                 bool success = false;
+#if !LIBRARY
                 _asyncThread = Thread.CurrentThread;
+#endif
                 try {
                     ITerminalConnection result = Connect();
                     if (!_interrupted) {
@@ -168,7 +174,11 @@ namespace Poderosa.Protocols {
             }
 
             private static string GetCygtermPath() {
+#if LIBRARY
+                const string CYGTERM_DIR = "";
+#else
                 const string CYGTERM_DIR = "cygterm";
+#endif
                 const string CYGTERM_EXE = "cygterm.exe";
 
                 // 1st candidate: <assembly's location>/Cygterm/cygterm.exe
@@ -177,6 +187,7 @@ namespace Poderosa.Protocols {
                 if (File.Exists(path))
                     return path;
 
+#if !LIBRARY
                 IPoderosaApplication app = (IPoderosaApplication)ProtocolsPlugin.Instance.PoderosaWorld.GetAdapter(typeof(IPoderosaApplication));
 
                 // 2nd candidate: <HomeDirectory>/Protocols/Cygterm/cygterm.exe
@@ -195,6 +206,7 @@ namespace Poderosa.Protocols {
                 path = Path.Combine(app.HomeDirectory, CYGTERM_EXE);
                 if (File.Exists(path))
                     return path;
+#endif
 
                 return null;
             }
@@ -231,12 +243,12 @@ namespace Poderosa.Protocols {
             psi.EnvironmentVariables.Add("PATH", path);
         }
 
+#if !LIBRARY
         public static void Terminate() {
             if (_listener != null)
                 _listener.Close();
         }
 
-#if !LIBRARY
         private static bool IsCygwin(LocalShellParameter tp) {
             return true;
         }

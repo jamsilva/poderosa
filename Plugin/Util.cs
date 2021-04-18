@@ -96,9 +96,9 @@ namespace Poderosa {
             Debug.WriteLine(ex.Message);
             Debug.WriteLine(ex.StackTrace);
 
+#if !LIBRARY
             string errorfile = ReportExceptionToFile(ex);
 
-#if !LIBRARY
             //メッセージボックスで通知。
             //だがこの中で例外が発生することがSP1ではあるらしい。しかもそうなるとアプリが強制終了だ。
             //Win32のメッセージボックスを出しても同じ。ステータスバーなら大丈夫のようだ
@@ -115,12 +115,15 @@ namespace Poderosa {
         public static void SilentReportException(Exception ex) {
             Debug.WriteLine(ex.Message);
             Debug.WriteLine(ex.StackTrace);
+#if !LIBRARY
             ReportExceptionToFile(ex);
+#endif
         }
         public static void DebuggerReportException(Exception ex) {
             Debug.WriteLine(ex.Message);
             Debug.WriteLine(ex.StackTrace);
         }
+#if !LIBRARY
         //ファイル名を返す
         private static string ReportExceptionToFile(Exception ex) {
             string errorfile = null;
@@ -152,6 +155,7 @@ namespace Poderosa {
             errorfile = PoderosaStartupContext.Instance.ProfileHomeDirectory + "error.log";
             return new StreamWriter(errorfile, true/*append!*/, Encoding.Default);
         }
+#endif
 
         public static Font CreateFont(string name, float size) {
             try {
@@ -188,6 +192,7 @@ namespace Poderosa {
         }
     }
 
+#if !LIBRARY
     /// <summary>
     /// 
     /// </summary>
@@ -301,5 +306,5 @@ namespace Poderosa {
             }
         }
     }
-
+#endif
 }

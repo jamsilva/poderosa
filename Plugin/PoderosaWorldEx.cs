@@ -93,23 +93,29 @@ namespace Poderosa.Plugins {
     /// </summary>
     /// <exclude/>
     public interface IPoderosaApplication : IAdaptable {
+#if !LIBRARY
         string HomeDirectory {
             get;
         }
         string ProfileHomeDirectory {
             get;
         }
+#endif
         IPoderosaLog PoderosaLog {
             get;
         }
+#if !LIBRARY
         string[] CommandLineArgs {
             get;
         }
+#endif
         IPoderosaWorld Start();
         void Shutdown();
+#if !LIBRARY
         string InitialOpenFile {
             get;
         } //無指定はnull
+#endif
     }
 
 #if !LIBRARY

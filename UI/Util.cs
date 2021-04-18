@@ -59,7 +59,6 @@ namespace Poderosa.UI {
         public static void DumpControlTree(Control t) {
             DumpControlTree(t, 0);
         }
-#endif
 
         private static void DumpControlTree(Control t, int indent) {
             StringBuilder bld = new StringBuilder();
@@ -74,6 +73,7 @@ namespace Poderosa.UI {
             foreach (Control c in t.Controls)
                 DumpControlTree(c, indent + 1);
         }
+#endif
     }
 
 #if !LIBRARY

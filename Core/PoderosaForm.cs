@@ -26,7 +26,7 @@ using Poderosa.Commands;
 
 namespace Poderosa.Forms {
     //メインウィンドウとポップアップウィンドウの基底
-#if UIDESIGN
+#if LIBRARY || UIDESIGN
     internal class PoderosaForm : Form, IPoderosaForm {
 #else
     internal abstract class PoderosaForm : Form, IPoderosaForm {

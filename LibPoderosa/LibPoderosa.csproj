@@ -346,9 +346,6 @@
     <Compile Include="..\Plugin\PoderosaWorldEx.cs">
       <Link>Plugin\PoderosaWorldEx.cs</Link>
     </Compile>
-    <Compile Include="..\Plugin\StructuredText.cs">
-      <Link>Plugin\StructuredText.cs</Link>
-    </Compile>
     <Compile Include="..\Plugin\Tracer.cs">
       <Link>Plugin\Tracer.cs</Link>
     </Compile>
