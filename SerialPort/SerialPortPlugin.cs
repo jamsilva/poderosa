@@ -50,17 +50,15 @@ namespace Poderosa.SerialPort {
         private static SerialPortPlugin _instance;
 
         private StringResource _stringResource;
+#if !LIBRARY
         private ICoreServices _coreServices;
-#if !LIBRARY
         private IProtocolService _protocolService;
-#endif
         private ITerminalSessionsService _terminalSessionsService;
-#if !LIBRARY
         private ITerminalEmulatorService _terminalEmulatorService;
         private IMacroEngine _macroEngine;
-#endif
 
         private OpenSerialPortCommand _openSerialPortCommand;
+#endif
 
         public override void InitializePlugin(IPoderosaWorld poderosa) {
             base.InitializePlugin(poderosa);
@@ -73,21 +71,19 @@ namespace Poderosa.SerialPort {
             poderosa.Culture.AddChangeListener(_stringResource);
 #endif
             IPluginManager pm = poderosa.PluginManager;
+#if !LIBRARY
             _coreServices = (ICoreServices)poderosa.GetAdapter(typeof(ICoreServices));
 
-#if !LIBRARY
             IExtensionPoint pt = _coreServices.SerializerExtensionPoint;
             pt.RegisterExtension(new SerialTerminalParamSerializer());
             pt.RegisterExtension(new SerialTerminalSettingsSerializer());
-#endif
 
             _openSerialPortCommand = new OpenSerialPortCommand();
             _coreServices.CommandManager.Register(_openSerialPortCommand);
 
-#if !LIBRARY
             pm.FindExtensionPoint("org.poderosa.menu.file").RegisterExtension(new SerialPortMenuGroup());
-#endif
             pm.FindExtensionPoint("org.poderosa.core.window.toolbar").RegisterExtension(new SerialPortToolBarComponent());
+#endif
             pm.FindExtensionPoint("org.poderosa.termianlsessions.terminalConnectionFactory").RegisterExtension(new SerialConnectionFactory());
 
         }
@@ -106,7 +102,6 @@ namespace Poderosa.SerialPort {
                 return _protocolService;
             }
         }
-#endif
         public ITerminalSessionsService TerminalSessionsService {
             get {
                 if (_terminalSessionsService == null)
@@ -114,7 +109,6 @@ namespace Poderosa.SerialPort {
                 return _terminalSessionsService;
             }
         }
-#if !LIBRARY
         public ITerminalEmulatorService TerminalEmulatorService {
             get {
                 if (_terminalEmulatorService == null)
@@ -159,7 +153,7 @@ namespace Poderosa.SerialPort {
         }
 
         public Image LoadIcon() {
-            return Poderosa.SerialPort.Properties.Resources.Serial16x16;
+            return Poderosa.SerialPort.Properties.Resources.Icon16x16;
         }
 
         //コマンド、メニュー、ツールバー
@@ -176,16 +170,14 @@ namespace Poderosa.SerialPort {
                 : base(_instance._openSerialPortCommand, _instance.Strings, "Menu.SerialPort") {
             }
         }
-#endif
 
         private class SerialPortToolBarComponent : IToolBarComponent, IPositionDesignation {
-#if !LIBRARY
+
             public IAdaptable DesignationTarget {
                 get {
                     return _instance.CygwinPlugin.CygwinToolBarComponentTemp;
                 }
             }
-#endif
 
             public PositionType DesignationPosition {
                 get {
@@ -193,21 +185,15 @@ namespace Poderosa.SerialPort {
                 }
             }
 
-#if !LIBRARY
             public bool ShowSeparator {
                 get {
                     return true;
                 }
             }
-#endif
 
             public IToolBarElement[] ToolBarElements {
                 get {
-#if LIBRARY
-                    return new IToolBarElement[] {};
-#else
                     return new IToolBarElement[] { new ToolBarCommandButtonImpl(_instance._openSerialPortCommand, SerialPortPlugin.Instance.LoadIcon()) };
-#endif
                 }
             }
 
@@ -219,15 +205,10 @@ namespace Poderosa.SerialPort {
 
         private class OpenSerialPortCommand : GeneralCommandImpl {
             public OpenSerialPortCommand()
-#if LIBRARY
-                : base("org.poderosa.session.openserialport", "Command.SerialPort", _instance.TerminalSessionsService.ConnectCommandCategory) {
-#else
                 : base("org.poderosa.session.openserialport", _instance.Strings, "Command.SerialPort", _instance.TerminalSessionsService.ConnectCommandCategory) {
-#endif
             }
 
             public override CommandResult InternalExecute(ICommandTarget target, params IAdaptable[] args) {
-#if !LIBRARY
                 IPoderosaMainWindow window = (IPoderosaMainWindow)target.GetAdapter(typeof(IPoderosaMainWindow));
                 SerialLoginDialog dlg = new SerialLoginDialog();
                 using (dlg) {
@@ -243,11 +224,10 @@ namespace Poderosa.SerialPort {
                         }
                     }
                 }
-#endif
                 return CommandResult.Cancelled;
             }
 
         }
-
+#endif
     }
 }

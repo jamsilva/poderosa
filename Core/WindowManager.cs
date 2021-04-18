@@ -104,8 +104,8 @@ namespace Poderosa.Forms {
             pm.CreateExtensionPoint(WindowManagerConstants.VIEW_FACTORY_ID, typeof(IViewFactory), this);
 #if !LIBRARY
             pm.CreateExtensionPoint(WindowManagerConstants.VIEWFORMATEVENTHANDLER_ID, typeof(IViewFormatEventHandler), this);
-#endif
             pm.CreateExtensionPoint(WindowManagerConstants.TOOLBARCOMPONENT_ID, typeof(IToolBarComponent), this);
+#endif
             pm.CreateExtensionPoint(WindowManagerConstants.MAINWINDOWEVENTHANDLER_ID, typeof(IMainWindowEventHandler), this);
 #if !LIBRARY
             pm.CreateExtensionPoint(WindowManagerConstants.FILEDROPHANDLER_ID, typeof(IFileDropHandler), this);

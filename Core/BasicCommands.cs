@@ -89,6 +89,7 @@ namespace Poderosa.Commands {
 
     }
 
+
     internal static class BasicCommandImplementation {
         private static BasicCommand _closeAll;
         private static DocActivationCommand _docActivationCommand;

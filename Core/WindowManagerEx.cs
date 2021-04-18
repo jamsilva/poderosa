@@ -485,7 +485,6 @@ namespace Poderosa.Forms {
         IDocumentTabFeature DocumentTabFeature {
             get;
         }
-#endif
         /// <summary>
         /// <ja>
         /// ツールバーを示すオブジェクトを返します。
@@ -498,7 +497,6 @@ namespace Poderosa.Forms {
             get;
         }
 
-#if !LIBRARY
         /// <summary>
         /// <ja>
         /// ステータスバーを示すオブジェクトを返します。

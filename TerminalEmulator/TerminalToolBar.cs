@@ -36,13 +36,11 @@ namespace Poderosa.Terminal {
             _toolbarInstances = new TypedHashtable<IPoderosaMainWindow, TerminalToolBarInstance>();
         }
 
-#if !LIBRARY
         public IAdaptable DesignationTarget {
             get {
                 return null;
             }
         }
-#endif
 
         public PositionType DesignationPosition {
             get {
@@ -50,26 +48,22 @@ namespace Poderosa.Terminal {
             }
         }
 
-#if !LIBRARY
         public bool ShowSeparator {
             get {
                 return true;
             }
         }
-#endif
 
         public IToolBarElement[] ToolBarElements {
             get {
                 return new IToolBarElement[] {
-#if !LIBRARY
                     new ToolBarLabelImpl(GEnv.Strings, "Form.ToolBar._newLineLabel", 60),
                     new NewLineChangeHandler(),
                     new ToolBarLabelImpl(GEnv.Strings, "Form.ToolBar._encodingLabel", 88), //TODO サイズ指定はいやらしいな
                     new EncodingChangeHandler(),
                     new LocalEchoHandler(),
                     new IntelliSenseHandler(),
-                    new ShellSchemeChangeHandler(),
-#endif
+                    new ShellSchemeChangeHandler()
                 };
             }
         }
@@ -80,7 +74,6 @@ namespace Poderosa.Terminal {
         }
         #endregion
 
-#if !LIBRARY
         //それぞれの要素
         private class NewLineChangeHandler : ToolBarComboBoxImpl {
             public override object[] Items {
@@ -272,7 +265,6 @@ namespace Poderosa.Terminal {
                 }
             }
         }
-#endif
 
         #region IActiveDocumentChangeListener
         public void OnDocumentActivated(IPoderosaMainWindow window, IPoderosaDocument document) {

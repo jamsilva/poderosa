@@ -63,9 +63,9 @@ namespace Poderosa.SerialPort.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Serial16x16 {
+        internal static System.Drawing.Bitmap Icon16x16 {
             get {
-                object obj = ResourceManager.GetObject("Serial16x16", resourceCulture);
+                object obj = ResourceManager.GetObject("Icon16x16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

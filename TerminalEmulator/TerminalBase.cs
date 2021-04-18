@@ -307,7 +307,7 @@ namespace Poderosa.Terminal {
             IPoderosaMainWindow window = _session.OwnerWindow;
             if (window == null)
                 return;
-            Debug.Assert(window.AsForm().IsHandleCreated);
+            Debug.Assert(window.AsForm().InvokeRequired);
 
             Monitor.Exit(GetDocument()); //これは忘れるな
             switch (GEnv.Options.CharDecodeErrorBehavior) {
@@ -470,7 +470,7 @@ namespace Poderosa.Terminal {
         private void ShowAbnormalTerminationMessage() {
             IPoderosaMainWindow window = _session.OwnerWindow;
             if (window != null) {
-                Debug.Assert(window.AsForm().IsHandleCreated);
+                Debug.Assert(window.AsForm().InvokeRequired);
                 ITCPParameter tcp = (ITCPParameter)GetConnection().Destination.GetAdapter(typeof(ITCPParameter));
                 if (tcp != null) {
 #if LIBRARY

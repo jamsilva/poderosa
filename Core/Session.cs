@@ -46,8 +46,7 @@ namespace Poderosa.Sessions {
 #if !LIBRARY
         ISessionManagerForViewSplitter,
 #endif
-        ISessionManager
-    {
+        ISessionManager {
         public const string PLUGIN_ID = "org.poderosa.core.sessions";
         private static SessionManagerPlugin _instance;
         private TypedHashtable<ISession, SessionHost> _sessionMap;
@@ -66,7 +65,9 @@ namespace Poderosa.Sessions {
             _documentMap = new TypedHashtable<IPoderosaDocument, DocumentHost>();
             _docViewRelationHandler = poderosa.PluginManager.CreateExtensionPoint("org.poderosa.core.sessions.docViewRelationHandler", typeof(IDocViewRelationEventHandler), this);
             _activeDocumentChangeListeners = new ListenerList<IActiveDocumentChangeListener>();
+#if !LIBRARY
             _activeDocumentChangeListeners.Add(new WindowCaptionManager());
+#endif
 
             _sessionListeners = new ListenerList<ISessionListener>();
         }

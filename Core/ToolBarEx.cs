@@ -18,9 +18,6 @@ using System.Text;
 using System.Drawing;
 
 using Poderosa.Commands;
-#if LIBRARY
-using Poderosa.Library;
-#endif
 
 namespace Poderosa.Forms {
     /// <summary>

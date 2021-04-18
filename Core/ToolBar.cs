@@ -41,11 +41,7 @@ namespace Poderosa.Forms {
             this.LeftToolStripPanelVisible = false;
             this.RightToolStripPanelVisible = false;
             this.BottomToolStripPanelVisible = false;
-#if LIBRARY
-            this.TopToolStripPanelVisible = false;
-#else
             this.TopToolStripPanelVisible = WindowManagerPlugin.Instance.WindowPreference.OriginalPreference.ShowsToolBar;
-#endif
             this.AllowDrop = true;
             CreateInternal();
         }
@@ -95,7 +91,6 @@ namespace Poderosa.Forms {
             panel.ResumeLayout();
             panel.EndInit();
         }
-#if !LIBRARY
         public void ReloadPreference(ICoreServicePreference pref) {
             this.TopToolStripPanelVisible = pref.ShowsToolBar;
         }
@@ -103,7 +98,6 @@ namespace Poderosa.Forms {
             //本当は全部構築すべき
             RefreshAll();
         }
-#endif
 
         //現在はTop限定
         private ControlCollection GetContents() {
@@ -268,7 +262,6 @@ namespace Poderosa.Forms {
             base.OnCreateControl();
             this.RefreshAll();
         }
-#if !LIBRARY
         protected override void OnDragEnter(DragEventArgs drgevent) {
             base.OnDragEnter(drgevent);
             try {
@@ -287,7 +280,6 @@ namespace Poderosa.Forms {
                 RuntimeUtil.ReportException(ex);
             }
         }
-#endif
 
         private abstract class ControlTagBase {
             private IToolBarComponent _ownerComponent;

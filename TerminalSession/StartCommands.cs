@@ -217,8 +217,9 @@ namespace Poderosa.Sessions {
                         AdjustCaptionAndText(settings, ((ITCPParameter)con.Destination.GetAdapter(typeof(ITCPParameter))).Destination, StartCommandIcon.NewConnection);
                         return con;
                     }
+                    else
 #endif
-                    return null;
+                        return null;
                 }
                 else { //主にReproduceやマクロ。設定済みのパスワードで接続
                     IProtocolService protocolservice = TerminalSessionsPlugin.Instance.ProtocolService;

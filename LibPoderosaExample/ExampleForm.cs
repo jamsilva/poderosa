@@ -42,6 +42,7 @@ namespace LibPoderosaExample
                 Form cmdForm = cmdSession.Connect();
                 cmdForm.BackColor = Color.Blue;
                 BottomSplitContainer.Panel1.Controls.Add(cmdForm);
+                cmdSession.SendText("cd %UserProfile%\ncls\n");
             }
             catch
             {}
@@ -51,7 +52,6 @@ namespace LibPoderosaExample
                 Form cygwinForm = cygwinSession.Connect();
                 cygwinForm.ForeColor = Color.Red;
                 BottomSplitContainer.Panel2.Controls.Add(cygwinForm);
-                cmdSession.SendText("cd %UserProfile%\ncls\n");
             }
             catch
             {}

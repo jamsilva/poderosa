@@ -57,15 +57,12 @@ namespace Poderosa.Pipe {
     /// </para>
     /// </summary>
 
-#if LIBRARY
     [PluginInfo(ID = PipePlugin.PLUGIN_ID,
         Version = VersionInfo.PODEROSA_VERSION,
         Author = VersionInfo.PROJECT_NAME,
+#if LIBRARY
         Dependencies = "org.poderosa.terminalsessions;org.poderosa.terminalemulator")]
 #else
-    [PluginInfo(ID = PipePlugin.PLUGIN_ID,
-        Version = VersionInfo.PODEROSA_VERSION,
-        Author = VersionInfo.PROJECT_NAME,
         Dependencies = "org.poderosa.terminalsessions;org.poderosa.terminalemulator;org.poderosa.core.serializing")]
 #endif
     internal class PipePlugin : PluginBase {

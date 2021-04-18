@@ -109,13 +109,6 @@
     <Compile Include="..\Core\TextSelection.cs">
       <Link>Core\TextSelection.cs</Link>
     </Compile>
-    <Compile Include="..\Core\ToolBar.cs">
-      <SubType>Component</SubType>
-      <Link>Core\ToolBar.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\ToolBarEx.cs">
-      <Link>Core\ToolBarEx.cs</Link>
-    </Compile>
     <Compile Include="..\Core\UIEventHandler.cs">
       <Link>Core\UIEventHandler.cs</Link>
     </Compile>
@@ -515,9 +508,6 @@
     </Compile>
     <Compile Include="..\TerminalEmulator\TerminalSettingsEx.cs">
       <Link>TerminalEmulator\TerminalSettingsEx.cs</Link>
-    </Compile>
-    <Compile Include="..\TerminalEmulator\TerminalToolBar.cs">
-      <Link>TerminalEmulator\TerminalToolBar.cs</Link>
     </Compile>
     <Compile Include="..\TerminalEmulator\TerminalUtil.cs">
       <Link>TerminalEmulator\TerminalUtil.cs</Link>

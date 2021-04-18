@@ -37,15 +37,13 @@ namespace Poderosa.Forms {
     internal class MainWindow : PoderosaForm, IPoderosaMainWindow {
 
         private IViewManager _viewManager;
-#if !LIBRARY
-        private MainWindowArgument _argument;
-        private MenuStrip _mainMenu;
-        private TabBarTable _tabBarTable;
-#endif
-        private PoderosaToolStripContainer _toolStripContainer;
 #if LIBRARY
         private IPoderosaDocument _document;
 #else
+        private MainWindowArgument _argument;
+        private MenuStrip _mainMenu;
+        private TabBarTable _tabBarTable;
+        private PoderosaToolStripContainer _toolStripContainer;
         private PoderosaStatusBar _statusBar;
         private TabBarManager _tabBarManager;
 #endif
@@ -81,24 +79,22 @@ namespace Poderosa.Forms {
             IExtensionPoint creator_ext = WindowManagerPlugin.Instance.PoderosaWorld.PluginManager.FindExtensionPoint(WindowManagerConstants.MAINWINDOWCONTENT_ID);
             IViewManagerFactory f = ((IViewManagerFactory[])creator_ext.GetExtensions())[0];
 
-#if LIBRARY
-            _toolStripContainer = new PoderosaToolStripContainer(this, "");
-            _toolStripContainer.TopToolStripPanelVisible = false;
-#else
+#if !LIBRARY
             _toolStripContainer = new PoderosaToolStripContainer(this, _argument.ToolBarInfo);
-#endif
             this.Controls.Add(_toolStripContainer);
+#endif
 
             //ステータスバーその他の初期化
             //コントロールを追加する順番は重要！
             _viewManager = f.Create(this);
             Control main = _viewManager.RootControl;
-#if LIBRARY
-            _viewManager.RootControl.Visible = false;
-#endif
             if (main != null) { //テストケースではウィンドウの中身がないこともある
                 main.Dock = DockStyle.Fill;
+#if LIBRARY
+                this.Controls.Add(main);
+#else
                 _toolStripContainer.ContentPanel.Controls.Add(main);
+#endif
             }
 #if !LIBRARY
             int rowcount = _argument.TabRowCount;
@@ -157,12 +153,12 @@ namespace Poderosa.Forms {
                     return SessionManagerPlugin.Instance.FindDocumentHost(doc).LastAttachedView as IContentReplaceableView;
             }
         }
+#if !LIBRARY
         public IToolBar ToolBar {
             get {
                 return _toolStripContainer;
             }
         }
-#if !LIBRARY
         public IPoderosaStatusBar StatusBar {
             get {
                 return _statusBar;
@@ -519,7 +515,6 @@ namespace Poderosa.Forms {
             }
         }
     }
-#endif
 
     internal class WindowCaptionManager : IActiveDocumentChangeListener {
         public void OnDocumentActivated(IPoderosaMainWindow window, IPoderosaDocument document) {
@@ -530,4 +525,5 @@ namespace Poderosa.Forms {
             window.AsForm().Text = "Poderosa";
         }
     }
+#endif
 }

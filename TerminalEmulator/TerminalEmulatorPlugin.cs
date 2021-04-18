@@ -140,7 +140,6 @@ namespace Poderosa.Terminal {
             _documentContextMenu = pm.CreateExtensionPoint(TerminalEmulatorConstants.DOCUMENT_CONTEXT_MENU_EXTENSIONPOINT, typeof(IPoderosaMenuGroup), this);
             _documentContextMenu.RegisterExtension(new PoderosaMenuGroupImpl(new PoderosaMenuItemImpl(
                 cs.CommandManager.Find("org.poderosa.core.session.closedocument"), GEnv.Strings, "Menu.DocumentClose")));
-#endif
 
             //ToolBar
             IExtensionPoint toolbar = pm.FindExtensionPoint("org.poderosa.core.window.toolbar");
@@ -149,7 +148,6 @@ namespace Poderosa.Terminal {
             GetSessionManager().AddActiveDocumentChangeListener(terminaltoolbar);
 
             //その他 Extension
-#if !LIBRARY
             _intelliSenseExtension = pm.CreateExtensionPoint(TerminalEmulatorConstants.INTELLISENSE_CANDIDATE_EXTENSIONPOINT, typeof(IIntelliSenseCandidateExtension), this);
 #endif
             _autoLogFileFormatter = pm.CreateExtensionPoint(TerminalEmulatorConstants.LOG_FILENAME_FORMATTER_EXTENSIONPOINT, typeof(IAutoLogFileFormatter), this);
