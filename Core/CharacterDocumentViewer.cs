@@ -16,16 +16,19 @@
 #define ONPAINT_TIME_MEASUREMENT
 #endif
 
-using Poderosa.Commands;
-using Poderosa.Document;
-using Poderosa.Forms;
-using Poderosa.Sessions;
-using Poderosa.UI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+
+using Poderosa.Document;
+using Poderosa.Forms;
+using Poderosa.Sessions;
+using Poderosa.UI;
+#if !LIBRARY
+using Poderosa.Commands;
+#endif
 
 namespace Poderosa.View {
     /*

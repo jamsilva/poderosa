@@ -18,9 +18,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-using Poderosa.Commands;
 using Poderosa.View;
 using Poderosa.Util.Collections;
+#if !LIBRARY
+using Poderosa.Commands;
+#endif
 
 namespace Poderosa.Forms {
     //メインウィンドウとポップアップウィンドウの基底
@@ -149,6 +151,7 @@ namespace Poderosa.Forms {
                 return false;
         }
 
+#if !LIBRARY
         protected bool _closeCancelled;
         public CommandResult CancellableClose() {
             _closeCancelled = false;
@@ -156,7 +159,6 @@ namespace Poderosa.Forms {
             return _closeCancelled ? CommandResult.Cancelled : CommandResult.Succeeded;
         }
 
-#if !LIBRARY
         private void ContextMenuDisposeTimerTick(object sender, EventArgs e) {
             _contextMenuDisposeTimer.Stop();
             foreach (ContextMenuStrip cm in _contextMenusToDispose) {

@@ -19,9 +19,11 @@ using System.Windows.Forms;
 using System.Drawing;
 
 using Poderosa.Forms;
-using Poderosa.Commands;
 using Poderosa.UI;
 using Poderosa.View;
+#if !LIBRARY
+using Poderosa.Commands;
+#endif
 
 namespace Poderosa.Sessions {
     /// <summary>
@@ -32,7 +34,11 @@ namespace Poderosa.Sessions {
     /// Interface that shows document
     /// </en>
     /// </summary>
+#if LIBRARY
+    public interface IPoderosaDocument : IAdaptable {
+#else
     public interface IPoderosaDocument : ICommandTarget {
+#endif
         /// <summary>
         /// <ja>
         /// ドキュメントのアイコンです。
@@ -110,7 +116,11 @@ namespace Poderosa.Sessions {
     /// </para>
     /// </en>
     /// </remarks>
+#if LIBRARY
+    public interface IPoderosaView : IPoderosaControl, IAdaptable {
+#else
     public interface IPoderosaView : IPoderosaControl, ICommandTarget {
+#endif
         /// <summary>
         /// <ja>
         /// ビューに結びつけられているドキュメントを示します。
@@ -215,6 +225,7 @@ namespace Poderosa.Sessions {
 
     //ビュー用の標準コマンド。IPoderosaViewがオプショナルで提供する。
 
+#if !LIBRARY
     /// <summary>
     /// <ja>
     /// ビューの標準コマンドを提供します。
@@ -248,7 +259,7 @@ namespace Poderosa.Sessions {
         }
         //IPoderosaCommand Cut { get; } モトがターミナルエミュレータということで、カットは標準に含めず
     }
-
+#endif
 
     /// <summary>
     /// <ja>

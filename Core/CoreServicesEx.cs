@@ -17,10 +17,10 @@ using System.Collections.Generic;
 using System.Text;
 
 using Poderosa.Forms;
-using Poderosa.Commands;
 using Poderosa.Sessions;
 using Poderosa.Boot;
 #if !LIBRARY
+using Poderosa.Commands;
 using Poderosa.Preferences;
 using Poderosa.Serializing;
 #endif
@@ -104,7 +104,6 @@ namespace Poderosa.Plugins {
         IPreferences Preferences {
             get;
         }
-#endif
         /// <summary>
         /// <ja>
         /// ICommandManagerインターフェイスを返します。
@@ -125,6 +124,7 @@ namespace Poderosa.Plugins {
         ICommandManager CommandManager {
             get;
         }
+#endif
         /// <summary>
         /// <ja>
         /// ISessionManagerインターフェイスを返します。
@@ -219,8 +219,8 @@ namespace Poderosa.Plugins {
         private IWindowManager _windowManager;
 #if !LIBRARY
         private IPreferences _preferences;
-#endif
         private ICommandManager _commandManager;
+#endif
         private ISessionManager _sessionManager;
 #if !LIBRARY
         private ISerializeService _serializeService;
@@ -250,7 +250,6 @@ namespace Poderosa.Plugins {
                 return _preferences;
             }
         }
-#endif
 
         public ICommandManager CommandManager {
             get {
@@ -260,7 +259,6 @@ namespace Poderosa.Plugins {
             }
         }
 
-#if !LIBRARY
         public ISerializeService SerializeService {
             get {
                 if (_serializeService == null)

@@ -549,6 +549,7 @@ namespace Poderosa.SerialPort {
         }
     }
 
+#if !LIBRARY
     internal class SerialConnectionFactory : ITerminalConnectionFactory {
         public bool IsSupporting(ITerminalParameter param, ITerminalSettings settings) {
             SerialTerminalParam sp = param as SerialTerminalParam;
@@ -564,6 +565,7 @@ namespace Poderosa.SerialPort {
             return SerialPortUtil.CreateNewSerialConnection(window, sp, ts);
         }
     }
+#endif
 
     internal class SerialPortUtil {
         public static SerialTerminalConnection CreateNewSerialConnection(IPoderosaMainWindow window, SerialTerminalParam param, SerialTerminalSettings settings) {

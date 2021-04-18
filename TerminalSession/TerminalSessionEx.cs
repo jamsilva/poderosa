@@ -16,10 +16,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using Poderosa.Commands;
 using Poderosa.Protocols;
 using Poderosa.Terminal;
 using Poderosa.Forms;
+#if !LIBRARY
+using Poderosa.Commands;
+#endif
 
 namespace Poderosa.Sessions {
 
@@ -222,7 +224,7 @@ namespace Poderosa.Sessions {
         }
     }
 
-
+#if !LIBRARY
     /// <summary>
     /// <ja>
     /// ターミナルサービスを提供するインターフェイスです。
@@ -345,9 +347,7 @@ namespace Poderosa.Sessions {
         /// <exclude/>
         ITerminalConnection OpenConnection(IPoderosaMainWindow window, ITerminalParameter destination, ITerminalSettings settings);
 
-#if !LIBRARY
         void OpenShortcutFile(ICommandTarget target, string filename);
-#endif
     }
 
     //ITerminalParameterをインスタンシエートしてITerminalConnectionにするExtensionPointのインタフェース
@@ -360,7 +360,6 @@ namespace Poderosa.Sessions {
         ITerminalConnection EstablishConnection(IPoderosaMainWindow window, ITerminalParameter param, ITerminalSettings settings);
     }
 
-#if !LIBRARY
     //ログインダイアログの使い勝手向上用のサポート
     /// <summary>
     /// 

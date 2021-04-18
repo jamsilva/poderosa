@@ -22,8 +22,8 @@ using System.Windows.Forms;
 using Poderosa.Plugins;
 using Poderosa.Sessions;
 using Poderosa.Forms;
-using Poderosa.Commands;
 #if !LIBRARY
+using Poderosa.Commands;
 using Poderosa.Preferences;
 #endif
 
@@ -48,13 +48,17 @@ namespace Poderosa.Terminal {
         public const string DYNAMIC_CAPTION_FORMATTER_EXTENSIONPOINT = "org.poderosa.terminalemulator.dynamicCaptionFormatter";
     }
 
+#if LIBRARY
+    [PluginInfo(ID = TerminalEmulatorPlugin.PLUGIN_ID, Version = VersionInfo.PODEROSA_VERSION, Author = VersionInfo.PROJECT_NAME, Dependencies = "org.poderosa.core.sessions")]
+#else
     [PluginInfo(ID = TerminalEmulatorPlugin.PLUGIN_ID, Version = VersionInfo.PODEROSA_VERSION, Author = VersionInfo.PROJECT_NAME, Dependencies = "org.poderosa.core.sessions;org.poderosa.core.commands")]
+#endif
     internal class TerminalEmulatorPlugin : PluginBase, ITerminalEmulatorService {
         public const string PLUGIN_ID = "org.poderosa.terminalemulator";
 
         private ICoreServices _coreServices;
-        private ICommandManager _commandManager;
 #if !LIBRARY
+        private ICommandManager _commandManager;
         private IExtensionPoint _contextMenu;
         private IExtensionPoint _documentContextMenu;
         private IExtensionPoint _intelliSenseExtension;
@@ -109,11 +113,9 @@ namespace Poderosa.Terminal {
 #if !LIBRARY
             //Serialize Service
             cs.SerializerExtensionPoint.RegisterExtension(new TerminalSettingsSerializer(pm));
-#endif
 
             _commandManager = cs.CommandManager;
             TerminalCommand.Register(_commandManager);
-#if !LIBRARY
             TerminalSettingMenuGroup.Initialize();
 
             //PromptChecker
@@ -226,12 +228,12 @@ namespace Poderosa.Terminal {
             }
         }
 
+#if !LIBRARY
         public ICommandCategory TerminalCommandCategory {
             get {
                 return TerminalCommand.TerminalCommandCategory;
             }
         }
-#if !LIBRARY
         public void LaterInitialize() {
             if (!_laterInitialized)
                 _shellSchemeCollection.Load();
@@ -248,17 +250,6 @@ namespace Poderosa.Terminal {
         public ISessionManager GetSessionManager() {
             return _coreServices.SessionManager;
         }
-#if !LIBRARY
-        public IWinFormsService GetWinFormsService() {
-            return (IWinFormsService)_coreServices.WindowManager.GetAdapter(typeof(IWinFormsService));
-        }
-        public IWindowManager GetWindowManager() {
-            return _coreServices.WindowManager;
-        }
-#endif
-        public ICommandManager GetCommandManager() {
-            return _commandManager;
-        }
 #if LIBRARY
         public TerminalOptions OriginalOptions {
             get {
@@ -266,6 +257,15 @@ namespace Poderosa.Terminal {
             }
         }
 #else
+        public IWinFormsService GetWinFormsService() {
+            return (IWinFormsService)_coreServices.WindowManager.GetAdapter(typeof(IWinFormsService));
+        }
+        public IWindowManager GetWindowManager() {
+            return _coreServices.WindowManager;
+        }
+        public ICommandManager GetCommandManager() {
+            return _commandManager;
+        }
         public IPoderosaApplication GetPoderosaApplication() {
             return (IPoderosaApplication)_poderosaWorld.GetAdapter(typeof(IPoderosaApplication));
         }

@@ -19,7 +19,9 @@ using System.Drawing;
 
 using Poderosa.Forms;
 using Poderosa.Document;
+#if !LIBRARY
 using Poderosa.Commands;
+#endif
 
 namespace Poderosa.Sessions {
     /// <summary>

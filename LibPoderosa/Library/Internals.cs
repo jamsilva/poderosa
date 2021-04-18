@@ -4,7 +4,6 @@ using System.IO;
 using System.Reflection;
 
 using Poderosa.Boot;
-using Poderosa.Commands;
 using Poderosa.Forms;
 using Poderosa.Plugins;
 using Poderosa.Protocols;
@@ -33,14 +32,6 @@ namespace Poderosa.Library
             T plugin = (T) _internalPoderosaWorld.PluginManager.FindPlugin(pluginId, typeof(T));
             _cachedPlugins[pluginId] = plugin;
             return plugin;
-        }
-
-        public CommandManagerPlugin CommandManagerPlugin
-        {
-            get
-            {
-                return GetPlugin<CommandManagerPlugin>(CommandManagerPlugin.PLUGIN_ID);
-            }
         }
 
         public SessionManagerPlugin SessionManagerPlugin

@@ -45,13 +45,11 @@ namespace Poderosa.Sessions {
 
         public static ConnectCommandCategory _instance = new ConnectCommandCategory();
 
-#if !LIBRARY
         public IAdaptable DesignationTarget {
             get {
                 return TerminalSessionsPlugin.Instance.CommandManager.CommandCategories.File;
             }
         }
-#endif
 
         public PositionType DesignationPosition {
             get {
@@ -105,10 +103,8 @@ namespace Poderosa.Sessions {
         public ITerminalSession StartTerminalSession(ICommandTarget target, ITerminalConnection connection, ITerminalSettings settings) {
             Debug.Assert(connection != null);
             Debug.Assert(settings != null);
-#if !LIBRARY
             //ここでターミナルエミュレータの遅延初期化
             TerminalSessionsPlugin.Instance.TerminalEmulatorService.LaterInitialize();
-#endif
 
             ISessionManager sm = (ISessionManager)TerminalSessionsPlugin.Instance.PoderosaWorld.PluginManager.FindPlugin("org.poderosa.core.sessions", typeof(ISessionManager));
 
@@ -119,12 +115,10 @@ namespace Poderosa.Sessions {
             sm.StartNewSession(session, view);
             sm.ActivateDocument(session.Terminal.IDocument, ActivateReason.InternalAction);
 
-#if !LIBRARY
             IAutoExecMacroParameter autoExecParam = connection.Destination.GetAdapter(typeof(IAutoExecMacroParameter)) as IAutoExecMacroParameter;
             if (autoExecParam != null && autoExecParam.AutoExecMacroPath != null && TelnetSSHPlugin.Instance.MacroEngine != null) {
                 TelnetSSHPlugin.Instance.MacroEngine.RunMacro(autoExecParam.AutoExecMacroPath, session);
             }
-#endif
 
             return session;
         }
@@ -160,11 +154,9 @@ namespace Poderosa.Sessions {
             throw new ArgumentException("Failed to make an ITerminalConnection using extension point."); //ましなエラーメッセージ
         }
 
-#if !LIBRARY
         public void OpenShortcutFile(ICommandTarget target, string filename) {
             ShortcutFileCommands.OpenShortcutFile(target, filename);
         }
-#endif
 
         private class CygwinConnectionFactory : ITerminalConnectionFactory {
             public bool IsSupporting(ITerminalParameter param, ITerminalSettings settings) {
@@ -210,7 +202,6 @@ namespace Poderosa.Sessions {
             public ITerminalConnection EstablishConnection(IPoderosaMainWindow window, ITerminalParameter destination, ITerminalSettings settings) {
                 ISSHLoginParameter ssh = (ISSHLoginParameter)destination.GetAdapter(typeof(ISSHLoginParameter));
                 if (ssh.LetUserInputPassword && ssh.AuthenticationType != Granados.AuthenticationType.KeyboardInteractive) { //ダイアログで入力を促して接続
-#if !LIBRARY
                     SSHShortcutLoginDialog dlg = new SSHShortcutLoginDialog(window, ssh, settings);
                     if (dlg.ShowDialog(window.AsForm()) == DialogResult.OK) {
                         ITerminalConnection con = dlg.Result;
@@ -218,7 +209,6 @@ namespace Poderosa.Sessions {
                         return con;
                     }
                     else
-#endif
                         return null;
                 }
                 else { //主にReproduceやマクロ。設定済みのパスワードで接続
@@ -236,7 +226,6 @@ namespace Poderosa.Sessions {
             terminal_settings.BeginUpdate();
             if (terminal_settings.Caption == null || terminal_settings.Caption.Length == 0)
                 terminal_settings.Caption = caption; //長さ０はいかん
-#if !LIBRARY
             if (terminal_settings.Icon == null) {
                 switch (icon) {
                     case StartCommandIcon.NewConnection:
@@ -247,7 +236,6 @@ namespace Poderosa.Sessions {
                         break;
                 }
             }
-#endif
             terminal_settings.EndUpdate();
 
         }

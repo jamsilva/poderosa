@@ -73,7 +73,6 @@ namespace Poderosa.Commands {
     /// </en>
     /// </summary>
     public interface IPositionDesignation : IAdaptable {
-#if !LIBRARY
         //Targetにnullを指定したときは、First, Last, DontCareのどれか。
         //Targetが非nullのときは、PreviousTo, NextToのどれか。
         /// <summary>
@@ -106,7 +105,6 @@ namespace Poderosa.Commands {
         IAdaptable DesignationTarget {
             get;
         } //can be null
-#endif
         /// <summary>
         /// <ja>
         /// <seealso cref="DesignationTarget">DesignationTarget</seealso>に対する位置を指定します。
@@ -210,9 +208,7 @@ namespace Poderosa.Commands {
             public int index;
             public IAdaptable content;
             public IPositionDesignation designation;
-#if !LIBRARY
             public Entry dependency;
-#endif
 
             public Entry(int i, IAdaptable c) {
                 index = i;
@@ -220,12 +216,6 @@ namespace Poderosa.Commands {
                 designation = (IPositionDesignation)c.GetAdapter(typeof(IPositionDesignation));
             }
 
-#if LIBRARY
-            //依存しているものが先に来るように並び替える
-            public int CompareTo(Entry other) {
-                return this.index - other.index; //元の順序を保持
-            }
-#else
             private bool IsIndependent {
                 get {
                     return dependency == null;
@@ -251,7 +241,6 @@ namespace Poderosa.Commands {
                     }
                 }
             }
-#endif
         }
 
         //依存関係に従ってソートする。各IAdaptableは、オプショナルでIPositionDesignationを実装する。
@@ -264,11 +253,9 @@ namespace Poderosa.Commands {
                 Debug.Assert(a != null);
                 map.Add(new Entry(i++, a));
             }
-#if !LIBRARY
             //依存先をチェック
             foreach (Entry e in map)
                 e.dependency = FindDependencyFor(e, map);
-#endif
             //ソート
             //TODO 依存関係にループがあるときを救済
             map.Sort();
@@ -282,9 +269,7 @@ namespace Poderosa.Commands {
             LinkedListNode<IAdaptable> firstzone = null;
             LinkedListNode<IAdaptable> lastzone = null;
             foreach (Entry e in map) {
-#if !LIBRARY
                 if (e.dependency == null) {
-#endif
                     //依存物なしのばあい、first-dontcare-lastの各ゾーン順で並ぶ。各ゾーン内は元の入力順を保持
 
                     //designationなしはDontCareに等しい
@@ -306,7 +291,6 @@ namespace Poderosa.Commands {
                         else
                             lastzone = result.AddBefore(lastzone, e.content);
                     }
-#if !LIBRARY
                 }
                 else { //依存物あり
                     LinkedListNode<IAdaptable> n = result.Find(e.dependency.content);
@@ -317,12 +301,10 @@ namespace Poderosa.Commands {
                     else
                         result.AddBefore(n, e.content);
                 }
-#endif
             }
             return result;
         }
 
-#if !LIBRARY
         //依存先を見つける
         private static Entry FindDependencyFor(Entry e, List<Entry> map) {
             if (e.designation == null)
@@ -343,7 +325,6 @@ namespace Poderosa.Commands {
                 return r;
             }
         }
-#endif
 
         private static Entry Find(IAdaptable target, List<Entry> map) {
             foreach (Entry e in map)

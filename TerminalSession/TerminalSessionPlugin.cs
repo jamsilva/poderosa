@@ -23,10 +23,10 @@ using Poderosa.Forms;
 using Poderosa.Terminal;
 using Poderosa.UI;
 using Poderosa.Protocols;
-using Poderosa.Commands;
 #if LIBRARY
 using Poderosa.Library;
 #else
+using Poderosa.Commands;
 using Poderosa.Preferences;
 using Poderosa.Serializing;
 #endif
@@ -35,10 +35,16 @@ using Poderosa.Serializing;
 
 namespace Poderosa.Sessions {
     [PluginInfo(ID = TerminalSessionsPlugin.PLUGIN_ID, Version = VersionInfo.PODEROSA_VERSION, Author = VersionInfo.PROJECT_NAME, Dependencies = "org.poderosa.core.sessions;org.poderosa.terminalemulator;org.poderosa.protocols")]
+#if LIBRARY
+    internal class TerminalSessionsPlugin : PluginBase, IAdaptable {
+#else
     internal class TerminalSessionsPlugin : PluginBase, ITerminalSessionsService {
+#endif
         public const string PLUGIN_ID = "org.poderosa.terminalsessions";
 
+#if !LIBRARY
         public const string TERMINAL_CONNECTION_FACTORY_ID = "org.poderosa.termianlsessions.terminalConnectionFactory";
+#endif
 
         private static TerminalSessionsPlugin _instance;
 
@@ -54,10 +60,12 @@ namespace Poderosa.Sessions {
         private TerminalViewFactory _terminalViewFactory;
         private PaneBridgeAdapter _paneBridgeAdapter;
 
+#if !LIBRARY
         private StartCommand _startCommand;
         private ReproduceCommand _reproduceCommand;
         private IPoderosaCommand _pasteCommand;
         private IExtensionPoint _pasteCommandExt;
+#endif
 
         public override void InitializePlugin(IPoderosaWorld poderosa) {
             base.InitializePlugin(poderosa);
@@ -74,19 +82,17 @@ namespace Poderosa.Sessions {
             foreach (IViewManagerFactory mf in pm.FindExtensionPoint(WindowManagerConstants.MAINWINDOWCONTENT_ID).GetExtensions())
                 mf.DefaultViewFactory = _terminalViewFactory;
 
-#if !LIBRARY
+#if LIBRARY
+            _terminalSessionOptions = new TerminalSessionOptions();
+#else
             //ログインダイアログのサポート用
             pm.CreateExtensionPoint("org.poderosa.terminalsessions.telnetSSHLoginDialogInitializer", typeof(ITelnetSSHLoginDialogInitializer), this);
             pm.CreateExtensionPoint("org.poderosa.terminalsessions.loginDialogUISupport", typeof(ILoginDialogUISupport), this);
             pm.CreateExtensionPoint("org.poderosa.terminalsessions.terminalParameterStore", typeof(ITerminalSessionParameterStore), this);
-#endif
             IExtensionPoint factory_point = pm.CreateExtensionPoint(TERMINAL_CONNECTION_FACTORY_ID, typeof(ITerminalConnectionFactory), this);
 
             _pasteCommandExt = pm.CreateExtensionPoint("org.poderosa.terminalsessions.pasteCommand", typeof(IPoderosaCommand), this);
 
-#if LIBRARY
-            _terminalSessionOptions = new TerminalSessionOptions();
-#else
             _terminalSessionsOptionSupplier = new TerminalSessionOptionsSupplier();
             _coreServices.PreferenceExtensionPoint.RegisterExtension(_terminalSessionsOptionSupplier);
 #endif
@@ -95,11 +101,11 @@ namespace Poderosa.Sessions {
             _paneBridgeAdapter = new PaneBridgeAdapter();
             poderosa.AdapterManager.RegisterFactory(_paneBridgeAdapter);
 
+#if !LIBRARY
             _startCommand = new StartCommand(factory_point);
             _reproduceCommand = new ReproduceCommand();
             _coreServices.CommandManager.Register(_reproduceCommand);
 
-#if !LIBRARY
             ReproduceMenuGroup rmg = new ReproduceMenuGroup();
             IExtensionPoint consolemenu = pm.FindExtensionPoint("org.poderosa.menu.console");
             consolemenu.RegisterExtension(rmg);
@@ -180,7 +186,6 @@ namespace Poderosa.Sessions {
                 return _coreServices.SessionManager;
             }
         }
-#endif
 
         public ICommandCategory ConnectCommandCategory {
             get {
@@ -188,15 +193,14 @@ namespace Poderosa.Sessions {
             }
         }
 
-        #region ITerminalSessionService
+#region ITerminalSessionService
         public ITerminalSessionStartCommand TerminalSessionStartCommand {
             get {
                 return _startCommand;
             }
         }
-        #endregion
+#endregion
 
-#if !LIBRARY
         public ReproduceCommand ReproduceCommand {
             get {
                 return _reproduceCommand;
@@ -208,7 +212,6 @@ namespace Poderosa.Sessions {
                 return (ICoreServicePreference)folder.QueryAdapter(typeof(ICoreServicePreference));
             }
         }
-#endif
 
         /// <summary>
         /// Get a Paste command object
@@ -229,7 +232,7 @@ namespace Poderosa.Sessions {
             }
             return _pasteCommand;
         }
-
+#endif
     }
 
     internal class TEnv {
@@ -294,7 +297,7 @@ namespace Poderosa.Sessions {
             }
         }
 
-        #region ITelnetSSHLoginDialogInitializeInfo
+#region ITelnetSSHLoginDialogInitializeInfo
         public void AddHost(string value) {
             if (!_hosts.Contains(value) && value.Length > 0)
                 _hosts.Add(value);
@@ -318,7 +321,7 @@ namespace Poderosa.Sessions {
         public IAdaptable GetAdapter(Type adapter) {
             return TerminalSessionsPlugin.Instance.PoderosaWorld.AdapterManager.GetAdapter(this, adapter);
         }
-        #endregion
+#endregion
     }
 #endif
 }

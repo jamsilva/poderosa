@@ -48,12 +48,10 @@ namespace Poderosa.Terminal {
             if (window != null)
                 return window.LastActivatedView;
             else {
-#if !LIBRARY
                 IPoderosaPopupWindow popup = (IPoderosaPopupWindow)target.GetAdapter(typeof(IPoderosaPopupWindow));
                 if (popup != null)
                     return popup.InternalView;
                 else
-#endif
                     return null;
             }
         }
@@ -239,10 +237,8 @@ namespace Poderosa.Terminal {
             cm.Register(new TerminalCommand("org.poderosa.terminalemulator.resetterminal",
                 "Command.ResetTerminal", _terminal, new ExecuteDelegate(CmdResetTerminal), DoesOpenTargetSession));
 
-#if !LIBRARY
             //IntelliSense
             cm.Register(new ToggleIntelliSenseCommand());
-#endif
         }
 
 
@@ -496,16 +492,13 @@ namespace Poderosa.Terminal {
             }
         }
 
-#if !LIBRARY
         public static StringResource StringResource {
             get {
                 return GEnv.Strings;
             }
         }
-#endif
     }
 
-#if !LIBRARY
     /////////////////////////////////////////////
     // メニュー
 
@@ -682,5 +675,5 @@ namespace Poderosa.Terminal {
             p.RegisterExtension(new TerminalSendSpecialGroup());
         }
     }
-#endif
+
 }

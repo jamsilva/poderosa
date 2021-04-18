@@ -17,7 +17,9 @@ using System.Collections.Generic;
 using System.Text;
 
 using Poderosa.Sessions;
+#if !LIBRARY
 using Poderosa.Commands;
+#endif
 
 namespace Poderosa.View {
 
@@ -52,6 +54,7 @@ namespace Poderosa.View {
         ISelection ActiveSelection {
             get;
         } //ActiveViewのSelectionと同義
+#if !LIBRARY
         /// <summary>
         /// <ja>
         /// デフォルトのコピーや貼り付けに関するコマンドへのインターフェイスです。
@@ -63,6 +66,7 @@ namespace Poderosa.View {
         IPoderosaCommand DefaultCopyCommand {
             get;
         }
+#endif
     }
 
     /// <summary>
@@ -113,7 +117,11 @@ namespace Poderosa.View {
     /// method for the view that is the terminal emulator. 
     /// </en>
     /// </remarks>
+#if LIBRARY
+    public interface ISelection : IAdaptable {
+#else
     public interface ISelection : ICommandTarget {
+#endif
         /// <summary>
         /// <ja>
         /// 所有するビューを示します。

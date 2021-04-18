@@ -21,9 +21,11 @@ using System.Windows.Forms;
 using Poderosa.Terminal;
 using Poderosa.Sessions;
 using Poderosa.View;
-using Poderosa.Commands;
 using Poderosa.UI;
 using Poderosa.Forms;
+#if !LIBRARY
+using Poderosa.Commands;
+#endif
 
 namespace Poderosa.Terminal {
 
@@ -45,18 +47,26 @@ namespace Poderosa.Terminal {
     }
 
     //TerminalControlにビュー機能を与えるクラス
+#if LIBRARY
+    internal class TerminalView : IPoderosaView, IContentReplaceableViewSite {
+#else
     internal class TerminalView : IPoderosaView, IContentReplaceableViewSite, IGeneralViewCommands {
+#endif
         private IPoderosaForm _parent;
         private TerminalControl _control;
         private IContentReplaceableView _contentReplaceableView; //包含するやつ
+#if !LIBRARY
         private IPoderosaCommand _copyCommand;
         private IPoderosaCommand _pasteCommand;
+#endif
 
         public TerminalView(IPoderosaForm parent, TerminalControl control) {
             _parent = parent;
             _control = control;
+#if !LIBRARY
             _copyCommand = TerminalSessionsPlugin.Instance.WindowManager.SelectionService.DefaultCopyCommand;
             _pasteCommand = TerminalSessionsPlugin.Instance.GetPasteCommand();
+#endif
             control.Tag = this;
         }
 
@@ -104,6 +114,7 @@ namespace Poderosa.Terminal {
             return TerminalSessionsPlugin.Instance.PoderosaWorld.AdapterManager.GetAdapter(this, adapter);
         }
 
+#if !LIBRARY
         #region IGeneralViewCommands
         public IPoderosaCommand Copy {
             get {
@@ -117,7 +128,7 @@ namespace Poderosa.Terminal {
             }
         }
         #endregion
-
+#endif
     }
 
     //TerminalControl to TerminalView

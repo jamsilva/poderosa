@@ -40,9 +40,6 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Core\BasicCommands.cs">
-      <Link>Core\BasicCommands.cs</Link>
-    </Compile>
     <Compile Include="..\Core\Caret.cs">
       <Link>Core\Caret.cs</Link>
     </Compile>
@@ -53,23 +50,11 @@
       <Link>Core\CharacterDocumentViewer.cs</Link>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="..\Core\CommandEx.cs">
-      <Link>Core\CommandEx.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\CommandManager.cs">
-      <Link>Core\CommandManager.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\CommandPositionEx.cs">
-      <Link>Core\CommandPositionEx.cs</Link>
-    </Compile>
     <Compile Include="..\Core\CoreServicesEx.cs">
       <Link>Core\CoreServicesEx.cs</Link>
     </Compile>
     <Compile Include="..\Core\DocumentAndViewEx.cs">
       <Link>Core\DocumentAndViewEx.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\GenericsUtil.cs">
-      <Link>Core\GenericsUtil.cs</Link>
     </Compile>
     <Compile Include="..\Core\GLine.cs">
       <Link>Core\GLine.cs</Link>
@@ -78,12 +63,12 @@
       <Link>Core\ListenerList.cs</Link>
     </Compile>
     <Compile Include="..\Core\MainWindow.cs">
-      <SubType>Form</SubType>
       <Link>Core\MainWindow.cs</Link>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="..\Core\PoderosaForm.cs">
-      <SubType>Form</SubType>
       <Link>Core\PoderosaForm.cs</Link>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="..\Core\RenderProfile.cs">
       <Link>Core\RenderProfile.cs</Link>
@@ -484,9 +469,6 @@
     <Compile Include="..\TerminalEmulator\TerminalBase.cs">
       <Link>TerminalEmulator\TerminalBase.cs</Link>
     </Compile>
-    <Compile Include="..\TerminalEmulator\TerminalCommands.cs">
-      <Link>TerminalEmulator\TerminalCommands.cs</Link>
-    </Compile>
     <Compile Include="..\TerminalEmulator\TerminalControl.cs">
       <Link>TerminalEmulator\TerminalControl.cs</Link>
       <SubType>Component</SubType>
@@ -524,17 +506,8 @@
     <Compile Include="..\TerminalEmulator\XTerm.cs">
       <Link>TerminalEmulator\XTerm.cs</Link>
     </Compile>
-    <Compile Include="..\TerminalSession\CopyPaste.cs">
-      <Link>TerminalSession\CopyPaste.cs</Link>
-    </Compile>
     <Compile Include="..\TerminalSession\PaneBridge.cs">
       <Link>TerminalSession\PaneBridge.cs</Link>
-    </Compile>
-    <Compile Include="..\TerminalSession\Reproduce.cs">
-      <Link>TerminalSession\Reproduce.cs</Link>
-    </Compile>
-    <Compile Include="..\TerminalSession\StartCommands.cs">
-      <Link>TerminalSession\StartCommands.cs</Link>
     </Compile>
     <Compile Include="..\TerminalSession\TerminalSession.cs">
       <Link>TerminalSession\TerminalSession.cs</Link>

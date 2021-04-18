@@ -18,7 +18,9 @@ using System.Drawing;
 using System.Diagnostics;
 
 using Poderosa.Document;
+#if !LIBRARY
 using Poderosa.Commands;
+#endif
 
 namespace Poderosa.Terminal {
     /// <summary>

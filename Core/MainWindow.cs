@@ -27,10 +27,12 @@ using Poderosa.Plugins;
 using Poderosa.Boot;
 using Poderosa.Document;
 using Poderosa.Sessions;
-using Poderosa.Commands;
 using Poderosa.UI;
 using Poderosa.View;
 using Poderosa.Util.Collections;
+#if !LIBRARY
+using Poderosa.Commands;
+#endif
 
 namespace Poderosa.Forms {
     //メインウィンドウ

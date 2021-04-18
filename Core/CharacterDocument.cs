@@ -20,7 +20,9 @@ using System.Diagnostics;
 using System.IO;
 
 using Poderosa.Sessions;
+#if !LIBRARY
 using Poderosa.Commands;
+#endif
 
 namespace Poderosa.Document {
     //文字ベースのドキュメント。画面表示のみ。

@@ -17,13 +17,13 @@ using System.Diagnostics;
 using System.Windows.Forms;
 
 using Poderosa;
-using Poderosa.Commands;
 using Poderosa.Forms;
 using Poderosa.Plugins;
 using Poderosa.Protocols;
 using Poderosa.Terminal;
 using Poderosa.Sessions;
 #if !LIBRARY
+using Poderosa.Commands;
 using Poderosa.MacroEngine;
 using Poderosa.Serializing;
 #endif
@@ -188,17 +188,15 @@ namespace Poderosa.Pipe {
             extSer.RegisterExtension(new PipeTerminalSettingsSerializer());
 
             _openPipeCommand = new OpenPipeCommand();
-#endif
 
             IPluginManager pm = poderosa.PluginManager;
-#if !LIBRARY
             pm.FindExtensionPoint("org.poderosa.menu.file").RegisterExtension(new PipeMenuGroup(_openPipeCommand));
 
             // Toolbar button has not been added yet
             //pm.FindExtensionPoint("org.poderosa.core.window.toolbar").RegisterExtension(new PipeToolBarComponent());
-#endif
 
             pm.FindExtensionPoint("org.poderosa.termianlsessions.terminalConnectionFactory").RegisterExtension(new PipeConnectionFactory());
+#endif
         }
     }
 
@@ -295,7 +293,6 @@ namespace Poderosa.Pipe {
             return commandResult;
         }
     }
-#endif
 
     /// <summary>
     /// Implementation of ITerminalConnectionFactory
@@ -314,4 +311,5 @@ namespace Poderosa.Pipe {
             return PipeCreator.CreateNewPipeTerminalConnection(tp, ts);
         }
     }
+#endif
 }

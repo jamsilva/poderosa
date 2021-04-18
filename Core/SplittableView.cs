@@ -22,10 +22,12 @@ using System.Drawing;
 using Poderosa.Plugins;
 using Poderosa.Forms;
 using Poderosa.Sessions;
-using Poderosa.Commands;
 using Poderosa.UI;
 using Poderosa.View;
 using Poderosa.Util.Collections;
+#if !LIBRARY
+using Poderosa.Commands;
+#endif
 
 namespace Poderosa.Forms {
     internal class DefaultViewManagerFactory : IViewManagerFactory {
@@ -366,7 +368,7 @@ namespace Poderosa.Forms {
     }
 
 #if LIBRARY
-    internal class SplittableViewPane : IContentReplaceableView, IGeneralViewCommands {
+    internal class SplittableViewPane : IContentReplaceableView {
 #else
     internal class SplittableViewPane : PaneDivision.IPane, IContentReplaceableView, IGeneralViewCommands {
 #endif
@@ -500,6 +502,7 @@ namespace Poderosa.Forms {
         }
         #endregion
 
+#if !LIBRARY
         #region IGeneralViewCommand
         public IPoderosaCommand Copy {
             get {
@@ -519,5 +522,6 @@ namespace Poderosa.Forms {
             }
         }
         #endregion
+#endif
     }
 }

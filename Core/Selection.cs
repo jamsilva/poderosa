@@ -19,8 +19,10 @@ using System.Windows.Forms;
 using System.Diagnostics;
 
 using Poderosa.View;
-using Poderosa.Commands;
 using Poderosa.Sessions;
+#if !LIBRARY
+using Poderosa.Commands;
+#endif
 
 //選択領域の管理と、選択したものに関わる基本コマンド（コピーなど）の実装
 
@@ -28,11 +30,15 @@ namespace Poderosa.Forms {
     internal class SelectionService : ISelectionService {
 
         private WindowManagerPlugin _parent;
+#if !LIBRARY
         private SelectedTextCopyCommand _copyCommand;
+#endif
 
         public SelectionService(WindowManagerPlugin parent) {
             _parent = parent;
+#if !LIBRARY
             _copyCommand = new SelectedTextCopyCommand();
+#endif
         }
 
         public ISelection ActiveSelection {
@@ -49,10 +55,12 @@ namespace Poderosa.Forms {
             }
         }
 
+#if !LIBRARY
         public IPoderosaCommand DefaultCopyCommand {
             get {
                 return _copyCommand;
             }
         }
+#endif
     }
 }

@@ -27,11 +27,11 @@ using Poderosa.Forms;
 using Poderosa.Terminal;
 using Poderosa.UI;
 using Poderosa.Protocols;
-using Poderosa.Commands;
 using Poderosa.Sessions;
 #if LIBRARY
 using Poderosa.Library;
 #else
+using Poderosa.Commands;
 using Poderosa.MacroEngine;
 using Poderosa.Preferences;
 using Poderosa.Serializing;
@@ -69,9 +69,7 @@ namespace Poderosa.SerialPort {
 #else
             _stringResource = new StringResource("Poderosa.SerialPort.strings", typeof(SerialPortPlugin).Assembly);
             poderosa.Culture.AddChangeListener(_stringResource);
-#endif
             IPluginManager pm = poderosa.PluginManager;
-#if !LIBRARY
             _coreServices = (ICoreServices)poderosa.GetAdapter(typeof(ICoreServices));
 
             IExtensionPoint pt = _coreServices.SerializerExtensionPoint;
@@ -83,9 +81,8 @@ namespace Poderosa.SerialPort {
 
             pm.FindExtensionPoint("org.poderosa.menu.file").RegisterExtension(new SerialPortMenuGroup());
             pm.FindExtensionPoint("org.poderosa.core.window.toolbar").RegisterExtension(new SerialPortToolBarComponent());
-#endif
             pm.FindExtensionPoint("org.poderosa.termianlsessions.terminalConnectionFactory").RegisterExtension(new SerialConnectionFactory());
-
+#endif
         }
 
         public static SerialPortPlugin Instance {

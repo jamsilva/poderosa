@@ -17,12 +17,14 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Text;
+
 using Poderosa.Document;
 using Poderosa.Sessions;
-using Poderosa.Commands;
-
-using Poderosa.View;
 using Poderosa.Util;
+using Poderosa.View;
+#if !LIBRARY
+using Poderosa.Commands;
+#endif
 
 namespace Poderosa.Forms {
 
@@ -52,7 +54,11 @@ namespace Poderosa.Forms {
     /// Interface to treat the window as a form of .NET Framework. 
     /// </en>
     /// </summary>
+#if LIBRARY
+    public interface IPoderosaForm : IPoderosaControl {
+#else
     public interface IPoderosaForm : IPoderosaControl, ICommandTarget {
+#endif
         /// <summary>
         /// <ja>
         /// .NET FrameworkのFormオブジェクトに変換します。
@@ -61,6 +67,7 @@ namespace Poderosa.Forms {
         /// </summary>
         /// <returns><ja>変換されたFormオブジェクト</ja><en>Converted Form object.</en></returns>
         Form AsForm();
+#if !LIBRARY
         /// <summary>
         /// <ja>
         /// ウィンドウを閉じます。
@@ -82,7 +89,6 @@ namespace Poderosa.Forms {
         /// </remarks>
         CommandResult CancellableClose();
 
-#if !LIBRARY
         //ポップアップメニュー
         /// <summary>
         /// <ja>

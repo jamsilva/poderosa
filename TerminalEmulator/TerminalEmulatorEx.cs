@@ -20,7 +20,9 @@ using System.Drawing;
 using Poderosa.Protocols;
 using Poderosa.Sessions;
 using Poderosa.Forms;
+#if !LIBRARY
 using Poderosa.Commands;
+#endif
 
 namespace Poderosa.Terminal {
     //AbstractTerminalが必要な機能を受け渡し
@@ -148,7 +150,6 @@ namespace Poderosa.Terminal {
         IPoderosaMenuGroup[] ContextMenu {
             get;
         }
-#endif
         /// <summary>
         /// 
         /// </summary>
@@ -156,7 +157,6 @@ namespace Poderosa.Terminal {
         ICommandCategory TerminalCommandCategory {
             get;
         }
-#if !LIBRARY
         /// <summary>
         /// 
         /// </summary>

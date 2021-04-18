@@ -30,7 +30,9 @@ using Poderosa.Sessions;
 using Poderosa.ConnectionParam;
 using Poderosa.Protocols;
 using Poderosa.Forms;
+#if !LIBRARY
 using Poderosa.Commands;
+#endif
 
 namespace Poderosa.Terminal {
 
@@ -1277,10 +1279,9 @@ namespace Poderosa.Terminal {
                 ITerminalEmulatorOptions opt = TerminalEmulatorPlugin.Instance.TerminalEmulatorOptions;
                 MouseButtonAction act = args.Button == MouseButtons.Right ? opt.RightButtonAction : opt.MiddleButtonAction;
                 if (act != MouseButtonAction.None) {
-                    if (Control.ModifierKeys == Keys.Shift ^ act == MouseButtonAction.ContextMenu) { //シフトキーで動作反転
 #if !LIBRARY
+                    if (Control.ModifierKeys == Keys.Shift ^ act == MouseButtonAction.ContextMenu) { //シフトキーで動作反転
                         ShowContextMenu(new Point(args.X, args.Y));
-#endif
                     }
                     else { //Paste
                         IGeneralViewCommands vc = (IGeneralViewCommands)_control.GetAdapter(typeof(IGeneralViewCommands));
@@ -1289,7 +1290,7 @@ namespace Poderosa.Terminal {
                         if (!_control.Focused)
                             _control.Focus();
                     }
-
+#endif
                     return UIHandleResult.Stop;
                 }
             }

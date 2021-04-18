@@ -20,7 +20,9 @@ using System.Diagnostics;
 using Poderosa.Sessions;
 using Poderosa.Document;
 using Poderosa.Forms;
+#if !LIBRARY
 using Poderosa.Commands;
+#endif
 
 namespace Poderosa.View {
     internal enum RangeType {
@@ -156,9 +158,11 @@ namespace Poderosa.View {
                 return (IPoderosaView)_owner.GetAdapter(typeof(IPoderosaView));
             }
         }
+#if !LIBRARY
         public IPoderosaCommand TranslateCommand(IGeneralCommand command) {
             return null;
         }
+#endif
         public IAdaptable GetAdapter(Type adapter) {
             return WindowManagerPlugin.Instance.PoderosaWorld.AdapterManager.GetAdapter(this, adapter);
         }

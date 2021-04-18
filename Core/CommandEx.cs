@@ -19,11 +19,7 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-#if LIBRARY
-using Poderosa.Library;
-#else
 using Poderosa.Preferences;
-#endif
 
 namespace Poderosa.Commands {
     /// <summary>
@@ -638,7 +634,6 @@ namespace Poderosa.Commands {
         }
     }
 
-#if !LIBRARY
     /// <summary>
     /// <ja>
     /// 定義済みコマンドカテゴリを示します
@@ -693,7 +688,6 @@ namespace Poderosa.Commands {
             get;
         }
     }
-#endif
 
     //GeneralCommandのコレクション
     /// <summary>
@@ -795,7 +789,6 @@ namespace Poderosa.Commands {
         /// </summary>
         /// </overloads>
         IGeneralCommand Find(string id);
-#if !LIBRARY
         /// <summary>
         /// <ja>
         /// ショートカットキーをキーにして、コマンドマネージャに登録されたコマンドを検索します。
@@ -823,7 +816,6 @@ namespace Poderosa.Commands {
         /// </en>
         /// </returns>
         IGeneralCommand Find(Keys key); //ショートカットキーから
-#endif
         /// <summary>
         /// <ja>
         /// コマンドマネージャに登録されているすべてのコマンドオブジェクトを列挙します。
@@ -936,7 +928,6 @@ namespace Poderosa.Commands {
         /// </example>
         CommandResult Execute(IPoderosaCommand command, ICommandTarget target, params IAdaptable[] args);
 
-#if !LIBRARY
         /// <exclude/>
         IKeyBinds CurrentKeyBinds {
             get;
@@ -956,7 +947,6 @@ namespace Poderosa.Commands {
         IDefaultCommandCategories CommandCategories {
             get;
         }
-#endif
     }
 
     //キーバインド設定
@@ -1376,7 +1366,6 @@ namespace Poderosa.Commands {
         }
     }
 
-#if !LIBRARY
     //コンテキストメニューを供給する能力のあるクラスが実装
     /// <summary>
     /// <ja>
@@ -1400,7 +1389,7 @@ namespace Poderosa.Commands {
             get;
         }
     }
-#endif
+
 
 
     //IPoderosaCommand標準実装
@@ -2158,7 +2147,6 @@ namespace Poderosa.Commands {
         }
     }
 
-#if !LIBRARY
     //IPoderosaMenuGroup標準実装
     /// <summary>
     /// <ja>
@@ -2762,5 +2750,4 @@ namespace Poderosa.Commands {
             return CommandManagerPlugin.Instance.PoderosaWorld.AdapterManager.GetAdapter(this, adapter);
         }
     }
-#endif
 }

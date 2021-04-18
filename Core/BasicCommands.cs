@@ -26,7 +26,6 @@ using Poderosa.UI;
 using Poderosa.View;
 
 namespace Poderosa.Commands {
-#if !LIBRARY
     internal class CommandCategory : ICommandCategory, IPositionDesignation {
         private string _nameID;
         private bool _keybindCustomizable;
@@ -454,7 +453,7 @@ namespace Poderosa.Commands {
             return Keys.Control | Keys.Shift | key;
         }
     }
-#endif
+
 
     //メインメニューの項目は、ICommandTarget経由で起動元のフォームが取れるようになっている。
     /// <summary>
@@ -501,7 +500,7 @@ namespace Poderosa.Commands {
     /// </code>
     /// </example>
     public class CommandTargetUtil {
-#if !LIBRARY
+
         /// <summary>
         /// 
         /// </summary>
@@ -513,7 +512,7 @@ namespace Poderosa.Commands {
             else
                 return (ICommandTarget)obj.GetAdapter(typeof(ICommandTarget));
         }
-#endif
+
 
         /// <summary>
         /// <ja>
@@ -545,7 +544,6 @@ namespace Poderosa.Commands {
             IPoderosaMainWindow window = (IPoderosaMainWindow)target.GetAdapter(typeof(IPoderosaMainWindow));
             return window;
         }
-#if !LIBRARY
         /// <summary>
         /// <ja>
         /// ポップアップウィンドウへと変換します。
@@ -568,7 +566,6 @@ namespace Poderosa.Commands {
             IPoderosaPopupWindow window = (IPoderosaPopupWindow)target.GetAdapter(typeof(IPoderosaPopupWindow));
             return window;
         }
-#endif
         /// <summary>
         /// <ja>
         /// 最後にアクティブになったビューへと変換します。
@@ -611,9 +608,6 @@ namespace Poderosa.Commands {
             IPoderosaMainWindow window = AsWindow(target);
             if (window != null)
                 return window.LastActivatedView;
-#if LIBRARY
-            return null;
-#else
             else {
                 IPoderosaPopupWindow popup = AsPopupWindow(target);
                 if (popup != null)
@@ -621,7 +615,6 @@ namespace Poderosa.Commands {
                 else
                     return null;
             }
-#endif
         }
 
         //ちょっと恣意的だが、ビュー直接またはLastActivatedViewで
@@ -705,7 +698,7 @@ namespace Poderosa.Commands {
             }
         }
 
-#if !LIBRARY
+
         /// <exclude/>
         public static IContentReplaceableView AsContentReplaceableViewOrLastActivatedView(ICommandTarget target) {
             if (target == null)
@@ -755,7 +748,6 @@ namespace Poderosa.Commands {
 
             return (IGeneralViewCommands)view.GetAdapter(typeof(IGeneralViewCommands));
         }
-#endif
     }
 
     //CharacterDocumentViewerに対して起動するテキストコピーコマンド

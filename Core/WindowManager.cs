@@ -29,8 +29,8 @@ using Poderosa.Util;
 using Poderosa.Plugins;
 using Poderosa.Sessions;
 using Poderosa.View;
-using Poderosa.Commands;
 #if !LIBRARY
+using Poderosa.Commands;
 using Poderosa.Plugin.Remoting;
 using Poderosa.Preferences;
 #endif
@@ -39,7 +39,7 @@ using Poderosa.Preferences;
 
 namespace Poderosa.Forms {
 #if LIBRARY
-    [PluginInfo(ID = WindowManagerPlugin.PLUGIN_ID, Version = VersionInfo.PODEROSA_VERSION, Author = VersionInfo.PROJECT_NAME, Dependencies = "org.poderosa.core.commands")]
+    [PluginInfo(ID = WindowManagerPlugin.PLUGIN_ID, Version = VersionInfo.PODEROSA_VERSION, Author = VersionInfo.PROJECT_NAME)]
 #else
     [PluginInfo(ID = WindowManagerPlugin.PLUGIN_ID, Version = VersionInfo.PODEROSA_VERSION, Author = VersionInfo.PROJECT_NAME, Dependencies = "org.poderosa.core.preferences;org.poderosa.core.commands")]
 #endif
