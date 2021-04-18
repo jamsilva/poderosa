@@ -17,7 +17,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;LIBRARY</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;LIBRARY;PODEROSA_KEYFORMAT</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
@@ -27,7 +27,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;LIBRARY</DefineConstants>
+    <DefineConstants>TRACE;LIBRARY;PODEROSA_KEYFORMAT</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
@@ -172,9 +172,6 @@
     <Compile Include="..\Granados\PKIBase.cs">
       <Link>Granados\PKIBase.cs</Link>
     </Compile>
-    <Compile Include="..\Granados\Poderosa\FileTransfer\Cancellation.cs">
-      <Link>Granados\Poderosa\FileTransfer\Cancellation.cs</Link>
-    </Compile>
     <Compile Include="..\Granados\Poderosa\KeyFormat\BERReader.cs">
       <Link>Granados\Poderosa\KeyFormat\BERReader.cs</Link>
     </Compile>
@@ -207,9 +204,6 @@
     </Compile>
     <Compile Include="..\Granados\Poderosa\KeyFormat\SSHComPrivateKeyLoader.cs">
       <Link>Granados\Poderosa\KeyFormat\SSHComPrivateKeyLoader.cs</Link>
-    </Compile>
-    <Compile Include="..\Granados\Poderosa\Util\FilePathValidator.cs">
-      <Link>Granados\Poderosa\Util\FilePathValidator.cs</Link>
     </Compile>
     <Compile Include="..\Granados\PortForwarding.cs">
       <Link>Granados\PortForwarding.cs</Link>
@@ -524,14 +518,8 @@
     <Compile Include="..\UI\DrawUtil.cs">
       <Link>UI\DrawUtil.cs</Link>
     </Compile>
-    <Compile Include="..\UI\ListItem.cs">
-      <Link>UI\ListItem.cs</Link>
-    </Compile>
     <Compile Include="..\UI\Util.cs">
       <Link>UI\Util.cs</Link>
-    </Compile>
-    <Compile Include="..\UI\Win32.cs">
-      <Link>UI\Win32.cs</Link>
     </Compile>
     <Compile Include="..\UI\WinFormsUtil.cs">
       <Link>UI\WinFormsUtil.cs</Link>

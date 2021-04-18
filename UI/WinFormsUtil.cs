@@ -23,6 +23,7 @@ namespace Poderosa.Util {
     /// </summary>
     /// <exclude/>
     public class WinFormsUtil {
+#if !LIBRARY
         public static string KeyString(Keys key) {
             int ik = (int)key;
             if ((int)Keys.D0 <= ik && ik <= (int)Keys.D9)
@@ -71,6 +72,7 @@ namespace Poderosa.Util {
                  */
             }
         }
+#endif
 
         //KeyStringの逆変換　KeyConverterの実装は死ぬほど遅い
         public static Keys ParseSingleKey(string s) {
@@ -98,9 +100,11 @@ namespace Poderosa.Util {
                 }
             }
         }
+#if !LIBRARY
         public static Keys ParseKey(string value) {
             return ParseKey(value.Split('+'));
         }
+#endif
         public static Keys ParseKey(string[] value) { //modifier込みでパース
             Keys modifier = Keys.None;
             for (int i = 0; i < value.Length - 1; i++) { //最後以外
@@ -122,6 +126,7 @@ namespace Poderosa.Util {
                 throw new Exception(value + " is unknown modifier");
         }
 
+#if !LIBRARY
         public static string FormatShortcut(Keys key) {
             return FormatShortcut(key, '+');
         }
@@ -159,5 +164,6 @@ namespace Poderosa.Util {
             else
                 return FindTopControl(c, screen_pt);
         }
+#endif
     }
 }

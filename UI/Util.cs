@@ -25,6 +25,7 @@ namespace Poderosa.UI {
     /// </summary>
     /// <exclude/>
     public class UIUtil {
+#if !LIBRARY
         public static int AdjustRange(int value, int min, int max) {
             if (value < min)
                 value = min;
@@ -33,6 +34,7 @@ namespace Poderosa.UI {
 
             return value;
         }
+#endif
 
         public static void ReplaceControl(Control parent, Control src, Control dest) {
             Debug.Assert(src.Parent == parent);
@@ -53,9 +55,11 @@ namespace Poderosa.UI {
             Debug.Assert(parent.Controls.Contains(dest));
         }
 
+#if !LIBRARY
         public static void DumpControlTree(Control t) {
             DumpControlTree(t, 0);
         }
+#endif
 
         private static void DumpControlTree(Control t, int indent) {
             StringBuilder bld = new StringBuilder();
@@ -72,6 +76,7 @@ namespace Poderosa.UI {
         }
     }
 
+#if !LIBRARY
     /// <summary>
     /// Utility methods for creating icon.
     /// </summary>
@@ -105,5 +110,5 @@ namespace Poderosa.UI {
 
 
     }
-
+#endif
 }
